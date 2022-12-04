@@ -44,3 +44,54 @@ Next, you will use the command `npm` init to initialise your project, so that a 
 `npm init`
 
 ![alt](https://github.com/IwunzeGE/DevOps-Project/blob/0636e30f9680e6c72bf7c2aa139a373a2a4ea7d0/MERN%20Stack/images/Capture.PNG)
+
+**Next, we will Install ExpressJs and create the Routes directory.**
+
+### INSTALL EXPRESS JS
+
+Express is a framework for Node.js, therefore a lot of things developers would have programmed is already taken care of out of the box. Therefore, it simplifies development, and abstracts a lot of low-level details. For example, Express helps to define routes of your application based on HTTP methods and URLs.
+
+To use express, install it using npm:  
+`npm install express`
+
+Now create a file index.js with the command below  
+`touch index.js`
+
+Run ls to confirm that your index.js file is successfully created
+
+Install the dotenv module  
+`npm install dotenv`
+
+Open the index.js file with the command below  
+`nano index.js`
+
+Type the code below into it and save. For now, simply paste the code into the file.
+
+```const express = require('express');
+require('dotenv').config();
+ 
+const app = express();
+ 
+const port = process.env.PORT || 5000;
+ 
+app.use((req, res, next) => {
+res.header("Access-Control-Allow-Origin", "\*");
+res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+next();
+});
+ 
+app.use((req, res, next) => {
+res.send('Welcome to Express');
+});
+ 
+app.listen(port, () => {
+console.log(`Server running on port ${port}`)
+});
+```
+![alt](https://github.com/IwunzeGE/DevOps-Project/blob/4189308ea2e90f63fdf04b017430f95b1ae6f4e4/MERN%20Stack/images/install%20express.PNG)
+
+Now it is time to start our server to see if it works. Open your terminal in the same directory as your index.js file and type:  
+`node index.js`
+
+If everything goes well, you should see Server running on port 5000 in your terminal.
+![alt](https://github.com/IwunzeGE/DevOps-Project/blob/4189308ea2e90f63fdf04b017430f95b1ae6f4e4/MERN%20Stack/images/server%20running.PNG)
