@@ -3,8 +3,10 @@
 
 ## Prerequisites
 
+## Prerequisites
 - Cloud Service Provider - AWS, Azure, GCP, etc.
-- Launch a Linux Instance and SSH
+- Launch a Linux Instance (Ubuntu preferably).
+- Priot knowledge on how to SSH into a virtual host.
 
 
 
