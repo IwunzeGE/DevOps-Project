@@ -95,3 +95,131 @@ Now it is time to start our server to see if it works. Open your terminal in the
 
 If everything goes well, you should see Server running on port 5000 in your terminal.
 ![alt](https://github.com/IwunzeGE/DevOps-Project/blob/4189308ea2e90f63fdf04b017430f95b1ae6f4e4/MERN%20Stack/images/server%20running.PNG)
+
+Open up your browser and try to access your server’s Public IP or Public DNS name followed by port 5000:
+http://PublicIP-or-PublicDNS:5000
+
+Welcome to Express
+
+![alt](https://github.com/IwunzeGE/DevOps-Project/blob/93bf59a766b3e7587364d9c7f092a7ae2567a480/MERN%20Stack/images/express.PNG)
+
+### ROUTES
+There are three actions that our To-Do application needs to be able to do:
+- Create a new task
+- Display list of all tasks
+- Delete a completed task
+
+Each task will be associated with some particular endpoint and will use different standard HTTP request methods: POST, GET, DELETE.
+
+For each task, we need to create routes that will define various endpoints that the To-do app will depend on. So let us create a folder routes  
+`mkdir routes`
+
+Change directory to routes folder.  
+`cd routes`
+
+Now, create a file api.js with the command below  
+`touch api.js`
+
+Open the file with the command below  
+`nano api.js`
+Copy below code in the file.
+
+```const express = require ('express');
+const router = express.Router();
+ 
+router.get('/todos', (req, res, next) => {
+ 
+});
+ 
+router.post('/todos', (req, res, next) => {
+ 
+});
+ 
+router.delete('/todos/:id', (req, res, next) => {
+ 
+})
+ 
+module.exports = router;
+Moving forward let create Models directory.
+```
+![alt](https://github.com/IwunzeGE/DevOps-Project/blob/93bf59a766b3e7587364d9c7f092a7ae2567a480/MERN%20Stack/images/routes.PNG)
+
+## MODELS
+We are going to make use of Mongodb which is a NoSQL database, we need to create a model.
+
+**A model is at the heart of JavaScript-based applications, and it is what makes it interactive.
+We will also use models to define the database schema.**
+
+To create a Schema and a model, install mongoose which is a Node.js package that makes working with mongodb easier.
+
+Change directory back Todo folder with `cd ..` and install Mongoose
+`npm install mongoose`
+
+![alt](https://github.com/IwunzeGE/DevOps-Project/blob/93bf59a766b3e7587364d9c7f092a7ae2567a480/MERN%20Stack/images/mongoose.PNG)
+
+Create a new folder models :  
+`mkdir models`
+
+Change the directory into the newly created ‘models’ folder with  
+`cd models`
+
+Inside the models folder, create a file and name it todo.js  
+`touch todo.js`
+
+Open the file created with nano todo.js then paste the code below in the file:
+
+```const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+ 
+//create schema for todo
+const TodoSchema = new Schema({
+action: {
+type: String,
+required: [true, 'The todo text field is required']
+}
+})
+ 
+//create model for todo
+const Todo = mongoose.model('todo', TodoSchema);
+ 
+module.exports = Todo;
+Now we need to update our routes from the file api.js in ‘routes’ directory to make use of the new model.
+In Routes directory, open api.js with vim api.js, delete the code inside with :%d command and paste there code below into it then save and exit
+const express = require ('express');
+const router = express.Router();
+const Todo = require('../models/todo');
+ 
+router.get('/todos', (req, res, next) => {
+ 
+//this will return all the data, exposing only the id and action field to the client
+Todo.find({}, 'action')
+.then(data => res.json(data))
+.catch(next)
+});
+ 
+router.post('/todos', (req, res, next) => {
+if(req.body.action){
+Todo.create(req.body)
+.then(data => res.json(data))
+.catch(next)
+}else {
+res.json({
+error: "The input field is empty"
+})
+}
+});
+ 
+router.delete('/todos/:id', (req, res, next) => {
+Todo.findOneAndDelete({"_id": req.params.id})
+.then(data => res.json(data))
+.catch(next)
+})
+ 
+module.exports = router;
+```
+
+The next piece of our application will be the MongoDB Databaqqse
+### MongoDB DATABASE
+
+We need a database where we will store our data. For this, we will make use of mLab. mLab provides MongoDB database as a service solution (DBaaS), so to make life easy, you will need to sign up for shared clusters free account, which is ideal for our use case. Sign up here. Follow the signup process, select AWS as the cloud provider, and choose a region near you.
+Complete a get started checklist as shown in the image below
