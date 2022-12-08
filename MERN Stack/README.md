@@ -380,7 +380,7 @@ Now, ensure you are inside the Todo directory, and simply do:
 
 Your app should open and start running on PublicIP:3000
 
-![a}(https://github.com/IwunzeGE/DevOps-Project/blob/19ef7b1d1a8d9fec3d95162c69c5372c3837d8c3/MERN%20Stack/images/react%20app.png)
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/19ef7b1d1a8d9fec3d95162c69c5372c3837d8c3/MERN%20Stack/images/react%20app.png)
 
 `cd client`
  
