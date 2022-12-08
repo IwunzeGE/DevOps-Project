@@ -360,20 +360,28 @@ This will create a new folder in your Todo directory called client, where all th
 Configure Proxy in package.json
 - Change directory to ‘client’  
 `cd client`
- 
-2.	Open the package.json file  
+
+- Open the package.json file  
 `nano package.json`
 
-3.	Add the key value pair in the package.json file "proxy": "http://PublicIP:5000".
+![alt](https://github.com/IwunzeGE/DevOps-Project/blob/19ef7b1d1a8d9fec3d95162c69c5372c3837d8c3/MERN%20Stack/images/cd%20Clients.png)
+ 
+- Add the key value pair in the package.json file "proxy": "http://PublicIP:5000".
 
+![alt](https://github.com/IwunzeGE/DevOps-Project/blob/19ef7b1d1a8d9fec3d95162c69c5372c3837d8c3/MERN%20Stack/images/clients%20proxy%20config.png)
+ 
 ***The whole purpose of adding the proxy configuration in number 3 above is to make it possible to access the application directly from the browser by simply calling the server url***
 
 Now, ensure you are inside the Todo directory, and simply do:
 
 `npm run dev` 
+ 
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/19ef7b1d1a8d9fec3d95162c69c5372c3837d8c3/MERN%20Stack/images/npm%20run%20dev.png)
 
 Your app should open and start running on PublicIP:3000
- 
+
+![a}(https://github.com/IwunzeGE/DevOps-Project/blob/19ef7b1d1a8d9fec3d95162c69c5372c3837d8c3/MERN%20Stack/images/react%20app.png)
+
 `cd client`
  
 move to the src director  
@@ -390,6 +398,8 @@ Inside ‘components’ directory create three files Input.js, ListTodo.js and T
  
 Open Input.js file  
 `nano Input.js`
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/19ef7b1d1a8d9fec3d95162c69c5372c3837d8c3/MERN%20Stack/images/js%20input.png)
 
 Copy and paste the following
 
@@ -439,6 +449,7 @@ return (
  
 export default Input
 ```
+
 To make use of Axios, which is a Promise based HTTP client for the browser and node.js, you need to `cd` into your client from your terminal and run  
 `yarn add axios` or `npm install axios`.
 
@@ -450,12 +461,15 @@ Move to clients folder
  
 Install Axios  
 `npm install axios`
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/19ef7b1d1a8d9fec3d95162c69c5372c3837d8c3/MERN%20Stack/images/install%20axios.png)
  
 Go to ‘components’ directory  
 `cd src/components`
  
 After that open your ListTodo.js  
 `nano ListTodo.js` and in the ListTodo.js, copy and paste the following code.
+ 
 ```
 import React from 'react';
  
@@ -541,6 +555,8 @@ let { todos } = this.state;
 export default Todo;
 ```
 
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/19ef7b1d1a8d9fec3d95162c69c5372c3837d8c3/MERN%20Stack/images/ListTodo%20clients.png)
+
 We need to make little adjustment to our react code. Delete the logo and adjust our App.js to look like this.
 
 Move to the src folder  
@@ -548,7 +564,7 @@ Move to the src folder
 
 Make sure that you are in the src folder and run
 
-`vi App.js`
+`nano App.js`
 
 Copy and paste the code below into it
  
@@ -567,12 +583,13 @@ return (
 
 export default App;
 ```
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/19ef7b1d1a8d9fec3d95162c69c5372c3837d8c3/MERN%20Stack/images/App%20js%20clients.png)
  
 After pasting, exit the editor.
 
 In the src directory open the App.css
 
-`nano App.`
+`nano App.css`
 
 Then paste the following code into App.css:
 
@@ -663,11 +680,13 @@ margin-left: 10px;
 margin-top: 0;
 }
 }
-Exit
-In the src directory open the index.css
-vim index.css
-Copy and paste the code below:
-body {
+ ```
+![a}(https://github.com/IwunzeGE/DevOps-Project/blob/19ef7b1d1a8d9fec3d95162c69c5372c3837d8c3/MERN%20Stack/images/App%20css%20clients.png)
+ 
+In the src directory open the index.css  
+`nano index.css`. Copy and paste the code below:
+
+```body {
 margin: 0;
 padding: 0;
 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -685,8 +704,12 @@ font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
 monospace;
 }
 ```
-
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/19ef7b1d1a8d9fec3d95162c69c5372c3837d8c3/MERN%20Stack/images/index%20css.png)
+ 
 Go to the Todo directory and run `npm run dev`
 
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/19ef7b1d1a8d9fec3d95162c69c5372c3837d8c3/MERN%20Stack/images/Todo%20npm%20run%20dev.png)
+ 
 Assuming no errors when saving all these files, our To-Do app should be ready and fully functional with the functionality discussed earlier: creating a task, deleting a task and viewing all your tasks.
 
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/19ef7b1d1a8d9fec3d95162c69c5372c3837d8c3/MERN%20Stack/images/final%20todo%20app.png)
