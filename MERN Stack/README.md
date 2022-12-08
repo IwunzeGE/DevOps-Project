@@ -497,8 +497,12 @@ return (
 }
  
 export default ListTodo
-Then in your Todo.js file you write the following code
-import React, {Component} from 'react';
+```
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/19ef7b1d1a8d9fec3d95162c69c5372c3837d8c3/MERN%20Stack/images/ListTodo%20clients.png)
+
+In your Todo.js file, write the following code
+
+```import React, {Component} from 'react';
 import axios from 'axios';
  
 import Input from './Input';
@@ -555,7 +559,7 @@ let { todos } = this.state;
 export default Todo;
 ```
 
-![a](https://github.com/IwunzeGE/DevOps-Project/blob/19ef7b1d1a8d9fec3d95162c69c5372c3837d8c3/MERN%20Stack/images/ListTodo%20clients.png)
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/d5c4489d886ec044ef4f766c8f8665cf6cad8174/MERN%20Stack/images/Todo%20clients.png)
 
 We need to make little adjustment to our react code. Delete the logo and adjust our App.js to look like this.
 
@@ -681,7 +685,7 @@ margin-top: 0;
 }
 }
  ```
-![a}(https://github.com/IwunzeGE/DevOps-Project/blob/19ef7b1d1a8d9fec3d95162c69c5372c3837d8c3/MERN%20Stack/images/App%20css%20clients.png)
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/19ef7b1d1a8d9fec3d95162c69c5372c3837d8c3/MERN%20Stack/images/App%20css%20clients.png)
  
 In the src directory open the index.css  
 `nano index.css`. Copy and paste the code below:
