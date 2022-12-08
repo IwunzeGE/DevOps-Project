@@ -88,6 +88,7 @@ app.listen(port, () => {
 console.log(`Server running on port ${port}`)
 });
 ```
+
 ![alt](https://github.com/IwunzeGE/DevOps-Project/blob/4189308ea2e90f63fdf04b017430f95b1ae6f4e4/MERN%20Stack/images/install%20express.PNG)
 
 Now it is time to start our server to see if it works. Open your terminal in the same directory as your index.js file and type:  
@@ -109,7 +110,7 @@ There are three actions that our To-Do application needs to be able to do:
 - Display list of all tasks
 - Delete a completed task
 
-Each task will be associated with some particular endpoint and will use different standard HTTP request methods: POST, GET, DELETE.
+Each task will be associated with some particular endpoint and different standard HTTP request methods: POST, GET, DELETE.
 
 For each task, we need to create routes that will define various endpoints that the To-do app will depend on. So let us create a folder routes  
 `mkdir routes`
@@ -142,6 +143,7 @@ router.delete('/todos/:id', (req, res, next) => {
 module.exports = router;
 Moving forward let create Models directory.
 ```
+
 ![alt](https://github.com/IwunzeGE/DevOps-Project/blob/93bf59a766b3e7587364d9c7f092a7ae2567a480/MERN%20Stack/images/routes.PNG)
 
 ## MODELS
@@ -183,9 +185,12 @@ required: [true, 'The todo text field is required']
 const Todo = mongoose.model('todo', TodoSchema);
  
 module.exports = Todo;
+```
+
 Now we need to update our routes from the file api.js in ‘routes’ directory to make use of the new model.
-In Routes directory, open api.js with vim api.js, delete the code inside with :%d command and paste there code below into it then save and exit
-const express = require ('express');
+In Routes directory, open `api.js` with `nano api.js`, update the code inside with the code below.
+
+```const express = require ('express');
 const router = express.Router();
 const Todo = require('../models/todo');
  
@@ -218,8 +223,85 @@ Todo.findOneAndDelete({"_id": req.params.id})
 module.exports = router;
 ```
 
-The next piece of our application will be the MongoDB Databaqqse
+The next piece of our application will be the MongoDB Database!
+
 ### MongoDB DATABASE
 
-We need a database where we will store our data. For this, we will make use of mLab. mLab provides MongoDB database as a service solution (DBaaS), so to make life easy, you will need to sign up for shared clusters free account, which is ideal for our use case. Sign up here. Follow the signup process, select AWS as the cloud provider, and choose a region near you.
-Complete a get started checklist as shown in the image below
+We need a database where we will store our data. For this, we will make use of mLab. mLab provides MongoDB database as a service solution (DBaaS). [Sign up here](https://www.mongodb.com/atlas-signup-from-mlab) and select AWS as the cloud provider, and choose a region near you.
+![alt](https://github.com/IwunzeGE/DevOps-Project/blob/0ff3f6c282610d3b811fc3a130baa51970a28a84/MERN%20Stack/images/Screenshot%20(50).png)
+
+- Allow access to the MongoDB database from anywhere (Not secure, but it is ideal for testing)
+
+![alt](https://github.com/IwunzeGE/DevOps-Project/blob/0ff3f6c282610d3b811fc3a130baa51970a28a84/MERN%20Stack/images/mogodb%20IP%20access.PNG)
+
+![alt](https://github.com/IwunzeGE/DevOps-Project/blob/0ff3f6c282610d3b811fc3a130baa51970a28a84/MERN%20Stack/images/mongodb%20ip.PNG)
+
+- Create a MongoDB database and collection inside mLab
+
+![alt](https://github.com/IwunzeGE/DevOps-Project/blob/0ff3f6c282610d3b811fc3a130baa51970a28a84/MERN%20Stack/images/mongodb%20collection.PNG)
+
+In the index.js file, process.env (access environment variables) was specified but haven't been created.
+
+- Create a file in your Todo directory and name it `.env`  
+`touch .env` 
+
+`nano .env`
+
+Add the connection string to access the database in it, just as below:
+
+```DB = 'mongodb+srv://<username>:<password>@<network-address>/<dbname>?retryWrites=true&w=majority'```
+
+***Ensure to update <username>, <password>, <network-address> and <database> according to your setup***
+
+![alt](https://github.com/IwunzeGE/DevOps-Project/blob/0ff3f6c282610d3b811fc3a130baa51970a28a84/MERN%20Stack/images/mongodb%20%20.env.png)
+
+***Heres's how to get your connection string***
+
+![alt](https://github.com/IwunzeGE/DevOps-Project/blob/0ff3f6c282610d3b811fc3a130baa51970a28a84/MERN%20Stack/images/mongodb%20connect%20cluster.png)
+
+![alt](https://github.com/IwunzeGE/DevOps-Project/blob/0ff3f6c282610d3b811fc3a130baa51970a28a84/MERN%20Stack/images/mongodb%20db%20link.png)
+
+![alt](https://github.com/IwunzeGE/DevOps-Project/blob/0ff3f6c282610d3b811fc3a130baa51970a28a84/MERN%20Stack/images/mongodb%20%20.env.png)
+
+- Update the ```index.js``` to reflect the use of ```.env``` so that ```Node.js``` can connect to the database.
+
+`nano index.js`
+
+```const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const routes = require('./routes/api');
+const path = require('path');
+require('dotenv').config();
+ 
+const app = express();
+ 
+const port = process.env.PORT || 5000;
+ 
+//connect to the database
+mongoose.connect(process.env.DB, { useNewUrlParser: true, useUnifiedTopology: true })
+.then(() => console.log(`Database connected successfully`))
+.catch(err => console.log(err));
+ 
+//since mongoose promise is depreciated, we overide it with node's promise
+mongoose.Promise = global.Promise;
+ 
+app.use((req, res, next) => {
+res.header("Access-Control-Allow-Origin", "\*");
+res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+next();
+});
+ 
+app.use(bodyParser.json());
+ 
+app.use('/api', routes);
+ 
+app.use((err, req, res, next) => {
+console.log(err);
+next();
+});
+ 
+app.listen(port, () => {
+console.log(`Server running on port ${port}`)
+});
+```
