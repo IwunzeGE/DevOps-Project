@@ -100,11 +100,11 @@ If everything goes well, you should see Server running on port 5000 in your term
 Open up your browser and try to access your server’s Public IP or Public DNS name followed by port 5000:
 http://PublicIP-or-PublicDNS:5000
 
-Welcome to Express
+You should get **Welcome to Express**
 
 ![alt](https://github.com/IwunzeGE/DevOps-Project/blob/93bf59a766b3e7587364d9c7f092a7ae2567a480/MERN%20Stack/images/express.PNG)
 
-### ROUTES
+## ROUTES
 There are three actions that our To-Do application needs to be able to do:
 - Create a new task
 - Display list of all tasks
@@ -141,7 +141,6 @@ router.delete('/todos/:id', (req, res, next) => {
 })
  
 module.exports = router;
-Moving forward let create Models directory.
 ```
 
 ![alt](https://github.com/IwunzeGE/DevOps-Project/blob/93bf59a766b3e7587364d9c7f092a7ae2567a480/MERN%20Stack/images/routes.PNG)
@@ -225,7 +224,7 @@ module.exports = router;
 
 The next piece of our application will be the MongoDB Database!
 
-### MongoDB DATABASE
+## MongoDB DATABASE
 
 We need a database where we will store our data. For this, we will make use of mLab. mLab provides MongoDB database as a service solution (DBaaS). [Sign up here](https://www.mongodb.com/atlas-signup-from-mlab) and select AWS as the cloud provider, and choose a region near you.
 ![alt](https://github.com/IwunzeGE/DevOps-Project/blob/0ff3f6c282610d3b811fc3a130baa51970a28a84/MERN%20Stack/images/Screenshot%20(50).png)
@@ -243,9 +242,7 @@ We need a database where we will store our data. For this, we will make use of m
 In the index.js file, process.env (access environment variables) was specified but haven't been created.
 
 - Create a file in your Todo directory and name it `.env`  
-`touch .env` 
-
-`nano .env`
+`touch .env` and edit using `nano .env`
 
 Add the connection string to access the database in it, just as below:
 
@@ -261,11 +258,9 @@ Add the connection string to access the database in it, just as below:
 
 ![alt](https://github.com/IwunzeGE/DevOps-Project/blob/0ff3f6c282610d3b811fc3a130baa51970a28a84/MERN%20Stack/images/mongodb%20db%20link.png)
 
-![alt](https://github.com/IwunzeGE/DevOps-Project/blob/0ff3f6c282610d3b811fc3a130baa51970a28a84/MERN%20Stack/images/mongodb%20%20.env.png)
-
 - Update the ```index.js``` to reflect the use of ```.env``` so that ```Node.js``` can connect to the database.
 
-`nano index.js`
+edit with `nano index.js`
 
 ```const express = require('express');
 const bodyParser = require('body-parser');
@@ -305,3 +300,153 @@ app.listen(port, () => {
 console.log(`Server running on port ${port}`)
 });
 ```
+
+ ![alt](https://github.com/IwunzeGE/DevOps-Project/blob/fccf04f89222b3226cf0b4c890e16f32afdbe130/MERN%20Stack/images/index.js%20config.png)
+ 
+***NOTE: Using environment variables to store information is considered more secure and best practice to separate configuration and secret data from the application, instead of writing connection strings directly inside the index.js application file.***
+
+ Start your server using the command:  
+ `node index.js`
+You should see a message **‘Database connected successfully’**
+ 
+### TESTING THE CODES
+
+We will need a way to test our code using RESTful API.
+  
+In this project, we will use Postman to test our API.
+
+Click [Install Postman](https://www.getpostman.com/downloads/) to download and install postman on your machine.
+ 
+[Click HERE](https://www.youtube.com/watch?v=FjgYtQK_zLE) to learn how perform [CRUD operartions](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) on Postman.
+
+Open your Postman, create a POST request to the API http://PublicIP-or-PublicDNS:5000/api/todos. This request sends a new task to our To-Do list so the application could store it in the database.  
+**Note: make sure your set header key Content-Type as application/json**
+
+![alt](https://github.com/IwunzeGE/DevOps-Project/blob/3e1eabd698ad5e3587e17b3d582ed888048ee5d5/MERN%20Stack/images/postman%20header.png)
+
+Reference the body as shown below;
+
+![alt](https://github.com/IwunzeGE/DevOps-Project/blob/3e1eabd698ad5e3587e17b3d582ed888048ee5d5/MERN%20Stack/images/post%20request.png)
+ 
+Create a GET request to the API http://PublicIP-or-PublicDNS:5000/api/todos.
+
+Reference the body as shown below;
+
+![alt](https://github.com/IwunzeGE/DevOps-Project/blob/3e1eabd698ad5e3587e17b3d582ed888048ee5d5/MERN%20Stack/images/get%20request.png)
+ 
+
+ 
+##FRONTEND CREATION
+
+To start out with the frontend of the To-do app, use the create-react-app command to scaffold the app. In the same root directory as your backend code, which is the Todo directory, run:  
+`npx create-react-app client`
+
+1.	Install concurrently. It is used to run more than one command simultaneously from the same terminal window.  
+`npm install concurrently --save-dev`
+ 
+2.	Install nodemon. It is used to run and monitor the server. If there is any change in the server code, nodemon will restart it automatically and load the new changes.  
+`npm install nodemon --save-dev`
+ 
+3.	In Todo folder open the package.json file. Change the highlighted part of the below screenshot and replace with the code below.  
+```"scripts": {
+"start": "node index.js",
+"start-watch": "nodemon index.js",
+"dev": "concurrently \"npm run start-watch\" \"cd client && npm start\""
+},
+```
+
+This will create a new folder in your Todo directory called client, where all the react code will be added.
+
+Configure Proxy in package.json
+- Change directory to ‘client’  
+`cd client`
+ 
+2.	Open the package.json file  
+`nano package.json`
+
+3.	Add the key value pair in the package.json file "proxy": "http://PublicIP:5000".
+
+***The whole purpose of adding the proxy configuration in number 3 above is to make it possible to access the application directly from the browser by simply calling the server url***
+
+Now, ensure you are inside the Todo directory, and simply do:
+
+`npm run dev` 
+
+Your app should open and start running on PublicIP:3000
+ 
+`cd client`
+ 
+move to the src director  
+`cd src`
+ 
+Inside your src folder create another folder called components  
+`mkdir components`
+
+Move into the components directory with  
+`cd components`
+
+Inside ‘components’ directory create three files Input.js, ListTodo.js and Todo.js.  
+`touch Input.js ListTodo.js Todo.js`
+ 
+Open Input.js file  
+`nano Input.js`
+
+Copy and paste the following
+
+```import React, { Component } from 'react';
+import axios from 'axios';
+ 
+class Input extends Component {
+ 
+state = {
+action: ""
+}
+ 
+addTodo = () => {
+const task = {action: this.state.action}
+ 
+    if(task.action && task.action.length > 0){
+      axios.post('/api/todos', task)
+        .then(res => {
+          if(res.data){
+            this.props.getTodos();
+            this.setState({action: ""})
+          }
+        })
+        .catch(err => console.log(err))
+    }else {
+      console.log('input field required')
+    }
+ 
+}
+ 
+handleChange = (e) => {
+this.setState({
+action: e.target.value
+})
+}
+ 
+render() {
+let { action } = this.state;
+return (
+<div>
+<input type="text" onChange={this.handleChange} value={action} />
+<button onClick={this.addTodo}>add todo</button>
+</div>
+)
+}
+}
+ 
+export default Input
+```
+To make use of Axios, which is a Promise based HTTP client for the browser and node.js, you need to `cd` into your client from your terminal and run  
+`yarn add axios` or `npm install axios`.
+
+Move to the src folder  
+`cd ..`
+ 
+Move to clients folder  
+`cd ..`
+ 
+Install Axios  
+`npm install axios`
