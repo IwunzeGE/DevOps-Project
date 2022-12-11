@@ -10,8 +10,15 @@
 
 - Node.js (JavaScript runtime environment) – Accepts requests and displays results to end user
 
-
 ## Prerequisites
+
+- Cloud Service Provider - AWS, Azure, GCP, etc.
+
+- Launch a Linux Instance (Ubuntu preferably).
+
+- Prior knowledge on how to SSH into a virtual host.
+
+- Knowledge on how configure inbound rules for security groups using the AWS console.
 
 ## STEP 1: INSTALL NODEJS
 
@@ -44,7 +51,7 @@ To be able to compile native addons from npm you’ll need to install the develo
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/5e332a8206d8f42d39ddea439087beccec1065e4/MEAN%20Stack/images/install%20build%20essential.png)
 
 ## STEP 2: INSTALL MONGODB
-
+Run:
 `sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6
 echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.4.list`
 
