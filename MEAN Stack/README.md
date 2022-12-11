@@ -273,7 +273,15 @@ Start the server by running this command:
 
 The server is now up and running, we can connect it via port 3300.
 
-Go to http://localhost:3300 on your browser
+Go to http://PublicIP-or-PublicDNS:3300 on your browser.
+
+***A quick reminder on how to get your server’s Public IP and public DNS name:***
+
+- You can find it in your AWS web console in EC2 details.
+
+- Run curl -s http://169.254.169.254/latest/meta-data/public-ipv4 for Public IP address.
+
+- curl -s http://169.254.169.254/latest/meta-data/public-hostname for Public DNS name.
 
 This is how your WebBook Register Application will look in the browser:
 
