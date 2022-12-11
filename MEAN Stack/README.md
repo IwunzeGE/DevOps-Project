@@ -15,18 +15,6 @@
 
 ## STEP 1: INSTALL NODEJS
 
-`sudo apt update && sudo apt upgrade`
-
-**Add Certificates**
-
-`sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates`
- 
-`curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -`
-
-Then run:
-
-`sudo apt install -y nodejs`
-
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/7a8cc8b999c10030428af8c85f033a69515e1731/MEAN%20Stack/images/install%20nodejs.png)
 
 **ALTERNATIVELY, WE COULD USE;**
@@ -54,17 +42,11 @@ sudo apt install nodejs
 
 The nodejs package contains both the node and npm binaries.
 
-Verify that the Node.js and npm were successfully installed by printing their versions:
-
-node --version
-Copy
-v14.2.0Copy
-npm --version
-Copy
-6.14.4Copy
 To be able to compile native addons from npm you’ll need to install the development tools:
 
-sudo apt install build-essential
+`sudo apt install build-essential`
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/5e332a8206d8f42d39ddea439087beccec1065e4/MEAN%20Stack/images/install%20build%20essential.png)
 
 ## STEP 2: INSTALL MONGODB
 
