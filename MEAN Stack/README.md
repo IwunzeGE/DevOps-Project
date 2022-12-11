@@ -27,14 +27,44 @@ Then run:
 
 `sudo apt install -y nodejs`
 
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/7a8cc8b999c10030428af8c85f033a69515e1731/MEAN%20Stack/images/install%20nodejs.png)
+
 **ALTERNATIVELY, WE COULD USE;**
 
 `sudo apt update && sudo apt install nodejs npm`
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/7a8cc8b999c10030428af8c85f033a69515e1731/MEAN%20Stack/images/install%20npm.png)
 
 Once done, verify the installation by running:
 
 `nodejs -v`
 
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/7a8cc8b999c10030428af8c85f033a69515e1731/MEAN%20Stack/images/node%20-v.png)
+
+Run the following command as a user with sudo privileges to download and execute the NodeSource installation script:
+
+`curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -`
+
+The script will add the NodeSource signing key to your system, create an apt repository file, install all necessary packages, and refresh the apt cache.  
+Once the NodeSource repository is enabled, install Node.js and npm:
+
+sudo apt install nodejs
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/7a8cc8b999c10030428af8c85f033a69515e1731/MEAN%20Stack/images/install%20nodejs.png)
+
+The nodejs package contains both the node and npm binaries.
+
+Verify that the Node.js and npm were successfully installed by printing their versions:
+
+node --version
+Copy
+v14.2.0Copy
+npm --version
+Copy
+6.14.4Copy
+To be able to compile native addons from npm you’ll need to install the development tools:
+
+sudo apt install build-essential
 
 ## STEP 2: INSTALL MONGODB
 
@@ -44,18 +74,25 @@ echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/
 **Install MongoDB**  
 `sudo apt install -y mongodb`
 
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/7a8cc8b999c10030428af8c85f033a69515e1731/MEAN%20Stack/images/install%20mongodb.png)
+
 **Start The server**  
 `sudo service mongodb start`
 
 Verify that the service is up and running  
 `sudo systemctl status mongodb`
 
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/7a8cc8b999c10030428af8c85f033a69515e1731/MEAN%20Stack/images/start%20mongodb.png)
+
 **Install npm – Node package manager**  
 `sudo apt install -y npm`
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/7a8cc8b999c10030428af8c85f033a69515e1731/MEAN%20Stack/images/install%20npm%20-y.png)
 
 **Install body-parser package:**‘body-parser’ package to help us process JSON files passed in requests to the server.  
 `sudo npm install body-parser`
 
+![f](https://github.com/IwunzeGE/DevOps-Project/blob/7a8cc8b999c10030428af8c85f033a69515e1731/MEAN%20Stack/images/insttall%20body%20parser.png)
 
 Create a folder named ‘Books’  
 `mkdir Books && cd Books`
@@ -63,6 +100,8 @@ Create a folder named ‘Books’
 In the Books directory, Initialize npm project  
 `npm init`
  
+![alt](https://github.com/IwunzeGE/DevOps-Project/blob/7a8cc8b999c10030428af8c85f033a69515e1731/MEAN%20Stack/images/mkdir%20Books.png)
+
 Add a file to it named server.js  
 `nano server.js`
 
@@ -79,6 +118,7 @@ app.listen(app.get('port'), function() {
     console.log('Server up: http://localhost:' + app.get('port'));
 });
 ```
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/7a8cc8b999c10030428af8c85f033a69515e1731/MEAN%20Stack/images/nano%20server%20js.png)
 
 ## STEP 3: INSTALL EXPRESS AND SET UP ROUTES
 
@@ -86,13 +126,15 @@ app.listen(app.get('port'), function() {
 
 `sudo npm install express mongoose`
 
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/7a8cc8b999c10030428af8c85f033a69515e1731/MEAN%20Stack/images/install%20express%20mongoose.png)
+
 In ‘Books’ folder, create a folder named apps  
 `mkdir apps && cd apps`
 
 Create a file named routes.js  
 `nano routes.js`
- 
- 
+
+
 Copy and paste the code below into routes.js
 
 ```var Book = require('./models/book');
@@ -133,6 +175,8 @@ module.exports = function(app) {
   });
 };
 ```
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/7a8cc8b999c10030428af8c85f033a69515e1731/MEAN%20Stack/images/routes%20js.png)
 
 In the ‘apps’ folder, create a folder named models  
 `mkdir models && cd models`
