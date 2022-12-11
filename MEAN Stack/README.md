@@ -15,10 +15,6 @@
 
 ## STEP 1: INSTALL NODEJS
 
-![a](https://github.com/IwunzeGE/DevOps-Project/blob/7a8cc8b999c10030428af8c85f033a69515e1731/MEAN%20Stack/images/install%20nodejs.png)
-
-**ALTERNATIVELY, WE COULD USE;**
-
 `sudo apt update && sudo apt install nodejs npm`
 
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/7a8cc8b999c10030428af8c85f033a69515e1731/MEAN%20Stack/images/install%20npm.png)
@@ -29,21 +25,20 @@ Once done, verify the installation by running:
 
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/7a8cc8b999c10030428af8c85f033a69515e1731/MEAN%20Stack/images/node%20-v.png)
 
-Run the following command as a user with sudo privileges to download and execute the NodeSource installation script:
+**ALTERNATIVELY, WE COULD USE;**
 
+Run the following command as a user with sudo privileges to download and execute the NodeSource installation script:  
 `curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -`
 
 The script will add the NodeSource signing key to your system, create an apt repository file, install all necessary packages, and refresh the apt cache.  
-Once the NodeSource repository is enabled, install Node.js and npm:
-
-sudo apt install nodejs
+Once the NodeSource repository is enabled, install Node.js and npm:  
+`sudo apt install nodejs`
 
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/7a8cc8b999c10030428af8c85f033a69515e1731/MEAN%20Stack/images/install%20nodejs.png)
 
 The nodejs package contains both the node and npm binaries.
 
-To be able to compile native addons from npm you’ll need to install the development tools:
-
+To be able to compile native addons from npm you’ll need to install the development tools:  
 `sudo apt install build-essential`
 
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/5e332a8206d8f42d39ddea439087beccec1065e4/MEAN%20Stack/images/install%20build%20essential.png)
