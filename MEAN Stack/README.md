@@ -155,6 +155,9 @@ var bookSchema = mongoose.Schema( {
 var Book = mongoose.model('Book', bookSchema);
 module.exports = mongoose.model('Book', bookSchema);
 ```
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/d5982bcd8c54f971cd0d305fd39a2dc8b0c379cb/MEAN%20Stack/images/mkdir%20models.png)
+
 ## STEP 4 – ACCESS THE ROUTES WITH ANGULARJS
 
 Change the directory back to ‘Books’  
@@ -165,6 +168,8 @@ Create a folder named public
 
 Add a file named script.js  
 `nano script.js`
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/d5982bcd8c54f971cd0d305fd39a2dc8b0c379cb/MEAN%20Stack/images/mkdir%20public.png)
 
 Copy and paste the Code below (controller configuration defined) into the script.js file.
 
@@ -207,6 +212,8 @@ app.controller('myCtrl', function($scope, $http) {
   };
 });
 ```
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/d5982bcd8c54f971cd0d305fd39a2dc8b0c379cb/MEAN%20Stack/images/scrpit%20js.png)
 
 In the public folder, create a file named index.html;  
 `nano index.html`
@@ -265,11 +272,15 @@ Copy and paste the code below into index.html file.
 </html>
 ```
 
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/d5982bcd8c54f971cd0d305fd39a2dc8b0c379cb/MEAN%20Stack/images/index%20html.png)
+
 Change the directory back up to 'Books'  
 `cd ..`
 
 Start the server by running this command:  
 `node server.js`
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/d5982bcd8c54f971cd0d305fd39a2dc8b0c379cb/MEAN%20Stack/images/node%20server%20js.png)
 
 The server is now up and running, we can connect it via port 3300.
 
@@ -285,3 +296,4 @@ Go to http://PublicIP-or-PublicDNS:3300 on your browser.
 
 This is how your WebBook Register Application will look in the browser:
 
+![alt](https://github.com/IwunzeGE/DevOps-Project/blob/d5982bcd8c54f971cd0d305fd39a2dc8b0c379cb/MEAN%20Stack/images/default.png)
