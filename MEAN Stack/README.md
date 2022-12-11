@@ -52,6 +52,7 @@ To be able to compile native addons from npm you’ll need to install the develo
 
 ## STEP 2: INSTALL MONGODB
 Run:
+
 `sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6
 echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.4.list`
 
@@ -117,7 +118,6 @@ In ‘Books’ folder, create a folder named apps
 
 Create a file named routes.js  
 `nano routes.js`
-
 
 Copy and paste the code below into routes.js
 
