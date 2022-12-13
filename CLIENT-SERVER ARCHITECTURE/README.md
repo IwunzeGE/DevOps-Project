@@ -13,7 +13,7 @@ In the example above, a machine that is trying to access a Web site using a Web 
 The Web Server has a role of a "Client" that connects and reads/writes to/from a Database (DB) Server (MySQL, MongoDB, Oracle, SQL Server or any other), and the communication between them happens over a Local Network (it can also be an Internet connection, but it is a common practice to place Web Server and DB Server close to each other in a local network).  
 Essentially, it is sending requests to the remote server, and in turn, would be expecting some kind of response from the remote server. Let’s take a very quick example and see Client-Server communicatation in action. Open up your Ubuntu or Windows terminal and run the curl command:
 
-curl -Iv www.bing.com
+`curl -Iv www.bing.com`
 
 ***Note: If your Ubuntu does not have ‘curl’, you can install it by running `sudo apt install curl` In this example, your terminal will be the client, while www.bing.com will be the server.***
 
