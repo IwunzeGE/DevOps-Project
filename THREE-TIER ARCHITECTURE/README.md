@@ -153,12 +153,12 @@ sudo systemctl daemon-reload
 
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/10d8b69bedf06f1feda38efff29df59f9ba92bf4/THREE-TIER%20ARCHITECTURE/images/df%20-h%202.png)
 
-#STEP 2 - PREPARE THE DATABASE SERVER
+# STEP 2 - PREPARE THE DATABASE SERVER
 
 Launch a second RedHat EC2 instance that will have a role – ‘DB Server’
 Repeat the same steps as for the Web Server, but instead of apps-lv and logs-lv, create db-lv and logs-lv, then mount it to /db directory instead of /var/www/html/.
 
-#STEP 3 - INSTALL WORDPRESS ON YOUR WEB SERVER
+# STEP 3 - INSTALL WORDPRESS ON YOUR WEB SERVER
 1.	Update the repository
 
 `sudo yum -y update`
@@ -216,7 +216,7 @@ sudo setsebool -P httpd_can_network_connect_db 1
 
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/10d8b69bedf06f1feda38efff29df59f9ba92bf4/THREE-TIER%20ARCHITECTURE/images/chown.png)
 
-#STEP 4 - INSTALL MYSQL ON YOUR DB SERVER
+# STEP 4 - INSTALL MYSQL ON YOUR DB SERVER
 
 ```sudo yum update
 sudo yum install mysql-server
@@ -228,7 +228,7 @@ sudo systemctl enable mysqld
 ```
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/33364112574aae407879771e46100cab7b0b423d/THREE-TIER%20ARCHITECTURE/images/restart%20mysqld.png)
 
-#STEP 5 - CONFIGURE BD TO WORK WITH WORDPRESS
+# STEP 5 - CONFIGURE DB TO WORK WITH WORDPRESS
 
 ```sudo mysql
 CREATE DATABASE wordpress;
@@ -241,7 +241,7 @@ exit
 
 ![A](https://github.com/IwunzeGE/DevOps-Project/blob/33364112574aae407879771e46100cab7b0b423d/THREE-TIER%20ARCHITECTURE/images/create%20user.png)
 
-#STEP 6 - CONFIGURE WORDPRESS TO CONNECT TO THE REMOTE DATABASE
+# STEP 6 - CONFIGURE WORDPRESS TO CONNECT TO THE REMOTE DATABASE
 
 *Hint: Do not forget to open MySQL port 3306 on DB Server EC2. For extra security, you shall allow access to the DB server ONLY from your Web Server’s IP address, so in the Inbound Rule configuration specify source as /32*
 
@@ -306,6 +306,6 @@ sudo setsebool -P httpd_can_network_connect_db 1
 
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/3b01b6cad858c31b3d271b23faa92a55b6358805/THREE-TIER%20ARCHITECTURE/images/My%20dashboard.png)
 
-#CONGRATULATIONS!!!
+# CONGRATULATIONS!!!
  
 You have learned how to configure Linux storage susbystem and have also deployed a full-scale Web Solution using WordPress CMS and MySQL RDBMS.
