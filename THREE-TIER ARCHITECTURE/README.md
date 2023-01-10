@@ -20,3 +20,26 @@ Three-tier Architecture is a client-server software architecture pattern that co
 
 # STEP 1 - PREPARE A WEB-SERVER
 1.	Launch an EC2 instance that will serve as "Web Server". Create 3 volumes in the same AZ as your Web Server EC2, each of 10 GiB.
+![alt](https://github.com/IwunzeGE/DevOps-Project/blob/a9acc7f3c0df813d98b46f050670461879a42b6a/THREE-TIER%20ARCHITECTURE/images/volumes.png)
+
+![al](https://github.com/IwunzeGE/DevOps-Project/blob/a9acc7f3c0df813d98b46f050670461879a42b6a/THREE-TIER%20ARCHITECTURE/images/available%20volumes.png)
+
+2.	Attach all three volumes one by one to your Web Server EC2 instance
+
+![alt](https://github.com/IwunzeGE/DevOps-Project/blob/a9acc7f3c0df813d98b46f050670461879a42b6a/THREE-TIER%20ARCHITECTURE/images/attach%20volumes.png)
+
+![alt](https://github.com/IwunzeGE/DevOps-Project/blob/a9acc7f3c0df813d98b46f050670461879a42b6a/THREE-TIER%20ARCHITECTURE/images/attach%20volumes%202.png)
+
+3. Open up the Linux terminal to begin configuration Use `lsblk` command to inspect what block devices are attached to the server. Notice names of your newly created devices. All devices in Linux reside in /dev/ directory. Inspect it with `ls /dev/` and make sure you see all 3 newly created block devices there – their names will likely be xvdf, xvdh, xvdg.
+
+![al](https://github.com/IwunzeGE/DevOps-Project/blob/a9acc7f3c0df813d98b46f050670461879a42b6a/THREE-TIER%20ARCHITECTURE/images/lsblk.png)
+
+4.	Use df -h command to see all mounts and free space on your server
+
+![al](https://github.com/IwunzeGE/DevOps-Project/blob/a9acc7f3c0df813d98b46f050670461879a42b6a/THREE-TIER%20ARCHITECTURE/images/df%20-h.png)
+
+5.	Use gdisk utility to create a single partition on each of the 3 disks
+`sudo fdisk /dev/xvdf`
+
+![al](https://github.com/IwunzeGE/DevOps-Project/blob/a9acc7f3c0df813d98b46f050670461879a42b6a/THREE-TIER%20ARCHITECTURE/images/sudo%20gdisk2.png)
+
