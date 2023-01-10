@@ -38,8 +38,15 @@ Three-tier Architecture is a client-server software architecture pattern that co
 
 ![al](https://github.com/IwunzeGE/DevOps-Project/blob/a9acc7f3c0df813d98b46f050670461879a42b6a/THREE-TIER%20ARCHITECTURE/images/df%20-h.png)
 
-5.	Use gdisk utility to create a single partition on each of the 3 disks
+5.	Use fdisk utility to create a single partition on each of the 3 disks
 `sudo fdisk /dev/xvdf`
 
 ![al](https://github.com/IwunzeGE/DevOps-Project/blob/a9acc7f3c0df813d98b46f050670461879a42b6a/THREE-TIER%20ARCHITECTURE/images/sudo%20gdisk2.png)
 
+6.	Use lsblk utility to view the newly configured partition on each of the 3 disks.
+
+![al](https://github.com/IwunzeGE/DevOps-Project/blob/be5073e286dc1b1ea1c4a12117e92a2f567c9a1a/THREE-TIER%20ARCHITECTURE/images/lsblk%20part.png)
+
+7. Install lvm2 package using `sudo yum install lvm2`. Run sudo lvmdiskscan command to check for available partitions.
+
+*Note: yum is the package installer for RedHat/CentOS*
