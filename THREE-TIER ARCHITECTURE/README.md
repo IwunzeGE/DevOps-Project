@@ -22,6 +22,8 @@ Three-tier Architecture is a client-server software architecture pattern that co
 1.	Launch an EC2 instance that will serve as "Web Server". Create 3 volumes in the same AZ as your Web Server EC2, each of 10 GiB.
 ![alt](https://github.com/IwunzeGE/DevOps-Project/blob/a9acc7f3c0df813d98b46f050670461879a42b6a/THREE-TIER%20ARCHITECTURE/images/volumes.png)
 
+![A](https://github.com/IwunzeGE/DevOps-Project/blob/33364112574aae407879771e46100cab7b0b423d/THREE-TIER%20ARCHITECTURE/images/create%20volume.png)
+
 ![al](https://github.com/IwunzeGE/DevOps-Project/blob/a9acc7f3c0df813d98b46f050670461879a42b6a/THREE-TIER%20ARCHITECTURE/images/available%20volumes.png)
 
 2.	Attach all three volumes one by one to your Web Server EC2 instance
@@ -145,6 +147,7 @@ sudo mkfs -t ext4 /dev/webdata-vg/logs-lv
 ```sudo mount -a
 sudo systemctl daemon-reload
 ```
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/33364112574aae407879771e46100cab7b0b423d/THREE-TIER%20ARCHITECTURE/images/mount%20&%20daemon%20reload.png)
 
 23.	Verify your setup by running `df -h`, output must look like this:
 
@@ -204,7 +207,7 @@ sudo cp -R wordpress /var/www/html/
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/10d8b69bedf06f1feda38efff29df59f9ba92bf4/THREE-TIER%20ARCHITECTURE/images/cp%20wordpress.png)
 
 7.	Configure SELinux Policies
-``
+```
 sudo chown -R apache:apache /var/www/html/wordpress
 sudo chcon -t httpd_sys_rw_content_t /var/www/html/wordpress -R
 sudo setsebool -P httpd_can_network_connect=1
@@ -212,3 +215,88 @@ sudo setsebool -P httpd_can_network_connect_db 1
 ```
 
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/10d8b69bedf06f1feda38efff29df59f9ba92bf4/THREE-TIER%20ARCHITECTURE/images/chown.png)
+
+#STEP 4 - INSTALL MYSQL ON YOUR DB SERVER
+
+```sudo yum update
+sudo yum install mysql-server
+```
+
+Verify that the service is up and running by using `sudo systemctl status mysqld`, if it is not running, restart the service and enable it so it will be running even after reboot:
+```sudo systemctl restart mysqld
+sudo systemctl enable mysqld
+```
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/33364112574aae407879771e46100cab7b0b423d/THREE-TIER%20ARCHITECTURE/images/restart%20mysqld.png)
+
+#STEP 5 - CONFIGURE BD TO WORK WITH WORDPRESS
+
+```sudo mysql
+CREATE DATABASE wordpress;
+CREATE USER `myuser`@`<Web-Server-Private-IP-Address>` IDENTIFIED BY 'mypass';
+GRANT ALL ON wordpress.* TO 'myuser'@'<Web-Server-Private-IP-Address>';
+FLUSH PRIVILEGES;
+SHOW DATABASES;
+exit
+```
+
+![A](https://github.com/IwunzeGE/DevOps-Project/blob/33364112574aae407879771e46100cab7b0b423d/THREE-TIER%20ARCHITECTURE/images/create%20user.png)
+
+#STEP 6 - CONFIGURE WORDPRESS TO CONNECT TO THE REMOTE DATABASE
+
+*Hint: Do not forget to open MySQL port 3306 on DB Server EC2. For extra security, you shall allow access to the DB server ONLY from your Web Server’s IP address, so in the Inbound Rule configuration specify source as /32*
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/33364112574aae407879771e46100cab7b0b423d/THREE-TIER%20ARCHITECTURE/images/inbound%20rules.png)
+
+1.	Install MySQL client and test that you can connect from your Web Server to your DB server by using mysql-client
+
+`sudo yum install mysql`
+
+2. Now edit mysql configuration file by typing `sudo nano /etc/my.cnf`. Add the following at the end of the file.
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/360f9180f4da97e3e69471ce3075ecde262f5ac4/THREE-TIER%20ARCHITECTURE/images/bind-address.png)
+
+- Now, restart mysqld service using `sudo systemctl restart mysqld`
+
+2.	Change permissions and configuration so Apache could use WordPress:
+
+3.	Enable TCP port 80 in Inbound Rules configuration for your Web Server EC2 (enable from everywhere 0.0.0.0/0 or from your workstation’s IP)
+
+4.	On the web server, edit wordpress configuration file.
+
+cd /var/www/html/wordpress
+`sudo nano wp-config.php`
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/360f9180f4da97e3e69471ce3075ecde262f5ac4/THREE-TIER%20ARCHITECTURE/images/nano%20wp-config.png)
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/360f9180f4da97e3e69471ce3075ecde262f5ac4/THREE-TIER%20ARCHITECTURE/images/wp%20config.png)
+
+5. Disable the default page of apache so that you ca view the wordpress on the internet.
+
+`sudo mv /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.conf_backup`
+
+Restart httpd. `sudo systemctl restart httpd`
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/360f9180f4da97e3e69471ce3075ecde262f5ac4/THREE-TIER%20ARCHITECTURE/images/mv%20etc.png)
+
+6.	Verify if you can successfully execute SHOW DATABASES; command and see a list of existing databases.
+
+`sudo mysql -u admin -p -h <DB-Server-Private-IP-address>`
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/5f53ecf3b3f354f9a1b110efe00e072fd986b393/THREE-TIER%20ARCHITECTURE/images/db%20remote%20connect.png)
+
+7. Try to access from your browser the link to your WordPress http://<Web-Server-Public-IP-Address>/wordpress/
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/5f53ecf3b3f354f9a1b110efe00e072fd986b393/THREE-TIER%20ARCHITECTURE/images/Wordpess%20site.png)
+
+- Fill in your credentials to setup your account for your wordpress website. If you see this message – it means your WordPress has successfully connected to your remote MySQL database.
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/8c108b67bdc9d219080ebe217575433f47d1324e/THREE-TIER%20ARCHITECTURE/images/Wordpress%20page.png)
+
+- Log in with your username and password
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/5f53ecf3b3f354f9a1b110efe00e072fd986b393/THREE-TIER%20ARCHITECTURE/images/login%20to%20website.png)
+
+https://github.com/IwunzeGE/DevOps-Project/blob/3b01b6cad858c31b3d271b23faa92a55b6358805/THREE-TIER%20ARCHITECTURE/images/My%20dashboard.png
+
+#CONGRATULATIONS!!!
+You have learned how to configure Linux storage susbystem and have also deployed a full-scale Web Solution using WordPress CMS and MySQL RDBMS.
