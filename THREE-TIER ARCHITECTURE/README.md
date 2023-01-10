@@ -284,7 +284,15 @@ Restart httpd. `sudo systemctl restart httpd`
 
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/5f53ecf3b3f354f9a1b110efe00e072fd986b393/THREE-TIER%20ARCHITECTURE/images/db%20remote%20connect.png)
 
-7. Try to access from your browser the link to your WordPress http://<Web-Server-Public-IP-Address>/wordpress/
+7. Change permissions and configuration so Apache could use WordPress:
+
+```sudo chown -R apache:apache /var/www/html/wordpress
+sudo chcon -t httpd_sys_content_t /var/www/html/wordpress -R
+sudo setsebool -P httpd_can_network_connect=1
+sudo setsebool -P httpd_can_network_connect_db 1
+```
+
+8. Try to access from your browser the link to your WordPress http://<Web-Server-Public-IP-Address>/wordpress/
 
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/5f53ecf3b3f354f9a1b110efe00e072fd986b393/THREE-TIER%20ARCHITECTURE/images/Wordpess%20site.png)
 
@@ -296,7 +304,8 @@ Restart httpd. `sudo systemctl restart httpd`
 
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/5f53ecf3b3f354f9a1b110efe00e072fd986b393/THREE-TIER%20ARCHITECTURE/images/login%20to%20website.png)
 
-https://github.com/IwunzeGE/DevOps-Project/blob/3b01b6cad858c31b3d271b23faa92a55b6358805/THREE-TIER%20ARCHITECTURE/images/My%20dashboard.png
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/3b01b6cad858c31b3d271b23faa92a55b6358805/THREE-TIER%20ARCHITECTURE/images/My%20dashboard.png)
 
 #CONGRATULATIONS!!!
+ 
 You have learned how to configure Linux storage susbystem and have also deployed a full-scale Web Solution using WordPress CMS and MySQL RDBMS.
