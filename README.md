@@ -20,3 +20,6 @@ Before you start, make sure you have the following tools installed on your syste
 2. Setting up a LEMP stack
 3. Setting up a MEAN stack
 4. Settting up a MERN stack
+5. Client-Server architecture
+6. Three-tier architecture with wordpress
+7. Devops tooling website solution
