@@ -8,14 +8,16 @@
 - Version Control System (VCS): Git
 - Containerization: Docker
 
-## Prerequisites
+## Prerequisites 🧰
 Before you start, make sure you have the following tools installed on your system:
+- An account with any cloud service provider - AWS, Azure, GCP, etc.
 - Putty, powershell, gitbash or any terminal based software.
-- Docker
 - A screen snipping tool
-- 
+- Docker
+- MongDB
+- Jenkins
 
-## List of the Projects
+## List of the Projects 📚
 1. Setting up a LAMP stack
 2. Setting up a LEMP stack
 3. Setting up a MEAN stack
