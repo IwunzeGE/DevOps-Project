@@ -138,8 +138,15 @@ sudo systemctl enable php-fpm
 sudo setsebool -P httpd_execmem 1
 ```
 **Repeat steps 1-5 for another 2 Web Servers.**
+
 6.	Verify that Apache files and directories are available on the Web Server in /var/www and also on the NFS server in /mnt/apps. If you see the same files – it means NFS is mounted correctly. You can try to create a new file touch test.txt from one server and check if the same file is accessible from other Web Servers.
+
 7.	Locate the log folder for Apache on the Web Server and mount it to NFS server’s export for logs. Repeat step №4 to make sure the mount point will persist after reboot.
 
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/3cb3602530a8e23fbda5801d0470507b496447b3/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/df%20logs.png)
- ![a](https://github.com/IwunzeGE/DevOps-Project/blob/3cb3602530a8e23fbda5801d0470507b496447b3/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/fstab%20logs.png)
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/3cb3602530a8e23fbda5801d0470507b496447b3/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/fstab%20logs.png)
+
+8.	Fork the tooling source code from [this repo](https://github.com/IwunzeGE/DevopsToolingWebsite) to your Github account. (Learn how to fork a repo [here](https://youtu.be/f5grYMXbAV0))
+9.	Deploy the tooling website’s code to the Webserver. Ensure that the html folder from the repository is deployed to /var/www/html
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/e0e209d1d8cd9ebacadfaa803e56383f07819c3a/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/cp%20html.png)
