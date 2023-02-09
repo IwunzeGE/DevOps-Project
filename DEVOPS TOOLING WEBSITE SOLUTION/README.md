@@ -22,9 +22,14 @@ It is important to know what storage solution is suitable for what use cases, fo
 
 ## STEP 1 – PREPARE NFS SERVER
 1.	Spin up a new EC2 instance with RHEL Linux 8 Operating System.
--	Based on your LVM experience from Project 6, Configure LVM on the Server.
+-	Based on your LVM experience from the [three-tier architecture project](https://github.com/IwunzeGE/DevOps-Project/blob/123636af62cf9854ec71bc0b21e1687b1952d162/THREE-TIER%20ARCHITECTURE/README.md), Configure LVM on the Server.
+
 -	Instead of formatting the disks as ext4, you will have to format them as xfs
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/123636af62cf9854ec71bc0b21e1687b1952d162/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/format%20xfs.png)
+
 -	Ensure there are 3 Logical Volumes. lv-opt lv-apps, and lv-logs
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/123636af62cf9854ec71bc0b21e1687b1952d162/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/lvcreate%20apps,logs,opt.png)
+
 3.	Create mount points on /mnt directory for the logical volumes as follow:
 Mount lv-apps on /mnt/apps – To be used by webservers
 Mount lv-logs on /mnt/logs – To be used by webserver logs
