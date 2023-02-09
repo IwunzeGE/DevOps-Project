@@ -31,9 +31,13 @@ It is important to know what storage solution is suitable for what use cases, fo
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/123636af62cf9854ec71bc0b21e1687b1952d162/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/lvcreate%20apps,logs,opt.png)
 
 3.	Create mount points on /mnt directory for the logical volumes as follow:
-Mount lv-apps on /mnt/apps – To be used by webservers
+```Mount lv-apps on /mnt/apps – To be used by webservers
 Mount lv-logs on /mnt/logs – To be used by webserver logs
 Mount lv-opt on /mnt/opt – To be used by Jenkins server in the next project
+```
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/d02ae2a89b6729382b23527a3e219f08137e90ec/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/mkdir.png)
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/d02ae2a89b6729382b23527a3e219f08137e90ec/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/mount.png)
+
 4.	Install NFS server, configure it to start on reboot and make sure it is up and running
 ```sudo yum -y update
 sudo yum install nfs-utils -y
