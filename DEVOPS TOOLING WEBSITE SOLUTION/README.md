@@ -147,6 +147,21 @@ sudo setsebool -P httpd_execmem 1
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/3cb3602530a8e23fbda5801d0470507b496447b3/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/fstab%20logs.png)
 
 8.	Fork the tooling source code from [this repo](https://github.com/IwunzeGE/DevopsToolingWebsite) to your Github account. (Learn how to fork a repo [here](https://youtu.be/f5grYMXbAV0))
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/3c918a8b0627979a763769c5c7d9e36c5d1e4dda/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/git%20clone.png)
+ 
 9.	Deploy the tooling website’s code to the Webserver. Ensure that the html folder from the repository is deployed to /var/www/html
 
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/e0e209d1d8cd9ebacadfaa803e56383f07819c3a/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/cp%20html.png)
+ 
+**Note 1: Do not forget to open TCP port 80 on the Web Server.**
+**Note 2: If you encounter 403 Error – check permissions to your /var/www/html folder and also disable SELinux `sudo setenforce 0`**
+**To make this change permanent – open following config file `sudo vi /etc/sysconfig/selinux` and set SELINUX=disabled then restart httpd.**
+ ![a](https://github.com/IwunzeGE/DevOps-Project/blob/3c918a8b0627979a763769c5c7d9e36c5d1e4dda/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/se%20disabled.png)
+
+10.	Update the website’s configuration to connect to the database (in /var/www/html/functions.php file)
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/3c918a8b0627979a763769c5c7d9e36c5d1e4dda/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/sss.png)
+
+Apply tooling-db.sql script to your database using this command mysql -h <databse-private-ip> -u <db-username> -p <db-name> < tooling-db.sql
+![a](
+
