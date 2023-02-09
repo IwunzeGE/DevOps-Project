@@ -51,5 +51,25 @@ Mount lv-opt on /mnt/opt – To be used by Jenkins server in Project 8
 
 ** Note: It is important to know what storage solution is suitable for what use cases, for this – you need to answer the following questions: what data will be stored, in what format, how this data will be accessed, by whom, from where, how frequently, etc. Based on this you will be able to choose the right storage system for your solution.**
 
+```
+sudo yum -y update
 
+sudo yum install nfs-utils -y
+
+sudo systemctl start nfs-server.service
+
+sudo systemctl enable nfs-server.service
+
+sudo systemctl status nfs-server.service
+
+
+``
+```
+``
+`
+`
+
+`
+
+`
 
