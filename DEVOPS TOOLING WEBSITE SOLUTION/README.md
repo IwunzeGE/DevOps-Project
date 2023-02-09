@@ -45,3 +45,53 @@ sudo systemctl start nfs-server.service
 sudo systemctl enable nfs-server.service
 sudo systemctl status nfs-server.service
 ```
+5.	Export the mounts for webservers’ subnet CIDR to connect as clients. For simplicity, you will install all three Web Servers inside the same subnet, but in the production set-up, you would probably want to separate each tier inside its own subnet for a higher level of security.
+
+To check your subnet cidr – open your EC2 details in the AWS web console and locate the ‘Networking’ tab and open a Subnet link:
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/b5c049f898bad3b63444ac15fcb8a21a5509e357/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/ipv4%20cidr1.png)
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/b5c049f898bad3b63444ac15fcb8a21a5509e357/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/ipv4%20cidr2.png)
+
+
+Make sure we set up permission that will allow our Web servers to read, write and execute files on NFS:
+```sudo chown -R nobody: /mnt/apps
+sudo chown -R nobody: /mnt/logs
+sudo chown -R nobody: /mnt/opt
+ 
+sudo chmod -R 777 /mnt/apps
+sudo chmod -R 777 /mnt/logs
+sudo chmod -R 777 /mnt/opt
+ ```
+`sudo systemctl restart nfs-server.service`
+
+Configure access to NFS for clients within the same subnet (example of Subnet CIDR – 172.31.32.0/20 ):
+
+`sudo nano /etc/exports`
+ 
+```/mnt/apps <Subnet-CIDR>(rw,sync,no_all_squash,no_root_squash)
+/mnt/logs <Subnet-CIDR>(rw,sync,no_all_squash,no_root_squash)
+/mnt/opt <Subnet-CIDR>(rw,sync,no_all_squash,no_root_squash)
+```
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/b5c049f898bad3b63444ac15fcb8a21a5509e357/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/etc-exports.png)
+
+sudo exportfs -arv
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/b5c049f898bad3b63444ac15fcb8a21a5509e357/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/export-arv.png)
+
+6.	Check which port is used by NFS and open it using Security Groups (add new Inbound Rule)
+`rpcinfo -p | grep nfs`
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/b5c049f898bad3b63444ac15fcb8a21a5509e357/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/rpcinfo.png)
+
+**Important note:** In order for NFS server to be accessible from your client, you must also open following ports: TCP 111, UDP 111, UDP 2049.
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/b5c049f898bad3b63444ac15fcb8a21a5509e357/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/inbound%20rules.png)
+
+## STEP 2 — CONFIGURE THE DATABASE SERVER
+By now you should know how to install and configure a MySQL DBMS to work with remote Web Server
+1.	Install MySQL server
+2.	Create a database and name it tooling
+3.	Create a database user and name it webaccess
+4.	Grant permission to webaccess user on tooling database to do anything only from the webservers subnet cidr
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/b5c049f898bad3b63444ac15fcb8a21a5509e357/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/database.png)
+
