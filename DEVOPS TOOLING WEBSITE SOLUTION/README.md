@@ -163,7 +163,9 @@ sudo setsebool -P httpd_execmem 1
 
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/3c918a8b0627979a763769c5c7d9e36c5d1e4dda/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/sss.png)
 
-Apply tooling-db.sql script to your database using this command mysql -h <databse-private-ip> -u <db-username> -p <db-name> < tooling-db.sql
+Iinstall mysql-client `sudo yum install mysql`
+ 
+Apply tooling-db.sql script to your database using this command `mysql -h <databse-private-ip> -u <db-username> -p <db-name> < tooling-db.sql`
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/d2d0af26f3df126086015fe37706034485650406/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/db%20tooling%20script.png)
  
 Confirm if this worked in the DB-Server
@@ -180,7 +182,3 @@ INSERT INTO ‘users’ (‘id’, ‘username’, ‘password’, ’email’, 
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/d2d0af26f3df126086015fe37706034485650406/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/final%20webpage.png)
  
 **Congratulations! We have just implemented a web solution for a DevOps team using LAMP stack with remote Database and NFS servers.**
-
-          
-                                                                                                                                            
-
