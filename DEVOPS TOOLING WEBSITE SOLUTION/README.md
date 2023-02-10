@@ -160,8 +160,27 @@ sudo setsebool -P httpd_execmem 1
  ![a](https://github.com/IwunzeGE/DevOps-Project/blob/3c918a8b0627979a763769c5c7d9e36c5d1e4dda/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/se%20disabled.png)
 
 10.	Update the website’s configuration to connect to the database (in /var/www/html/functions.php file)
+
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/3c918a8b0627979a763769c5c7d9e36c5d1e4dda/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/sss.png)
 
 Apply tooling-db.sql script to your database using this command mysql -h <databse-private-ip> -u <db-username> -p <db-name> < tooling-db.sql
-![a](
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/d2d0af26f3df126086015fe37706034485650406/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/db%20tooling%20script.png)
+ 
+Confirm if this worked in the DB-Server
+                                                                                                         
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/d2d0af26f3df126086015fe37706034485650406/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/check%20db%20script.png)
+                                                                                                         11.	Create in MySQL a new admin user with username: myuser and password: password:
+INSERT INTO ‘users’ (‘id’, ‘username’, ‘password’, ’email’, ‘user_type’, ‘status’) VALUES
+-> (1, ‘myuser’, ‘5f4dcc3b5aa765d61d8327deb882cf99’, ‘user@mail.com’, ‘admin’, ‘1’);
+
+12.	Open the website in your browser http://<Web-Server-Public-IP-Address-or-Public-DNS-Name>/index.php and make sure you can login into the website with myuser user.
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/d2d0af26f3df126086015fe37706034485650406/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/tooling%20page.png)
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/d2d0af26f3df126086015fe37706034485650406/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/insert%20login%20details.png)
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/d2d0af26f3df126086015fe37706034485650406/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/final%20webpage.png)
+ 
+**Congratulations! We have just implemented a web solution for a DevOps team using LAMP stack with remote Database and NFS servers.**
+
+          
+                                                                                                                                            
 
