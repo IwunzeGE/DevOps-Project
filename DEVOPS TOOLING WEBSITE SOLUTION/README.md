@@ -116,7 +116,7 @@ During the next steps we will do following:
 `sudo vi /etc/fstab`
 add following line
 <NFS-Server-Private-IP-Address>:/mnt/apps /var/www nfs defaults 0 0
-1[a](https://github.com/IwunzeGE/DevOps-Project/blob/3cb3602530a8e23fbda5801d0470507b496447b3/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/fstab.png)
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/3cb3602530a8e23fbda5801d0470507b496447b3/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/images/fstab.png)
  
 5.	Install Remi’s repository, Apache and PHP
  
