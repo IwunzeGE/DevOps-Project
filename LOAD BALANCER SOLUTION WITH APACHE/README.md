@@ -100,11 +100,12 @@ You can also study and try other methods, like [bybusyness](https://httpd.apache
 `http://<Load-Balancer-Public-IP-Address-or-Public-DNS-Name>/index.php`
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/ed5fc4ac756df1328ac5dc81612ff95c40c7c8a4/LOAD%20BALANCER%20SOLUTION%20WITH%20APACHE/images/page.png)
 **Note:** If in [the previous project](https://github.com/IwunzeGE/DevOps-Project/blob/main/DEVOPS%20TOOLING%20WEBSITE%20SOLUTION/README.md) you mounted /var/log/httpd/ from your Web Servers to the NFS server – unmount them and make sure that each Web Server has its own log directory.
-`sudo umount -f /var/log/httpd
+`sudo umount -f /var/log/httpd`
 
 Open two ssh/Putty consoles for both Web Servers and run the following command:
 `sudo tail -f /var/log/httpd/access_log`
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/ed5fc4ac756df1328ac5dc81612ff95c40c7c8a4/LOAD%20BALANCER%20SOLUTION%20WITH%20APACHE/images/logs.png)
+
 Try to refresh your browser page `http://<Load-Balancer-Public-IP-Address-or-Public-DNS-Name>/index.php` several times and ensure both servers receive HTTP GET requests from your LB – new records must appear in each server’s log file. The number of requests to each server will be approximately the same since we set loadfactor to the same value for both servers – it means that traffic will be distributed evenly between them.
 
 **OBSERVE THE NEW POST AND GET REQUESTS AFTER I REFREDHED THE PAGE FROM MY BROWSER**
