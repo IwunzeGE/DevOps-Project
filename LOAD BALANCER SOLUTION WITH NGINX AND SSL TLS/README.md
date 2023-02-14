@@ -134,7 +134,8 @@ To do so, lets edit the crontab file with the following command:
 `crontab -e`
 
 Add following line:
-```* */12 * * *   root /usr/bin/certbot renew > /dev/null 2>&1
+```
+* */12 * * *   root /usr/bin/certbot renew > /dev/null 2>&1
 ```
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/af44ff86f3574255870b9ccba2c186d3529860f5/LOAD%20BALANCER%20SOLUTION%20WITH%20NGINX%20AND%20SSL%20TLS/images/cron%20job.png)
 
