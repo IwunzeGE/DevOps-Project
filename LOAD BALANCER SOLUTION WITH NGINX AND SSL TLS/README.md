@@ -21,12 +21,14 @@ Your target architecture will look like this:
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/af44ff86f3574255870b9ccba2c186d3529860f5/LOAD%20BALANCER%20SOLUTION%20WITH%20NGINX%20AND%20SSL%20TLS/images/server%200.png)
 
 ## CONFIGURE NGINX AS A LOAD BALANCER
-You can either uninstall Apache from the existing Load Balancer server, or create a fresh installation of Linux for Nginx.
+
 1.	Create an EC2 VM based on Ubuntu Server 20.04 LTS and name it Nginx LB (do not forget to open TCP port 80 for HTTP connections, also open TCP port 443 – this port is used for secured HTTPS connections)
+
 2.	Update /etc/hosts file for local DNS with Web Servers’ names (e.g. Web1 and Web2) and their local IP addresses 
 `sudo nano /etc/hosts`
 
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/af44ff86f3574255870b9ccba2c186d3529860f5/LOAD%20BALANCER%20SOLUTION%20WITH%20NGINX%20AND%20SSL%20TLS/images/etc%20host.png)
+
 3.	Install and configure Nginx as a load balancer to point traffic to the resolvable DNS names of the webservers
 
 Update the instance and Install Nginx
@@ -36,14 +38,14 @@ Update the instance and Install Nginx
 
 Configure Nginx LB using Web Servers’ names defined in /etc/hosts
 
-*Hint: Read this blog to read about /etc/host*
+*Hint: Read this [blog](https://linuxize.com/post/how-to-edit-your-hosts-file/) to read about /etc/host*
 
 Open the default nginx configuration file 
 `sudo nano /etc/nginx/nginx.conf`
 
 insert following configuration into http section
-
-```upstream myproject {
+```
+upstream myproject {
     server Web1 weight=5;
     server Web2 weight=5;
   }
@@ -56,6 +58,7 @@ server {
     }
   }
 ```
+
 comment out this line
 **#include /etc/nginx/sites-enabled/*;**
 
