@@ -64,7 +64,8 @@ In this part, you will learn how to configure a simple Jenkins job/project (thes
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/4ad6cf4f7fcf8e72eecd002fe35df1ad7fca7c5a/DEPLOYMENT%20AUTOMATION%20WITH%20JENKINS%20CI/images/webhook3.png)
 
 2.	Go to Jenkins web console, click "New Item" and create a "Freestyle project"
-![a](new job.png](https://github.com/IwunzeGE/DevOps-Project/blob/b4437c432b9fb8041c3df75554e87ed6dd28452a/DEPLOYMENT%20AUTOMATION%20WITH%20JENKINS%20CI/images/new%20job.png)
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/b4437c432b9fb8041c3df75554e87ed6dd28452a/DEPLOYMENT%20AUTOMATION%20WITH%20JENKINS%20CI/images/new%20job.png)
+
 **NOTE: YOU MIGHT HIT THIS ISSUE**
 ![A](https://github.com/IwunzeGE/DevOps-Project/blob/b4437c432b9fb8041c3df75554e87ed6dd28452a/DEPLOYMENT%20AUTOMATION%20WITH%20JENKINS%20CI/images/blocker1.png)
 
