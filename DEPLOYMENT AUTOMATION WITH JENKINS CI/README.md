@@ -64,4 +64,33 @@ In this part, you will learn how to configure a simple Jenkins job/project (thes
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/4ad6cf4f7fcf8e72eecd002fe35df1ad7fca7c5a/DEPLOYMENT%20AUTOMATION%20WITH%20JENKINS%20CI/images/webhook3.png)
 
 2.	Go to Jenkins web console, click "New Item" and create a "Freestyle project"
-![a](new job.png)
+![a](new job.png](https://github.com/IwunzeGE/DevOps-Project/blob/b4437c432b9fb8041c3df75554e87ed6dd28452a/DEPLOYMENT%20AUTOMATION%20WITH%20JENKINS%20CI/images/new%20job.png)
+**NOTE: YOU MIGHT HIT THIS ISSUE**
+![A](https://github.com/IwunzeGE/DevOps-Project/blob/b4437c432b9fb8041c3df75554e87ed6dd28452a/DEPLOYMENT%20AUTOMATION%20WITH%20JENKINS%20CI/images/blocker1.png)
+
+**FIX**
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/b4437c432b9fb8041c3df75554e87ed6dd28452a/DEPLOYMENT%20AUTOMATION%20WITH%20JENKINS%20CI/images/fix1.png)
+
+In the configuration of your Jenkins freestyle project choose Git repository, and provide there the link to your Tooling GitHub repository and credentials (user/password) so Jenkins could access files in the repository.
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/b4437c432b9fb8041c3df75554e87ed6dd28452a/DEPLOYMENT%20AUTOMATION%20WITH%20JENKINS%20CI/images/psswd%20and%20usrname%20git.png)
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/b4437c432b9fb8041c3df75554e87ed6dd28452a/DEPLOYMENT%20AUTOMATION%20WITH%20JENKINS%20CI/images/repo%20url.png)
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/b4437c432b9fb8041c3df75554e87ed6dd28452a/DEPLOYMENT%20AUTOMATION%20WITH%20JENKINS%20CI/images/credenitals%20add.png)
+
+Save the configuration and let us try to run the build. For now, we can only do it manually.
+Click the "Build Now" button, if you have configured everything correctly, the build will be successful and you will see it under #1
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/b4437c432b9fb8041c3df75554e87ed6dd28452a/DEPLOYMENT%20AUTOMATION%20WITH%20JENKINS%20CI/images/build.png)
+
+You can open the build and check in "Console Output" if it has run successfully.
+If so – congratulations! You have just made your very first Jenkins build!
+But this build does not produce anything and it runs only when we trigger it manually. Let us fix it.
+
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/b4437c432b9fb8041c3df75554e87ed6dd28452a/DEPLOYMENT%20AUTOMATION%20WITH%20JENKINS%20CI/images/console%20output.png)
+
+3.	Click "Configure" your job/project and add these two configurations. Configure triggering the job from the GitHub webhook:
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/b4437c432b9fb8041c3df75554e87ed6dd28452a/DEPLOYMENT%20AUTOMATION%20WITH%20JENKINS%20CI/images/build%20triggers.png)
+
+Configure "Post-build Actions" to archive all the files – files resulting from a build are called "artifacts".
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/b4437c432b9fb8041c3df75554e87ed6dd28452a/DEPLOYMENT%20AUTOMATION%20WITH%20JENKINS%20CI/images/archive.png)
+
