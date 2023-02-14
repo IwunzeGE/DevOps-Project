@@ -25,17 +25,41 @@ Here is what your updated architecture will look like upon completion of this pr
 `sudo apt install default-jdk-headless`
 3.	Install Jenkins
 
-`wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -`
-
-```sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > \
-    /etc/apt/sources.list.d/jenkins.list'```
+```wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > \
+    /etc/apt/sources.list.d/jenkins.list
+sudo apt update
+sudo apt-get install jenkins
+```
     
-`sudo apt update`
-
-`sudo apt-get install jenkins`
-
 Make sure Jenkins is up and running
 `sudo systemctl status jenkins`
-4.	By default Jenkins server uses TCP port 8080 – open it by creating a new Inbound Rule in your EC2 Security Group
+    ![a](https://github.com/IwunzeGE/DevOps-Project/blob/4ad6cf4f7fcf8e72eecd002fe35df1ad7fca7c5a/DEPLOYMENT%20AUTOMATION%20WITH%20JENKINS%20CI/images/systemctl%20status.png)
 
+4.	By default Jenkins server uses TCP port 8080 – open it by creating a new Inbound Rule in your EC2 Security Group
+ ![a](https://github.com/IwunzeGE/DevOps-Project/blob/4ad6cf4f7fcf8e72eecd002fe35df1ad7fca7c5a/DEPLOYMENT%20AUTOMATION%20WITH%20JENKINS%20CI/images/custom%20tcp%208080.png)
+
+5.	Perform initial Jenkins setup.
+- From your browser access `http://<Jenkins-Server-Public-IP-Address-or-Public-DNS-Name>:8080`
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/4ad6cf4f7fcf8e72eecd002fe35df1ad7fca7c5a/DEPLOYMENT%20AUTOMATION%20WITH%20JENKINS%20CI/images/jenkins%20login%20page.png)
+- You will be prompted to provide a default admin password
+
+Retrieve it from your server:
+`sudo cat /var/lib/jenkins/secrets/initialAdminPassword`
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/4ad6cf4f7fcf8e72eecd002fe35df1ad7fca7c5a/DEPLOYMENT%20AUTOMATION%20WITH%20JENKINS%20CI/images/sudo%20cat%20admin%20password.png)
+    
+- Then you will be asked which plugings to install – choose suggested plugins.
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/4ad6cf4f7fcf8e72eecd002fe35df1ad7fca7c5a/DEPLOYMENT%20AUTOMATION%20WITH%20JENKINS%20CI/images/custtomize%20jenkins.png)
+
+- Once plugin installation is done – create an admin user and you will get your Jenkins server address.
+The installation is completed!
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/4ad6cf4f7fcf8e72eecd002fe35df1ad7fca7c5a/DEPLOYMENT%20AUTOMATION%20WITH%20JENKINS%20CI/images/create%20admin%20user.png)
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/4ad6cf4f7fcf8e72eecd002fe35df1ad7fca7c5a/DEPLOYMENT%20AUTOMATION%20WITH%20JENKINS%20CI/images/jenkins%20ready.png)
+ 
+### Step 2 – Configure Jenkins to retrieve source codes from GitHub using Webhooks
+In this part, you will learn how to configure a simple Jenkins job/project (these two terms can be used interchangeably). This job will be triggered by GitHub webhooks and will execute a ‘build’ task to retrieve codes from GitHub and store it locally on Jenkins server.
+1.	Enable webhooks in your GitHub repository settings
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/4ad6cf4f7fcf8e72eecd002fe35df1ad7fca7c5a/DEPLOYMENT%20AUTOMATION%20WITH%20JENKINS%20CI/images/webhook1.png)
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/4ad6cf4f7fcf8e72eecd002fe35df1ad7fca7c5a/DEPLOYMENT%20AUTOMATION%20WITH%20JENKINS%20CI/images/webhook2.png)
+![a](https://github.com/IwunzeGE/DevOps-Project/blob/4ad6cf4f7fcf8e72eecd002fe35df1ad7fca7c5a/DEPLOYMENT%20AUTOMATION%20WITH%20JENKINS%20CI/images/webhook3.png)
 
