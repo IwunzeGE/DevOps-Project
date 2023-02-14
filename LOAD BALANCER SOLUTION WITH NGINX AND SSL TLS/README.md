@@ -24,15 +24,16 @@ Your target architecture will look like this:
 You can either uninstall Apache from the existing Load Balancer server, or create a fresh installation of Linux for Nginx.
 1.	Create an EC2 VM based on Ubuntu Server 20.04 LTS and name it Nginx LB (do not forget to open TCP port 80 for HTTP connections, also open TCP port 443 – this port is used for secured HTTPS connections)
 2.	Update /etc/hosts file for local DNS with Web Servers’ names (e.g. Web1 and Web2) and their local IP addresses 
-`sudo nano /etc/hostd`
+`sudo nano /etc/hosts`
+
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/af44ff86f3574255870b9ccba2c186d3529860f5/LOAD%20BALANCER%20SOLUTION%20WITH%20NGINX%20AND%20SSL%20TLS/images/etc%20host.png)
 3.	Install and configure Nginx as a load balancer to point traffic to the resolvable DNS names of the webservers
 
 Update the instance and Install Nginx
 
-```sudo apt update
-sudo apt install nginx
-```
+`sudo apt update`
+`sudo apt install nginx`
+
 Configure Nginx LB using Web Servers’ names defined in /etc/hosts
 
 *Hint: Read this blog to read about /etc/host*
@@ -56,7 +57,7 @@ server {
   }
 ```
 comment out this line
-#       include /etc/nginx/sites-enabled/*;
+**#include /etc/nginx/sites-enabled/*;**
 
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/af44ff86f3574255870b9ccba2c186d3529860f5/LOAD%20BALANCER%20SOLUTION%20WITH%20NGINX%20AND%20SSL%20TLS/images/etx%20nginx.png)
 
