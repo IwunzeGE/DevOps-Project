@@ -99,8 +99,7 @@ Check that your Web Servers can be reached from your browser using new domain na
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/af44ff86f3574255870b9ccba2c186d3529860f5/LOAD%20BALANCER%20SOLUTION%20WITH%20NGINX%20AND%20SSL%20TLS/images/login.png)
 
 4.	Configure Nginx to recognize your new domain name
-Update your nginx.conf with server_name www.<your-domain-name.com> instead of ```server_name www.domain.com
-```
+Update your nginx.conf with `server_name www.<your-domain-name.com>` instead of `server_name www.domain.com`
 
 5.	Install certbot and request for an SSL/TLS certificate
 Make sure snapd service is active and running
