@@ -86,7 +86,11 @@ Confirm the key has been added with the command below, you should see the name o
 ssh-add -l
 
 Now, ssh into your Jenkins-Ansible server using ssh-agent
-ssh -A ubuntu@public-ip
+`ssh -A ubuntu@public-ip`
+
+![ssh](https://user-images.githubusercontent.com/110903886/220225624-7f183cbf-3e0e-4f7c-b7a7-cb5db59d88ed.png)
+
+![ssh check](https://user-images.githubusercontent.com/110903886/220227568-967653a6-d675-4ec4-9ec6-84b191a9fdbb.png)
 
 **Also notice, that your Load Balancer user is ubuntu and user for RHEL-based servers is ec2-user.**
   
@@ -107,5 +111,94 @@ Update your inventory/dev.yml file with this snippet of code:
 <Load-Balancer-Private-IP-Address> ansible_ssh_user='ubuntu'
 ```
 
-![ssh](https://user-images.githubusercontent.com/110903886/220225624-7f183cbf-3e0e-4f7c-b7a7-cb5db59d88ed.png)
+## CREATE A COMMON PLAYBOOK
+### Step 5 – Create a Common Playbook
+It is time to start giving Ansible the instructions on what you needs to be performed on all servers listed in inventory/dev.
+In common.yml playbook you will write configuration for repeatable, re-usable, and multi-machine tasks that is common to systems within the infrastructure.
 
+Update your playbooks/common.yml file with following code:
+
+```
+---
+- name: update web and nfs servers
+  hosts: webservers, nfs
+  remote_user: ec2-user
+  become: yes
+  become_user: root
+  tasks:
+    - name: ensure wireshark is at the latest version
+      yum:
+        name: wireshark
+        state: latest
+
+- name: update LB and DB server
+  hosts: lb, db
+  remote_user: ubuntu
+  become: yes
+  become_user: root
+  tasks:
+    - name: Update apt repo
+      apt: 
+        update_cache: yes
+
+    - name: ensure wireshark is at the latest version
+      apt:
+        name: wireshark
+        state: latest
+```
+
+Examine the code above and try to make sense out of it. This playbook is divided into two parts, each of them is intended to perform the same task: install wireshark utility (or make sure it is updated to the latest version) on your RHEL 8 and Ubuntu servers. It uses root user to perform this task and respective package manager: yum for RHEL 8 and apt for Ubuntu.
+
+Feel free to update this playbook with following tasks:
+- Create a directory and a file inside it
+- Change timezone on all servers
+- Run some shell script etc
+  
+For a better understanding of Ansible playbooks – watch this [video](https://youtu.be/ZAdJ7CdN7DY) from RedHat and read this [article](https://www.redhat.com/en/topics/automation/what-is-an-ansible-playbook).
+
+## Step 6 – Update GIT with the latest code
+Now all of your directories and files live on your machine and you need to push changes made locally to GitHub. It is important to learn how to collaborate with help of GIT. In many organisations there is a development rule that do not allow to deploy any code before it has been reviewed by an extra pair of eyes – it is also called "Four eyes principle". Now you have a separate branch, you will need to know how to raise a Pull Request (PR), get your branch peer reviewed and merged to the master branch.
+
+Commit your code into GitHub:
+16.	use git commands to add, commit and push your branch to GitHub.
+
+`git status`
+
+`git add <selected files>`
+
+`git commit -m "commit message"`
+  
+17.	Create a Pull request (PR)
+18.	Head back on your terminal, checkout from the feature branch into the master, and pull down the latest changes.
+
+![git pull](https://user-images.githubusercontent.com/110903886/220227717-7342a40e-2490-4cb4-87f0-7055847474d2.png)
+
+
+Once your code changes appear in master branch – Jenkins will do its job and save all the files (build artifacts) to `/var/lib/jenkins/jobs/ansible/builds/<build_number>/archive/ directory on Jenkins-Ansible server.`
+
+![jenkins build](https://user-images.githubusercontent.com/110903886/220227650-23845724-b715-4515-abb5-6da683b1ec27.png)
+
+![confirm jenkins build](https://user-images.githubusercontent.com/110903886/220227783-3a3cb7fe-e947-4637-bf15-fdce45c951ca.png)
+
+## RUN FIRST ANSIBLE TEST
+### Step 7 – Run first Ansible test
+Now, it is time to execute ansible-playbook command and verify if your playbook actually works:
+  
+`cd /var/lib/jenkins/jobs/ansible/builds/4/archive`
+ 
+`ansible-playbook -i inventory/dev.yml play
+
+![ansible i](https://user-images.githubusercontent.com/110903886/220227941-049d2edf-a1b1-423c-a22a-e7f600fda1bd.png)
+books/common.yml`
+  
+You can go to each of the servers and check if wireshark has been installed by running which wireshark or wireshark --version
+  
+![wireshark 1](https://user-images.githubusercontent.com/110903886/220228070-ef73cdd3-2105-4bb6-950c-6f7d959d6d47.png)
+
+![wireshark 2](https://user-images.githubusercontent.com/110903886/220228076-bf7b70fb-604d-4052-92e0-c73991c17aa2.png)
+
+Your updated with Ansible architecture now looks like this:
+
+![server 1](https://user-images.githubusercontent.com/110903886/220228156-2d17da01-31f0-42f9-8b42-5286a347f6e0.png)
+
+## Congratulations!! You have just automated your routine tasks by implementing your first Ansible project! 
