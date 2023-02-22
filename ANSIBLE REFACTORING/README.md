@@ -199,7 +199,7 @@ After removing unnecessary directories and files, the roles structure should loo
 **NOTE: TO COPY YOUR KEYPAIR FROM YOUR LOCAL MACHINE INTO YOUR EC2 INSTANCE USE SCP**
 
 - cd into the folder that you have your kepair located
-- then run `scp -i <"Name-of-keypair-used-to-ssh-into-the-instance"> <Name-of-kepair-that-you-want-to-copy> <username@public-IP:><path-to-copy-to/>
+- then run `scp -i <"Name-of-keypair-used-to-ssh-into-the-instance"> <Name-of-kepair-that-you-want-to-copy> <username@public-IP:><path-to-copy-to/>`
 
 ![scp](https://user-images.githubusercontent.com/110903886/220603541-635683b9-fd49-41c4-a9ef-db07f3ee1dcb.png)
 
