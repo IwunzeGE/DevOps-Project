@@ -43,6 +43,8 @@ Before we begin, let us make some changes to our Jenkins job – now every new c
 
 If both Jenkins jobs have completed one after another – you shall see your files inside /home/ubuntu/ansible-config-artifact directory and it will be updated with every commit to your master branch. Now your Jenkins pipeline is more neat and clean.
 
+![check1](https://user-images.githubusercontent.com/110903886/220601065-9775d48d-052b-4a09-9389-0bdbdc7da06a.png)
+
 ## REFACTOR ANSIBLE CODE BY IMPORTING OTHER PLAYBOOKS INTO SITE.YML
 
 ### Step 2 – Refactor Ansible code by importing other playbooks into site.yml
@@ -79,6 +81,8 @@ Your folder structure should look like this;
 └── playbooks
     └── site.yml
 ```
+
+![check 2](https://user-images.githubusercontent.com/110903886/220601338-c1f15392-cbd0-435e-84d6-3c79e0f80723.png)
 
 12.	Run ansible-playbook command against the dev environment
 Since you need to apply some tasks to your dev servers and wireshark is already installed – you can go ahead and create another playbook under static-assignments and name it common-del.yml. In this playbook, configure deletion of wireshark utility.
@@ -243,3 +247,74 @@ Your main.yml may consist of following tasks:
     path: /var/www/html/html
     state: absent
 ```
+
+## REFERENCE WEBSERVER ROLE
+
+### Step 4 – Reference ‘Webserver’ role
+
+Within the static-assignments folder, create a new assignment for uat-webservers uat-webservers.yml. This is where you will reference the role.
+    
+```
+---
+- hosts: uat-webservers
+  roles:
+     - webserver
+```
+
+Remember that the entry point to our ansible configuration is the site.yml file. Therefore, you need to refer your uat-webservers.yml role inside site.yml.
+
+So, we should have this in site.yml
+    
+```
+---
+- hosts: uat-webservers
+- import_playbook: ../static-assignments/uat-webservers.yml
+```
+
+### Step 5 – Commit & Test
+    
+Commit your changes, create a Pull Request and merge them to master branch, make sure webhook triggered two consequent Jenkins jobs, they ran successfully and copied all the files to your Jenkins-Ansible server into /home/ubuntu/ansible-config-artifact/ directory.
+    
+Now run the playbook against your uat inventory and see what happens:
+
+`cd ansible-config-artifact/` 
+`sudo ansible-playbook -i inventory/uat.yml playbooks/site.yml`
+
+If you get an error, you could do it ALTERNATIVELY.
+
+`cd ansible-config-artifact/` 
+`mkdir ansible` 
+`cd ansible`
+`sudo nano  host.ini`
+    
+Insert the code below;
+
+```
+[uat-webservers]
+<Web1-UAT-Server-Private-IP-Address> ansible_ssh_user='ec2-user' ansible_ssh_private_key_file=<path-to-pem-file>
+<Web2-UAT-Server-Private-IP-Address> ansible_ssh_user='ec2-user' ansible_ssh_private_key_file=<path-to-pem-file>
+```
+    
+![nano host ini](https://user-images.githubusercontent.com/110903886/220599552-f6a73dcc-e0b6-4d3c-a4dd-c6e980b7d0a7.png)
+
+Ping the inventory host.ini `ansible uat-webservers -m ping -i ansible/host.ini` to see if its works.
+
+![host ini](https://user-images.githubusercontent.com/110903886/220599717-c8350baa-09a8-4575-8721-cd40ff40eee7.png)
+
+Now run the playbook against your host.ini inventory and see what happens: `ansible-playbook -i ansible/host.ini playbooks/site.yml`
+
+![anisble -i 2](https://user-images.githubusercontent.com/110903886/220601462-ead40f36-dfd4-481b-b11e-c6267852e08c.png)
+
+You should be able to see both of your UAT Web servers configured and you can try to reach them from your browser:
+    
+`http://<Web1-UAT-Server-Public-IP-or-Public-DNS-Name>/index.php`
+
+![index php](https://user-images.githubusercontent.com/110903886/220601781-08f4e78d-d6b3-4d6b-99ec-3b640617739d.png)
+
+
+Your Ansible architecture now looks like this:
+
+![server 0](https://user-images.githubusercontent.com/110903886/220601872-f003e407-c9d4-4331-b714-42ca60b092ee.png)
+
+Congratulations!
+You have learned how to deploy and configure UAT Web Servers using Ansible imports and roles!
