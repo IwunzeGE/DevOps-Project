@@ -196,6 +196,12 @@ After removing unnecessary directories and files, the roles structure should loo
 <Web1-UAT-Server-Private-IP-Address> ansible_ssh_user='ec2-user' ansible_ssh_private_key_file=<path-to-pem-file>
 <Web2-UAT-Server-Private-IP-Address> ansible_ssh_user='ec2-user' ansible_ssh_private_key_file=<path-to-pem-file>
 ```
+**NOTE: TO COPY YOUR KEYPAIR FROM YOUR LOCAL MACHINE INTO YOUR EC2 INSTANCE USE SCP**
+
+- cd into the folder that you have your kepair located
+- then run `scp -i <"Name-of-keypair-used-to-ssh-into-the-instance"> <Name-of-kepair-that-you-want-to-copy> <username@public-IP:><path-to-copy-to/>
+
+![scp](https://user-images.githubusercontent.com/110903886/220603541-635683b9-fd49-41c4-a9ef-db07f3ee1dcb.png)
 
 16.	In /etc/ansible/ansible.cfg file uncomment roles_path string and provide a full path to your roles directory roles_path = /home/ubuntu/ansible-config-mgt/roles, so Ansible could know where to find configured roles.
 
@@ -280,7 +286,11 @@ Now run the playbook against your uat inventory and see what happens:
 `cd ansible-config-artifact/` 
 `sudo ansible-playbook -i inventory/uat.yml playbooks/site.yml`
 
-If you get an error, you could do it ALTERNATIVELY.
+If you get an error, 
+    
+![error](https://user-images.githubusercontent.com/110903886/220603986-1673c4a7-45be-44d6-978a-f7624708baa2.png)
+
+You could do it ALTERNATIVELY.
 
 `cd ansible-config-artifact/` 
 `mkdir ansible` 
