@@ -108,7 +108,8 @@ Since you need to apply some tasks to your dev servers and wireshark is already 
       state: absent
       autoremove: yes
       purge: yes
-      autoclean: yes```
+      autoclean: yes
+  ```
       
 update site.yml with - `import_playbook: ../static-assignments/common-del.yml` instead of common.yml and run it against dev servers:
 
