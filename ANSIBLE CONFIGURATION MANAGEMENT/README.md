@@ -186,10 +186,9 @@ Now, it is time to execute ansible-playbook command and verify if your playbook 
   
 `cd /var/lib/jenkins/jobs/ansible/builds/4/archive`
  
-`ansible-playbook -i inventory/dev.yml play
+`ansible-playbook -i inventory/dev.yml playbooks/common.yml`
 
 ![ansible i](https://user-images.githubusercontent.com/110903886/220227941-049d2edf-a1b1-423c-a22a-e7f600fda1bd.png)
-books/common.yml`
   
 You can go to each of the servers and check if wireshark has been installed by running which wireshark or wireshark --version
   
