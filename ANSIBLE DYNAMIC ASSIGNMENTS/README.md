@@ -202,7 +202,9 @@ load_balancer_is_required: true
 ```
   
 ![ansible i 1](https://user-images.githubusercontent.com/110903886/221914166-5c8c4f43-d6da-48b7-8870-6aa784b9de82.png)
-  
+
+![ansible i 3](https://user-images.githubusercontent.com/110903886/221917483-85f8acae-7273-4956-a08c-6562fa0cb82d.png)
+
 ![ansible i 2](https://user-images.githubusercontent.com/110903886/221914206-78d59c4d-0db3-454f-bda8-238ed62c2c06.png)
 
 
