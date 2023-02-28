@@ -159,6 +159,58 @@ git push --set-upstream origin roles-feature
 Now, if you are satisfied with your codes, you can create a Pull Request and merge it to main branch on GitHub.
 
 
+## Load Balancer roles
+  
+We want to be able to choose which Load Balancer to use, Nginx or Apache, so we need to have two roles respectively:
+1.	Nginx
+2.	Apache
+
+![ansible galaxy](https://user-images.githubusercontent.com/110903886/221913014-546f5527-419a-4b78-90af-545df199a9b8.png)
+
+**Important Hints:**
+  
+- Since you cannot use both Nginx and Apache load balancer, you need to add a condition to enable either one – this is where you can make use of variables.
+-	Declare a variable in defaults/main.yml file inside the Nginx and Apache roles. Name each variables enable_nginx_lb and enable_apache_lb respectively.
+-	Set both values to false like this enable_nginx_lb: false and enable_apache_lb: false.
+-	Declare another variable in both roles load_balancer_is_required and set its value to false as well
+-	Update both assignment and site.yml files respectively
+
+loadbalancers.yml file
+
+```
+- hosts: lb
+  roles:
+    - { role: nginx, when: enable_nginx_lb and load_balancer_is_required }
+    - { role: apache, when: enable_apache_lb and load_balancer_is_required }
+```
+  
+site.yml file
+
+```
+    - name: Loadbalancers assignment
+       hosts: lb
+         - import_playbook: ../static-assignments/loadbalancers.yml
+        when: load_balancer_is_required 
+```
+  
+Now you can make use of `env-vars\uat.yml` file to define which loadbalancer to use in UAT environment by setting respective environmental variable to true.
+You will activate load balancer, and enable nginx by setting these in the respective environment’s `env-vars` file.
+
+```
+enable_nginx_lb: true
+load_balancer_is_required: true
+```
+  
+![ansible i 1](https://user-images.githubusercontent.com/110903886/221914166-5c8c4f43-d6da-48b7-8870-6aa784b9de82.png)
+  
+![ansible i 2](https://user-images.githubusercontent.com/110903886/221914206-78d59c4d-0db3-454f-bda8-238ed62c2c06.png)
 
 
+The same must work with apache LB, so you can switch it by setting respective environmental variable to true and other to false.
+
+To test this, you can update inventory for each environment and run Ansible against each environment.
+
+Congratulations!
+
+You have learned and practiced how to use Ansible configuration management tool to prepare UAT environment for Tooling web solution.
 
