@@ -7,15 +7,14 @@
 - Continuous Integration (CI) Tool: Jenkins
 - Version Control System (VCS): Git
 - Containerization: Docker
+- Jenkins
+- Ancible
 
 ## Prerequisites 🧰
 Before you start, make sure you have the following tools installed on your system:
 - An account with any cloud service provider - AWS, Azure, GCP, etc.
 - Putty, powershell, gitbash or any terminal based software.
 - A screen snipping tool
-- Docker
-- MongDB
-- Jenkins
 
 ## List of the Projects 📚
 1. Setting up a LAMP stack
@@ -25,3 +24,10 @@ Before you start, make sure you have the following tools installed on your syste
 5. Client-Server architecture
 6. Three-tier architecture with wordpress
 7. Devops tooling website solution
+8. Load balancer solution with apache
+9. Tooling website deployment automation with continous integration - Jenkins 
+10. Load balancer solution with NGINX
+11. Ancible configuration management - Automate project 7-10 
+12. Ancible refactoring and static assignments (import and roles)
+13. Ancible dynamic assignments (include) and community roles.
+14. 
