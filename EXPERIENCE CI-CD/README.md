@@ -175,5 +175,14 @@ pipeline {
 
 ![pipepline cofig2](https://user-images.githubusercontent.com/110903886/224506265-28ed181c-d8a8-42bb-a359-56cc41b09ac7.png)
 
+![pipepline cofig3](https://user-images.githubusercontent.com/110903886/224506476-86c1a6d1-4c24-4ece-b692-5af9789cfa7c.png)
+
+![pipepline cofig4](https://user-images.githubusercontent.com/110903886/224506486-b1550b2b-aa2c-4e29-98fe-f5bc5acffe22.png)
+
+
+
+
+
+
 
 
