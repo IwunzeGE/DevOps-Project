@@ -224,4 +224,16 @@ Let us see this in action.
 
 ![blueocean2](https://user-images.githubusercontent.com/110903886/224506838-659bda30-cdae-495b-92e0-4eabe819904f.png)
 
+5. Add more stages into the Jenkins file to simulate below phases. (Just add an echo command like we have in build and test stages)
+   - Package 
+   - Deploy 
+   - Clean up
+   
+6. Verify in Blue Ocean that all the stages are working, then merge your feature branch to the main branch
+
+![added more stages to branch](https://user-images.githubusercontent.com/110903886/224507096-2a2f010f-73d0-446a-84a8-975aa2086a7a.png)
+
+7. Eventually, your main branch should have a successful pipeline like this in blue ocean.
+
+![added more stages to main](https://user-images.githubusercontent.com/110903886/224507124-853c8bef-ad2e-41b2-aa39-9fce57b65c94.png)
 
