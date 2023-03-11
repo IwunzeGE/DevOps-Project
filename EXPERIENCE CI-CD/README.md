@@ -175,6 +175,8 @@ pipeline {
 
 ![pipepline cofig2](https://user-images.githubusercontent.com/110903886/224506265-28ed181c-d8a8-42bb-a359-56cc41b09ac7.png)
 
+![pipeline build](https://user-images.githubusercontent.com/110903886/224507239-e949b681-2c33-4e85-ad1d-993a87c2a80e.png)
+
 This will trigger a build and you will be able to see the effect of our basic Jenkinsfile configuration by going through the console output of the build.
 
 ![pipepline cofig3](https://user-images.githubusercontent.com/110903886/224506476-86c1a6d1-4c24-4ece-b692-5af9789cfa7c.png)
@@ -236,4 +238,42 @@ Let us see this in action.
 7. Eventually, your main branch should have a successful pipeline like this in blue ocean.
 
 ![added more stages to main](https://user-images.githubusercontent.com/110903886/224507124-853c8bef-ad2e-41b2-aa39-9fce57b65c94.png)
+
+
+## RUNNING ANSIBLE PLAYBOOK FROM JENKINS
+
+Now that you have a broad overview of a typical Jenkins pipeline. Let us get the actual Ansible deployment to work by:
+1.	Installing Ansible on Jenkins Server
+
+```
+sudo yum install ansible -y
+python3 -m pip install --upgrade setuptools
+python3 -m pip install --upgrade pip
+python3 -m pip install PyMySQL
+python3 -m pip install mysql-connector-python
+python3 -m pip install psycopg2-binary
+```
+
+2.	Installing Ansible plugin in Jenkins UI
+
+![install ansible plugin](https://user-images.githubusercontent.com/110903886/224507402-230170d8-2ed0-48c0-a7f9-aa65523500ce.png)
+
+3. Add credentials in Jenkins UI
+
+![jenkins manage credentials0](https://user-images.githubusercontent.com/110903886/224507475-f52cf1e4-87df-4ac7-b723-db66e1da9b55.png)
+
+![jenkins manage credentials1](https://user-images.githubusercontent.com/110903886/224507503-4c0937fd-fdcb-431e-9c08-3a8c935a8fd8.png)
+
+![jenkins manage credentials2](https://user-images.githubusercontent.com/110903886/224507509-05b96bee-d7f1-4fdc-83bb-9dd103a58206.png)
+
+![jenkins manage credentials3](https://user-images.githubusercontent.com/110903886/224507518-207ac6eb-bcc6-4340-b288-58139ec109f4.png)
+
+
+
+
+
+
+
+
+5.	Creating Jenkinsfile from scratch. (Delete all you currently have in there and start all over to get Ansible to run successfully)
 
