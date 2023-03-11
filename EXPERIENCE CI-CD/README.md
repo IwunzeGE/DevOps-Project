@@ -71,6 +71,7 @@ Now go ahead and Add two more roles to ansible:
 2.	Artifactory
 
 ## Configuring the Jenkins Server
+
 - Install jenkins with its dependencies
 
 ```
@@ -138,7 +139,41 @@ To do this,
 
 At this point you may not have a Jenkinsfile in the Ansible repository, so Blue Ocean will attempt to give you some guidance to create one. But we do not need that. We will rather create one ourselves. So, click on Administration to exit the Blue Ocean console.
 
-
 ![administration](https://user-images.githubusercontent.com/110903886/224505887-c20d8a49-7d6d-48ff-bc67-0cabfa1fe7ab.png)
+
+- Create our Jenkinsfile
+
+Inside the Ansible project, create a new directory deploy and start a new file Jenkinsfile inside the directory.
+
+![jenkinsfile created](https://user-images.githubusercontent.com/110903886/224506029-a4999ad9-9b60-409a-b444-0f3af67d742e.png)
+
+Add the code snippet below to start building the Jenkinsfile gradually. This pipeline currently has just one stage called Build and the only thing we are doing is using the shell script module to echo Building Stage
+
+```
+pipeline {
+    agent any
+
+  stages {
+    stage('Build') {
+      steps {
+        script {
+          sh 'echo "Building Stage"'
+        }
+      }
+    }
+    }
+}
+```
+
+- Now go back into the Ansible pipeline in Jenkins, and select configure
+
+- Scroll down to Build Configuration section and specify the location of the Jenkinsfile at `deploy/Jenkinsfile`
+
+![pipepline cofig0](https://user-images.githubusercontent.com/110903886/224506267-e54eb851-315d-4531-9bd9-0b15d39e1810.png)
+
+![pipepline cofig1](https://user-images.githubusercontent.com/110903886/224506263-81965df5-bb4b-4155-99fb-757bac51a1dd.png)
+
+![pipepline cofig2](https://user-images.githubusercontent.com/110903886/224506265-28ed181c-d8a8-42bb-a359-56cc41b09ac7.png)
+
 
 
