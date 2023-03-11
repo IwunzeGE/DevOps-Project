@@ -1,7 +1,8 @@
 # EXPERIENCE CONTINUOUS INTEGRATION WITH JENKINS | ANSIBLE | ARTIFACTORY | SONARQUBE | PHP
 
-```
 Ansible Inventory should look like this
+
+```
 ├── ci
 ├── dev
 ├── pentest
@@ -12,7 +13,7 @@ Ansible Inventory should look like this
 ```
 
 
-ci inventory file
+- ci inventory file
 
 ```
 [jenkins]
@@ -28,7 +29,7 @@ ci inventory file
 <Artifact_repository-Private-IP-Address>
 ```
 
-dev Inventory file
+- dev Inventory file
 
 ```
 [tooling]
@@ -48,7 +49,7 @@ ansible_python_interpreter=/usr/bin/python
 <DB-Server-Private-IP-Address>
 ```
 
-pentest inventory file
+- pentest inventory file
 
 ```
 [pentest:children]
@@ -70,7 +71,47 @@ Now go ahead and Add two more roles to ansible:
 2.	Artifactory
 
 ## Configuring the Jenkins Server
+- Install jenkins with its dependencies
 
+```
+sudo wget -O /etc/yum.repos.d/jenkins.repo \    https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+sudo yum upgrade
+sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+sudo yum install -y dnf-utils http://rpms.remirepo.net/enterprise/remi-release-8.rpm
+
+# Add required dependencies for the jenkins package
+
+sudo yum install java-11-openjdk -y
+sudo yum install jenkins -y
+sudo systemctl daemon-reload
+```
+
+- Update the bash profile
+
+`sudo -i`
+
+`nano .bash_profile`
+
+```
+export JAVA_HOME=$(dirname $(dirname $(readlink $(readlink $(which java)))))
+export PATH=$PATH:$JAVA_HOME/bin 
+export CLASSPATH=.:$JAVA_HOME/jre/lib:$JAVA_HOME/lib:$JAVA_HOME/lib/tools.jar
+```
+
+- Reload the bash profile
+
+`source ~/.bash_profile`
+
+**NB: This is done so that the path is exported anytime the machine is restarted**
+
+- Start the jenkins server
+
+```			
+sudo systemctl start jenkins
+sudo systemctl enable jenkins
+sudo systemctl status jenkins
+```
 
 ## Configuring Ansible For Jenkins Deployment
 
