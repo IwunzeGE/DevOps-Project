@@ -175,14 +175,53 @@ pipeline {
 
 ![pipepline cofig2](https://user-images.githubusercontent.com/110903886/224506265-28ed181c-d8a8-42bb-a359-56cc41b09ac7.png)
 
+This will trigger a build and you will be able to see the effect of our basic Jenkinsfile configuration by going through the console output of the build.
+
 ![pipepline cofig3](https://user-images.githubusercontent.com/110903886/224506476-86c1a6d1-4c24-4ece-b692-5af9789cfa7c.png)
 
 ![pipepline cofig4](https://user-images.githubusercontent.com/110903886/224506486-b1550b2b-aa2c-4e29-98fe-f5bc5acffe22.png)
 
+View this with Blue ocean
 
+![blueocean0](https://user-images.githubusercontent.com/110903886/224506878-be180270-59cc-4bea-821d-f6a7c960cf6c.png)
 
+![blueocean1](https://user-images.githubusercontent.com/110903886/224506885-81f9f752-e42a-499c-bee1-08f03db14daa.png)
 
+Let us see this in action.
 
+1.	Create a new git branch and name it feature/jenkinspipeline-stages
+2.	Currently we only have the Build stage. Let us add another stage called Test. Paste the code snippet below and push the new changes to GitHub.
 
+```
+   pipeline {
+    agent any
+
+  stages {
+    stage('Build') {
+      steps {
+        script {
+          sh 'echo "Building Stage"'
+        }
+      }
+    }
+
+    stage('Test') {
+      steps {
+        script {
+          sh 'echo "Testing Stage"'
+        }
+      }
+    }
+    }
+}
+```
+
+3.	To make your new branch show up in Jenkins, we need to tell Jenkins to scan the repository.
+
+![scan repo now](https://user-images.githubusercontent.com/110903886/224506753-0ccff958-31dc-48d2-93a4-380d6edeadd5.png)
+
+4.	In Blue Ocean, you can now see how the Jenkinsfile has caused a new step in the pipeline launch build for the new branch.
+
+![blueocean2](https://user-images.githubusercontent.com/110903886/224506838-659bda30-cdae-495b-92e0-4eabe819904f.png)
 
 
