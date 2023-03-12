@@ -43,7 +43,6 @@ Ansible Inventory should look like this
 
 [db:vars]
 ansible_user=ec2-user
-ansible_python_interpreter=/usr/bin/python
 
 [db]
 <DB-Server-Private-IP-Address>
@@ -360,4 +359,39 @@ ssh_args = -o ControlMaster=auto -o ControlPersist=30m -o ControlPath=/tmp/ansib
 
 ![pipeline built](https://user-images.githubusercontent.com/110903886/224519902-1e08dee2-c771-44a0-83e8-fa87725fea3d.png)
 
+## Parameterizing Jenkinsfile For Ansible Deployment
 
+To deploy to other environments, we will need to use parameters.
+
+1.	Update sit inventory with new servers
+
+```
+[tooling]
+<SIT-Tooling-Web-Server-Private-IP-Address>
+
+[todo]
+<SIT-Todo-Web-Server-Private-IP-Address>
+
+[nginx]
+<SIT-Nginx-Private-IP-Address>
+
+[db:vars]
+ansible_user=ec2-user
+
+[db]
+<SIT-DB-Server-Private-IP-Address>
+```
+
+2.	Update Jenkinsfile to introduce parameterization. Below is just one parameter. It has a default value in case if no value is specified at execution. It also has a description so that everyone is aware of its purpose.
+
+```
+pipeline {
+    agent any
+
+    parameters {
+      string(name: 'inventory', defaultValue: 'dev',  description: 'This is the inventory file for the environment to deploy configuration')
+    }
+...
+
+
+3.	In the Ansible execution section, remove the hardcoded `inventory/dev` and replace with ``${inventory}`. From now on, each time you hit on execute, it will expect an input.
