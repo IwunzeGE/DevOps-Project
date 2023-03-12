@@ -291,10 +291,56 @@ To get the path of a package use the `which` command
 
 6.	Creating Jenkinsfile from scratch. (Delete all you currently have in there and start all over to get Ansible to run successfully)
 
+```
+pipeline {
+  agent any
+
+  environment {
+      ANSIBLE_CONFIG="${WORKSPACE}/deploy/ansible.cfg"
+    }
+
+  parameters {
+      string(name: 'inventory', defaultValue: 'dev',  description: 'This is the inventory file for the environment to deploy configuration')
+    }
+
+  stages{
+      stage("Initial cleanup") {
+          steps {
+            dir("${WORKSPACE}") {
+              deleteDir()
+            }
+          }
+        }
+
+      stage('Checkout SCM') {
+         steps{
+            git branch: 'main', url: 'https://github.com/IwunzeGE/ansible-config-mgt.git'
+         }
+       }
+
+      stage('Prepare Ansible For Execution') {
+        steps {
+          sh 'echo ${WORKSPACE}' 
+          sh 'sed -i "3 a roles_path=${WORKSPACE}/roles" ${WORKSPACE}/deploy/ansible.cfg'  
+        }
+     }
+
+      stage('Run Ansible playbook') {
+        steps {
+           ansiblePlaybook become: true, colorized: true, credentialsId: 'private-key', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory/dev', playbook: 'playbooks/site.yml'
+         }
+      }
+      stage('Clean Workspace after build'){
+        steps{
+          cleanWs(cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenUnstable: true, deleteDirs: true)
+        }
+      }
+    }
+  }
+```
 
 
-
-ansible.cfg
+- Create the ansible config file in the `deploy` dir `ansible.cfg` and paste the code below
 
 ```
 [defaults]
@@ -310,8 +356,8 @@ allow_world_readable_tmpfiles=true
 [ssh_connection]
 ssh_args = -o ControlMaster=auto -o ControlPersist=30m -o ControlPath=/tmp/ansible-ssh-%h-%p-%r -o ServerAliveInterval=60 -o ServerAliveCountMax=60 -o ForwardAgent=yes
 ```
+- Run a build and ensure the playbook was well executed
 
-
-
+![pipeline built](https://user-images.githubusercontent.com/110903886/224519902-1e08dee2-c771-44a0-83e8-fa87725fea3d.png)
 
 
