@@ -192,6 +192,9 @@ View this with Blue ocean
 Let us see this in action.
 
 1.	Create a new git branch and name it feature/jenkinspipeline-stages
+
+![create branch](https://user-images.githubusercontent.com/110903886/224516933-69487ad2-0eea-4fdd-9f7a-5170a46f7f4a.png)
+
 2.	Currently we only have the Build stage. Let us add another stage called Test. Paste the code snippet below and push the new changes to GitHub.
 
 ```
@@ -269,10 +272,15 @@ python3 -m pip install psycopg2-binary
 ![jenkins manage credentials3](https://user-images.githubusercontent.com/110903886/224507518-207ac6eb-bcc6-4340-b288-58139ec109f4.png)
 
 
+4. Configure ansible in UI
 
+![config ansible ui0](https://user-images.githubusercontent.com/110903886/224516861-19e42209-eb3a-410e-a32a-e0f376ea5637.png)
 
+To get the path of a package use the `which` command
 
+![which ansible](https://user-images.githubusercontent.com/110903886/224516906-708b687e-9331-4480-aa75-7724eb63d79a.png)
 
+![config ansible ui1](https://user-images.githubusercontent.com/110903886/224516917-9280dde3-23ff-4642-a314-9de281845407.png)
 
 
 5.	Creating Jenkinsfile from scratch. (Delete all you currently have in there and start all over to get Ansible to run successfully)
