@@ -282,8 +282,14 @@ To get the path of a package use the `which` command
 
 ![config ansible ui1](https://user-images.githubusercontent.com/110903886/224516917-9280dde3-23ff-4642-a314-9de281845407.png)
 
+5. Generate your ansible playbook command by using pipeline syntax
 
-5.	Creating Jenkinsfile from scratch. (Delete all you currently have in there and start all over to get Ansible to run successfully)
+![pipeline syntax0](https://user-images.githubusercontent.com/110903886/224517193-cb1cea11-10c1-4d17-93b5-0110a0f9cf5b.png)
+![pipeline syntax1](https://user-images.githubusercontent.com/110903886/224517200-3849f90e-e1a0-456c-b6be-1c82b386eee5.png)
+![pipeline syntax2](https://user-images.githubusercontent.com/110903886/224517203-8f304713-f749-451c-86b6-ee435ec137c6.png)
+
+
+6.	Creating Jenkinsfile from scratch. (Delete all you currently have in there and start all over to get Ansible to run successfully)
 
 
 
