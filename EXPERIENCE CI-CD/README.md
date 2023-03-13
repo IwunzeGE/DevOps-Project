@@ -403,7 +403,10 @@ pipeline {
 
 6. Run the build with the ci inventory so it updates the artifactory server
 7. To confirm to go <public-ip:8081>. Login with the default credntials 'admin' and 'password' and then change the password, then proceed to creating a generic local repository. **NB: It is required you open both port 8081 and 8082 in your inbound rules.**
-8. In Jenkins UI configure Artifactory
+
+![artifactory installed confirmed](https://user-images.githubusercontent.com/110903886/224582725-85cf92ce-d9de-4872-853c-6144d543e436.png)
+
+9. In Jenkins UI configure Artifactory
 ![configure artifactory](https://user-images.githubusercontent.com/110903886/224582477-3cad589d-c22c-4a3a-a50e-b8141bc6c943.png)
 
 
