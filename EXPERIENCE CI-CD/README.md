@@ -382,9 +382,7 @@ ansible_user=ec2-user
 <SIT-DB-Server-Private-IP-Address>
 ```
 
-2.	Update Jenkinsfile to introduce parameterization. Below is just one parameter. It has a default value in case if no value is specified at execution. It also has a description so that everyone is aware of its purpose.
-
-```
+2.	Update Jenkinsfile to introduce parameterization. Below is just one parameter. It has a default value in case if no value is specified at execution. It also has a description so that everyone is aware of its purpose.```
 pipeline {
     agent any
 
@@ -393,5 +391,22 @@ pipeline {
     }
 ...
 
-
 3.	In the Ansible execution section, remove the hardcoded `inventory/dev` and replace with ``${inventory}`. From now on, each time you hit on execute, it will expect an input.
+
+4. Run a build with parameter to put it to test.
+![build with parameters](https://user-images.githubusercontent.com/110903886/224582058-fa405f8e-6f88-4d37-8bb6-0130dd5f443b.png)
+
+5.	Install Jenkins plugins: Plot plugin and Artifactory plugin
+
+- We will use plot plugin to display tests reports, and code coverage information.
+- The Artifactory plugin will be used to easily upload code artifacts into an Artifactory server.
+
+6. Run the build with the ci inventory so it updates the artifactory server
+7. To confirm to go <public-ip:8081>. Login with the default credntials 'admin' and 'password' and then change the password, then proceed to creating a generic local repository. **NB: It is required you open both port 8081 and 8082 in your inbound rules.**
+8. In Jenkins UI configure Artifactory
+![configure artifactory](https://user-images.githubusercontent.com/110903886/224582477-3cad589d-c22c-4a3a-a50e-b8141bc6c943.png)
+
+
+
+
+
