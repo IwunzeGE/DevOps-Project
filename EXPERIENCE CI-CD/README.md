@@ -447,10 +447,7 @@ sudo yum install php-xdebug
 ### Phase 2 – Integrate Artifactory repository with Jenkins
 1.	Create a dummy Jenkinsfile in the repository
 2.	Using Blue Ocean, create a multibranch Jenkins pipeline
-3.	On the database server, create database and user
-Create database homestead;
-CREATE USER 'homestead'@'%' IDENTIFIED BY 'sePret^i';
-GRANT ALL PRIVILEGES ON * . * TO 'homestead'@'%';
+3.	Edit your mysql roles to Create database  `homestead`; CREATE USER 'homestead'@'%' IDENTIFIED BY 'Passswword1234'; GRANT ALL PRIVILEGES ON * . * TO 'homestead'@'%'; (THE IP ADDRESS OF THE USER WILL BE THAT OF THE JENKINS SERVER TO ALLOW REMOTE ACCESS)
 4.	Update the database connectivity requirements in the file .env.sample
 5.	Update Jenkinsfile with proper pipeline configuration
 
