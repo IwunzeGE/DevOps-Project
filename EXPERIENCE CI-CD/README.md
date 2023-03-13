@@ -544,4 +544,54 @@ This plugin provides generic plotting (or graphing) capabilities in Jenkins. It 
 
 You should now see a Plot menu item on the left menu. Click on it to see the charts. (The analytics may not mean much to you as it is meant to be read by developers. So, you need not worry much about it – this is just to give you an idea of the real-world implementation).
 
+![plots1](https://user-images.githubusercontent.com/110903886/224795546-a7aed5ce-28a2-4a1f-ba14-e17acb6f6699.png)
+
+![plot2](https://user-images.githubusercontent.com/110903886/224796055-6b442d5d-5c5c-45f8-90cc-90a7189d8511.png)
+
+3.	Bundle the application code for into an artifact (archived package) upload to Artifactory
+```
+stage ('Package Artifact') {
+    steps {
+            sh 'zip -qr php-todo.zip ${WORKSPACE}/*'
+     }
+    }
+```
+
+4.	Publish the resulted artifact into Artifactory
+```
+stage ('Upload Artifact to Artifactory') {
+          steps {
+            script { 
+                 def server = Artifactory.server 'artifactory-server'                 
+                 def uploadSpec = """{
+                    "files": [
+                      {
+                       "pattern": "php-todo.zip",
+                       "target": "<name-of-artifact-repository>/php-todo",
+                       "props": "type=zip;status=ready"
+
+                       }
+                    ]
+                 }""" 
+
+                 server.upload spec: uploadSpec
+               }
+            }
+
+        }
+```
+
+5.	Deploy the application to the dev environment by launching Ansible pipeline
+```
+stage ('Deploy to Dev Environment') {
+    steps {
+    build job: 'ansible-project/main', parameters: [[$class: 'StringParameterValue', name: 'env', value: 'dev']], propagate: false, wait: true
+    }
+  }
+```
+
+SONARQUBE INSTALLATION
+
+
+
 
