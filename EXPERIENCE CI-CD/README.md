@@ -396,20 +396,95 @@ pipeline {
 4. Run a build with parameter to put it to test.
 ![build with parameters](https://user-images.githubusercontent.com/110903886/224582058-fa405f8e-6f88-4d37-8bb6-0130dd5f443b.png)
 
-5.	Install Jenkins plugins: Plot plugin and Artifactory plugin
+
+## CI/CD PIPELINE FOR TODO APPLICATION
+
+### Phase 1 – Prepare Jenkins
+
+1.	Fork the repository below into your GitHub account
+https://github.com/IwunzeGE/php-todo.git
+
+2.	On you Jenkins server, install PHP, its dependencies and Composer tool (Feel free to do this manually at first, then update your Ansible accordingly later)
+
+```
+yum module reset php -y
+yum module enable php:remi-7.4 -y
+yum install -y php php-common php-mbstring php-opcache php-
+
+intl php-xml php-gd php-curl php-mysqlnd php-fpm php-json
+systemctl start php-fpm
+systemctl enable php-fpm
+
+#Install composer
+
+curl -sS https://getcomposer.org/installer | php
+sudo mv composer.phar /usr/bin/composer
+Verify Composer is installed or not
+composer --version
+
+#Install phpunit, phploc
+
+sudo dnf --enablerepo=remi install php-phpunit-phploc
+wget -O phpunit https://phar.phpunit.de/phpunit-7.phar
+chmod +x phpunit
+sudo yum install php-xdebug
+```
+
+3.	Install Jenkins plugins: Plot plugin and Artifactory plugin
 
 - We will use plot plugin to display tests reports, and code coverage information.
 - The Artifactory plugin will be used to easily upload code artifacts into an Artifactory server.
 
-6. Run the build with the ci inventory so it updates the artifactory server
-7. To confirm to go <public-ip:8081>. Login with the default credntials 'admin' and 'password' and then change the password, then proceed to creating a generic local repository. **NB: It is required you open both port 8081 and 8082 in your inbound rules.**
+4. Run the build with the ci inventory so it updates the artifactory server
+5. To confirm to go <public-ip:8081>. Login with the default credntials 'admin' and 'password' and then change the password, then proceed to creating a generic local repository. **NB: It is required you open both port 8081 and 8082 in your inbound rules.**
 
 ![artifactory installed confirmed](https://user-images.githubusercontent.com/110903886/224582725-85cf92ce-d9de-4872-853c-6144d543e436.png)
 
-9. In Jenkins UI configure Artifactory
+6. In Jenkins UI configure Artifactory
 ![configure artifactory](https://user-images.githubusercontent.com/110903886/224582477-3cad589d-c22c-4a3a-a50e-b8141bc6c943.png)
 
 
+### Phase 2 – Integrate Artifactory repository with Jenkins
+1.	Create a dummy Jenkinsfile in the repository
+2.	Using Blue Ocean, create a multibranch Jenkins pipeline
+3.	On the database server, create database and user
+Create database homestead;
+CREATE USER 'homestead'@'%' IDENTIFIED BY 'sePret^i';
+GRANT ALL PRIVILEGES ON * . * TO 'homestead'@'%';
+4.	Update the database connectivity requirements in the file .env.sample
+5.	Update Jenkinsfile with proper pipeline configuration
 
+```
+pipeline {
+    agent any
+
+  stages {
+
+     stage("Initial cleanup") {
+          steps {
+            dir("${WORKSPACE}") {
+              deleteDir()
+            }
+          }
+        }
+
+    stage('Checkout SCM') {
+      steps {
+            git branch: 'main', url: 'https://github.com/darey-devops/php-todo.git'
+      }
+    }
+
+    stage('Prepare Dependencies') {
+      steps {
+             sh 'mv .env.sample .env'
+             sh 'composer install'
+             sh 'php artisan migrate'
+             sh 'php artisan db:seed'
+             sh 'php artisan key:generate'
+      }
+    }
+  }
+}
+```
 
 
