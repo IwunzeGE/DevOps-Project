@@ -501,16 +501,19 @@ If you get this error, then you need to inshtall mysql-client on the jenkins ser
 •	Composer is used by PHP to install all the dependent libraries used by the application
 •	php artisan uses the .env file to setup the required database objects – (After successful run of this step, login to the database, run show tables and you will see the tables being created for you)**
 
-1.	Update the Jenkinsfile to include Unit tests step```
+Update the Jenkinsfile to include Unit tests step
+
+```
     stage('Execute Unit Tests') {
       steps {
              sh './vendor/bin/phpunit'
       }
-    ```
+```
     
 ### Phase 3 – Code Quality Analysis
 
 1.	Add the code analysis step in Jenkinsfile. The output of the data will be saved in build/logs/phploc.csv file.
+
 ```
     stage('Code Analysis') {
 	  steps {
@@ -549,6 +552,7 @@ You should now see a Plot menu item on the left menu. Click on it to see the cha
 ![plot2](https://user-images.githubusercontent.com/110903886/224796055-6b442d5d-5c5c-45f8-90cc-90a7189d8511.png)
 
 3.	Bundle the application code for into an artifact (archived package) upload to Artifactory
+
 ```
 stage ('Package Artifact') {
     steps {
@@ -558,6 +562,7 @@ stage ('Package Artifact') {
 ```
 
 4.	Publish the resulted artifact into Artifactory
+
 ```
 stage ('Upload Artifact to Artifactory') {
           steps {
@@ -582,6 +587,7 @@ stage ('Upload Artifact to Artifactory') {
 ```
 
 5.	Deploy the application to the dev environment by launching Ansible pipeline
+
 ```
 stage ('Deploy to Dev Environment') {
     steps {
