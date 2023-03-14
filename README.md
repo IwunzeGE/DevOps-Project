@@ -27,7 +27,7 @@ Before you start, make sure you have the following tools installed on your syste
 8. Load balancer solution with apache
 9. Tooling website deployment automation with continous integration - Jenkins 
 10. Load balancer solution with NGINX
-11. Ancible configuration management - Automate project 7-10 
-12. Ancible refactoring and static assignments (import and roles)
-13. Ancible dynamic assignments (include) and community roles.
+11. Ansible configuration management - Automate project 7-10 
+12. Ansible refactoring and static assignments (import and roles)
+13. Ansible dynamic assignments (include) and community roles.
 14. Experience CI-CD
