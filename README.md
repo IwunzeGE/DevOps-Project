@@ -30,4 +30,4 @@ Before you start, make sure you have the following tools installed on your syste
 11. Ancible configuration management - Automate project 7-10 
 12. Ancible refactoring and static assignments (import and roles)
 13. Ancible dynamic assignments (include) and community roles.
-14. 
+14. Experience CI-CD
