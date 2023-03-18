@@ -851,7 +851,8 @@ Access SonarQube
 
 ![sonarqube config5](https://user-images.githubusercontent.com/110903886/226130775-27ab5ecf-2ca6-4a67-93f8-8e4c38f36068.png)
 
-- Update Jenkins Pipeline to include SonarQube scanning and Quality Gate. Below is the snippet for a Quality Gate stage in Jenkinsfile.
+- Update Jenkins Pipeline to include SonarQube scanning and Quality Gate. Below is the snippet for a Quality Gate stage in Jenkinsfile. The Quality gate should come in before you package the artifacts.
+
 ```
     stage('SonarQube Quality Gate') {
         environment {
