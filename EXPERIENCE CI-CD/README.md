@@ -596,7 +596,234 @@ stage ('Deploy to Dev Environment') {
   }
 ```
 
-SONARQUBE INSTALLATION
+## SONARQUBE INSTALLATION
+
+Although I achieved this by using the ansible-galaxy sonarqube role (You can check my ansible-config repo for the codes). It can also be achieved by making use of some Linux Kernel configuration changes to ensure optimal performance of the tool – we will increase vm.max_map_count, file discriptor and ulimit.
+
+### Tune Linux Kernel
+
+This can be achieved by making session changes which does not persist beyond the current session terminal. 
+```
+sudo sysctl -w vm.max_map_count=262144
+sudo sysctl -w fs.file-max=65536
+ulimit -n 65536
+ulimit -u 4096
+```
+
+To make a permanent change, edit the file `/etc/security/limits.conf` and append the below
+
+```
+sonarqube   -   nofile   65536
+sonarqube   -   nproc    4096
+```
+
+Before installing, let us update and upgrade system packages:
+
+```
+sudo apt-get update
+sudo apt-get upgrade
+```
+
+Install wget and unzip packages
+
+`sudo apt-get install wget unzip -y`
+
+Install OpenJDK and Java Runtime Environment (JRE) 11
+```
+sudo apt-get install openjdk-11-jdk -y
+sudo apt-get install openjdk-11-jre -y
+```
+
+Set default JDK – To set default JDK or switch to OpenJDK enter below command:
+`sudo update-alternatives --config java`
+
+If you have multiple versions of Java installed, you should see a list like below:
+Selection    Path                                            Priority   Status
+
+------------------------------------------------------------
+
+  0            /usr/lib/jvm/java-11-openjdk-amd64/bin/java      1111      auto mode
+
+  1            /usr/lib/jvm/java-11-openjdk-amd64/bin/java      1111      manual mode
+
+  2            /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java   1081      manual mode
+
+* 3            /usr/lib/jvm/java-8-oracle/jre/bin/java          1081      manual mode
+Type "1" to switch OpenJDK 11
+
+Install and Setup PostgreSQL 10 Database for SonarQube
+
+- The command below will add PostgreSQL repo to the repo list:
+`sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" >> /etc/apt/sources.list.d/pgdg.list'`
+
+- Download PostgreSQL software
+
+`wget -q https://www.postgresql.org/media/keys/ACCC4CF8.asc -O - | sudo apt-key add -`
+
+- Install PostgreSQL Database Server
+
+`sudo apt-get -y install postgresql postgresql-contrib`
+
+- Start PostgreSQL Database Server
+
+`sudo systemctl start postgresql`
+
+- Enable it to start automatically at boot time
+
+`sudo systemctl enable postgresql`
+
+- Change the password for default postgres user (Pass in the password you intend to use, and remember to save it somewhere)
+
+`sudo passwd postgres`
+
+- Switch to the postgres user
+
+`su - postgres`
+
+- Create a new user by typing
+
+`createuser sonar`
+
+- Switch to the PostgreSQL shell
+
+`psql`
+
+- Set a password for the newly created user for SonarQube database
+
+`ALTER USER sonar WITH ENCRYPTED password 'sonar';`
+
+- Create a new database for PostgreSQL database by running:
+
+`CREATE DATABASE sonarqube OWNER sonar;`
+
+- Grant all privileges to sonar user on sonarqube Database.
+
+`grant all privileges on DATABASE sonarqube to sonar;`
+
+- Exit from the psql shell:
+
+`\q`
+
+- Switch back to the sudo user by running the exit command.
+`exit`
+
+Install SonarQube on Ubuntu 20.04 LTS
+
+- Navigate to the tmp directory to temporarily download the installation files
+
+`cd /tmp && sudo wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-7.9.3.zip`
+
+- Unzip the archive setup to /opt directory
+
+`sudo unzip sonarqube-7.9.3.zip -d /opt`
+
+- Move extracted setup to /opt/sonarqube directory
+
+`sudo mv /opt/sonarqube-7.9.3 /opt/sonarqube`
+
+
+CONFIGURE SONARQUBE
+
+We cannot run SonarQube as a root user, if you run using root user it will stop automatically. The ideal approach will be to create a separate group and a user to run SonarQube
+
+- Create a group sonar
+
+`sudo groupadd sonar`
+
+- Now add a user with control over the /opt/sonarqube directory
+```
+sudo useradd -c "user to run SonarQube" -d /opt/sonarqube -g sonar sonar 
+sudo chown sonar:sonar /opt/sonarqube -R
+```
+
+- Open SonarQube configuration file using your favourite text editor (e.g., nano or vim)
+`sudo vim /opt/sonarqube/conf/sonar.properties`
+
+- Find the following lines,  Uncomment them and provide the values of PostgreSQL Database username and password
+```
+#sonar.jdbc.username=
+#sonar.jdbc.password=
+```
+
+- Edit the sonar script file and set RUN_AS_USER
+
+`sudo nano /opt/sonarqube/bin/linux-x86-64/sonar.sh`
+
+```
+RUN_AS_USER=sonar
+```
+
+Now, to start SonarQube we need to do following:
+
+- Switch to sonar user
+
+`sudo su sonar`
+
+- Move to the script directory
+
+`cd /opt/sonarqube/bin/linux-x86-64/`
+
+- Run the script to start SonarQube
+`./sonar.sh start`
+
+- Check SonarQube running status:
+./sonar.sh status
+
+- To check SonarQube logs, navigate to `/opt/sonarqube/logs/sonar.log` directory.
+
+Configure SonarQube to run as a systemd service
+
+- Stop the currently running SonarQube service
+`cd /opt/sonarqube/bin/linux-x86-64/`
+
+- Run the script to start SonarQube
+
+`./sonar.sh stop`
+
+- Create a systemd service file for SonarQube to run as System Startup.
+
+`sudo nano /etc/systemd/system/sonar.service`
+
+- Add the configuration below for systemd to determine how to start, stop, check status, or restart the SonarQube service.
+
+```
+[Unit]
+Description=SonarQube service
+After=syslog.target network.target
+
+[Service]
+Type=forking
+
+ExecStart=/opt/sonarqube/bin/linux-x86-64/sonar.sh start
+ExecStop=/opt/sonarqube/bin/linux-x86-64/sonar.sh stop
+
+User=sonar
+Group=sonar
+Restart=always
+
+LimitNOFILE=65536
+LimitNPROC=4096
+
+[Install]
+WantedBy=multi-user.target
+```
+
+- Save the file and control the service with systemctl
+
+```
+sudo systemctl start sonar
+sudo systemctl enable sonar
+sudo systemctl status sonar
+```
+
+Access SonarQube
+
+- To access SonarQube using browser, type server’s IP address followed by port 9000
+`http://server_IP:9000 OR http://localhost:9000`
+
+Login to SonarQube with default administrator username and password – admin
+
+![sonarcube check](https://user-images.githubusercontent.com/110903886/226124385-a1f93f8e-dc34-4138-87db-21a92cc611d1.png)
 
 
 
