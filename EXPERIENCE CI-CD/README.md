@@ -828,6 +828,10 @@ Login to SonarQube with default administrator username and password – admin
 
 ![sonarcube check](https://user-images.githubusercontent.com/110903886/226124385-a1f93f8e-dc34-4138-87db-21a92cc611d1.png)
 
+### CONFIGURE SONARQUBE AND JENKINS FOR QUALITY GATE
+
+- In Jenkins, install SonarScanner plugin
+- Navigate to configure system in Jenkins. Add SonarQube server as shown below:
 
 
 
