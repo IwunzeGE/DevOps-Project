@@ -764,16 +764,19 @@ Now, to start SonarQube we need to do following:
 `cd /opt/sonarqube/bin/linux-x86-64/`
 
 - Run the script to start SonarQube
+
 `./sonar.sh start`
 
 - Check SonarQube running status:
-./sonar.sh status
+
+`./sonar.sh status`
 
 - To check SonarQube logs, navigate to `/opt/sonarqube/logs/sonar.log` directory.
 
 Configure SonarQube to run as a systemd service
 
 - Stop the currently running SonarQube service
+
 `cd /opt/sonarqube/bin/linux-x86-64/`
 
 - Run the script to start SonarQube
