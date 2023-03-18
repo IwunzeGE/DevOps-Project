@@ -830,8 +830,68 @@ Access SonarQube
 
 ### CONFIGURE SONARQUBE AND JENKINS FOR QUALITY GATE
 
-- In Jenkins, install SonarScanner plugin
+- In Jenkins, install SonarQube Scanner plugin
 - Navigate to configure system in Jenkins. Add SonarQube server as shown below:
+
+![sonarqube config](https://user-images.githubusercontent.com/110903886/226130490-48d1d835-349d-4255-bbed-90f3545007f8.png)
+
+- Generate authentication token in SonarQube
+
+![sonarqube config1](https://user-images.githubusercontent.com/110903886/226130534-5316ed49-0e4c-494b-92c6-d31652280abf.png)
+
+- Configure Quality Gate Jenkins Webhook in SonarQube – The URL should point to your Jenkins server `http://{JENKINS_HOST}/sonarqube-webhook/`
+
+![sonarqube config2](https://user-images.githubusercontent.com/110903886/226130579-1cae8635-8747-418f-8094-50a635990402.png)
+
+![sonarqube config3](https://user-images.githubusercontent.com/110903886/226130591-7d19ec67-187b-41e9-b467-f04461d12eac.png)
+
+![sonarqube config4](https://user-images.githubusercontent.com/110903886/226130655-636e6be6-82e5-4d1b-947c-d5a41180c2e5.png)
+
+- Setup SonarQube scanner from Jenkins – Global Tool Configuration
+
+![sonarqube config5](https://user-images.githubusercontent.com/110903886/226130775-27ab5ecf-2ca6-4a67-93f8-8e4c38f36068.png)
+
+- Update Jenkins Pipeline to include SonarQube scanning and Quality Gate. Below is the snippet for a Quality Gate stage in Jenkinsfile.
+```
+    stage('SonarQube Quality Gate') {
+        environment {
+            scannerHome = tool 'SonarQubeScanner'
+        }
+        steps {
+            withSonarQubeEnv('sonarqube') {
+                sh "${scannerHome}/bin/sonar-scanner"
+            }
+
+        }
+    }
+```
+
+NOTE: The above step will fail because we have not updated `sonar-scanner.properties`
+
+- Configure sonar-scanner.properties – From the step above, Jenkins will install the scanner tool on the Linux server. You will need to go into the tools directory on the server to configure the properties file in which SonarQube will require to function during pipeline execution.
+
+`cd /var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarQubeScanner/conf/`
+
+- Open sonar-scanner.properties file
+
+`sudo vi sonar-scanner.properties`
+
+- Add configuration related to php-todo project
+
+```
+sonar.host.url=http://<SonarQube-Server-IP-address>:9000
+sonar.projectKey=php-todo
+#----- Default source code encoding
+sonar.sourceEncoding=UTF-8
+sonar.php.exclusions=**/vendor/**
+sonar.php.coverage.reportPaths=build/logs/clover.xml
+sonar.php.tests.reportPath=build/logs/junit.xml
+```
+
+
+
+
+
 
 
 
