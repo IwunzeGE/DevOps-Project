@@ -824,7 +824,7 @@ Access SonarQube
 - To access SonarQube using browser, type server’s IP address followed by port 9000
 `http://server_IP:9000 OR http://localhost:9000`
 
-Login to SonarQube with default administrator username and password – admin
+- Login to SonarQube with default administrator username and password – admin
 
 ![sonarcube check](https://user-images.githubusercontent.com/110903886/226124385-a1f93f8e-dc34-4138-87db-21a92cc611d1.png)
 
