@@ -891,7 +891,11 @@ sonar.php.coverage.reportPaths=build/logs/clover.xml
 sonar.php.tests.reportPath=build/logs/junit.xml
 ```
 
+![nano sonar-properties](https://user-images.githubusercontent.com/110903886/226177106-dafa2093-b430-4626-b173-bea0a619aab3.png)
 
+**NB: I had to add the `sonar.sources=/var/lib/jenkins/workspace/php-todo_main` because thhe error from the previous screenshot showed that the source to the projectKey wasn't specified.**
+
+![quality gate cc](https://user-images.githubusercontent.com/110903886/226177255-b55e60f9-7a31-4113-bdf5-2d2fbd90a56d.png)
 
 
 
