@@ -959,6 +959,29 @@ export CLASSPATH=.:$JAVA_HOME/jre/lib:$JAVA_HOME/lib:$JAVA_HOME/lib/tools.jar
 `source ~/.bash_profile`
 
 
+![jenkins slave1](https://user-images.githubusercontent.com/110903886/226186648-3c0bc9f1-d1cf-423e-a07e-f943a8d147e8.png)
+
+
+![jenkins slave2](https://user-images.githubusercontent.com/110903886/226186660-464f4a1c-f3e7-4b09-ba2b-50fb1ea28b44.png)
+
+
+![jenkins slave3](https://user-images.githubusercontent.com/110903886/226186672-67a4ca7c-23d1-46aa-852d-1f1c69b960b0.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
