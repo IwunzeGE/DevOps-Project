@@ -926,6 +926,9 @@ stage('SonarQube Quality Gate') {
     }
 ```
 
+To test, create different branches and push to GitHub. You will realise that only branches other than develop, hotfix, release, main, or master will be able to deploy the code.
+If everything goes well, you should be able to see something like this:
+
 
 
 
