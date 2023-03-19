@@ -897,6 +897,36 @@ sonar.php.tests.reportPath=build/logs/junit.xml
 
 ![quality gate cc](https://user-images.githubusercontent.com/110903886/226177255-b55e60f9-7a31-4113-bdf5-2d2fbd90a56d.png)
 
+The quality gate we just included has no effect. Why? Well, because if you go to the SonarQube UI, you will realise that we just pushed a poor-quality code onto the development environment.
+- Navigate to php-todo project in SonarQube
+
+![qa1](https://user-images.githubusercontent.com/110903886/226181146-35005cb8-1e7b-4f38-9f81-6eb9fd807b81.png)
+
+There are no bugs, and there is 0.0% code coverage. (code coverage is a percentage of unit tests added by developers to test functions and objects in the code)
+- If you click on php-todo project for further analysis, you will see that there is 6 hours’ worth of technical debt, code smells and security issues in the code.
+
+![qa2](https://user-images.githubusercontent.com/110903886/226181198-e986628e-917b-46ca-adf0-c950187ee876.png)
+
+In the development environment, this is acceptable as developers will need to keep iterating over their code towards perfection. But as a DevOps engineer working on the pipeline, we must ensure that the quality gate step causes the pipeline to fail if the conditions for quality are not met. To achieve this we'll have  to edit our Jenkinsfile.
+
+```
+stage('SonarQube Quality Gate') {
+      when { branch pattern: "^develop*|^hotfix*|^release*|^main*", comparator: "REGEXP"}
+        environment {
+            scannerHome = tool 'SonarQubeScanner'
+        }
+        steps {
+            withSonarQubeEnv('sonarqube') {
+                sh "${scannerHome}/bin/sonar-scanner -Dproject.settings=sonar-project.properties"
+            }
+            timeout(time: 1, unit: 'MINUTES') {
+                waitForQualityGate abortPipeline: true
+            }
+        }
+    }
+```
+
+
 
 
 
