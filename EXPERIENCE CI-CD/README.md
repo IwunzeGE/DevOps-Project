@@ -968,9 +968,7 @@ export CLASSPATH=.:$JAVA_HOME/jre/lib:$JAVA_HOME/lib:$JAVA_HOME/lib/tools.jar
 ![jenkins slave3](https://user-images.githubusercontent.com/110903886/226186672-67a4ca7c-23d1-46aa-852d-1f1c69b960b0.png)
 
 
-
-
-
+![jenkins slave4](https://user-images.githubusercontent.com/110903886/226187199-98a6ac62-56c3-4c05-b3fc-362add8fdbc7.png)
 
 
 
