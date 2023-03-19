@@ -929,8 +929,12 @@ stage('SonarQube Quality Gate') {
 To test, create different branches and push to GitHub. You will realise that only branches other than develop, hotfix, release, main, or master will be able to deploy the code.
 If everything goes well, you should be able to see something like this:
 
+![new branches](https://user-images.githubusercontent.com/110903886/226183922-0bfcb364-80c5-43a8-b226-319acaed233a.png)
 
 
+![builddddddd](https://user-images.githubusercontent.com/110903886/226183875-2376cf8c-805d-481a-b77a-fae561320eea.png)
+
+Notice that with the current state of the code, it cannot be deployed to Integration environments due to its quality. In the real world, DevOps engineers will push this back to developers to work on the code further, based on SonarQube quality report. Once everything is good with code quality, the pipeline will pass and proceed with sipping the codes further to a higher environment.
 
 
 
