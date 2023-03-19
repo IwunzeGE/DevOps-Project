@@ -936,6 +936,28 @@ If everything goes well, you should be able to see something like this:
 
 Notice that with the current state of the code, it cannot be deployed to Integration environments due to its quality. In the real world, DevOps engineers will push this back to developers to work on the code further, based on SonarQube quality report. Once everything is good with code quality, the pipeline will pass and proceed with sipping the codes further to a higher environment.
 
+## Configure Jenkins Slave
+
+- Install Java
+
+`sudo yum install java-11-openjdk-devel -y`
+
+- Update the bash profile
+
+`sudo -i`
+
+`nano .bash_profile`
+
+```
+export JAVA_HOME=$(dirname $(dirname $(readlink $(readlink $(which java)))))
+export PATH=$PATH:$JAVA_HOME/bin 
+export CLASSPATH=.:$JAVA_HOME/jre/lib:$JAVA_HOME/lib:$JAVA_HOME/lib/tools.jar
+```
+
+- Reload the bash profile
+
+`source ~/.bash_profile`
+
 
 
 
