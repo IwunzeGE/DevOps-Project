@@ -26,6 +26,8 @@ Cost, Security, and Scalability are the major requirements for this project. Hen
    ![Alt text](images/organization8.png)
    ![Alt text](images/organization9.png)
     - Login to the newly created AWS account using the new email address.
+    ![Alt text](images/organizationsss.png)
+    **Note:** If you can't find your password, Just do a password reset from the console.
 - Create a domain name for your company. I used [namecheap](www.namecheap.com).
 - Create a hosted zone in AWS, and map it to your domain.
 ![Alt text](images/route1.png)
@@ -33,3 +35,40 @@ Cost, Security, and Scalability are the major requirements for this project. Hen
 ![Alt text](images/route3.png)
 ![Alt text](images/route4.png)
 ![Alt text](images/route5.png)
+
+## SET UP A VIRTUAL PRIVATE NETWORK (VPC)
+
+1. Create a VPC
+![Alt text](images/vpc1.png)
+![Alt text](images/vpc2.png)
+![Alt text](images/vpc3.png)
+2. Enable DNS hosting
+![Alt text](images/vpc4.png)
+![Alt text](images/vpc5.png)
+3. Create internet gateway as shown in the architecture
+![Alt text](images/ig1.png)
+![Alt text](images/ig2.png)
+![Alt text](images/ig3.png)
+![Alt text](images/ig4.png)
+![Alt text](images/ig5.png)
+4. Create the subnets
+
+Use this website to get the CIDR blocks easily. [ipinfo](https://ipinfo.io/ips).
+
+![Alt text](images/ip1.png)
+![Alt text](images/ip2.png)
+![Alt text](images/ip3.png)
+
+![Alt text](images/sn1.png)
+![Alt text](images/sn2.png)
+![Alt text](images/sn3.png)
+![Alt text](images/sn4.png)
+![Alt text](images/sn5.png)
+
+5. Create a route tables and associate it with private and public subnets
+
+6. Edit a route in public route table, and associate it with the Internet Gateway. (This is what allows a public subnet to be accessisble from the Internet).
+
+Create 3 Elastic IPs
+Create a Nat Gateway and assign one of the Elastic IPs (*The other 2 will be used by Bastion hosts)
+Create a Security Group for:
