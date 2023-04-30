@@ -64,6 +64,7 @@ Use this website to get the CIDR blocks easily. [ipinfo](https://ipinfo.io/ips).
 ![Alt text](images/sn3.png)
 ![Alt text](images/sn4.png)
 ![Alt text](images/sn5.png)
+![Alt text](images/sn6.png)
 
 5. Create a route tables and associate it with private and public subnets
 
