@@ -31,3 +31,4 @@ Before you start, make sure you have the following tools installed on your syste
 12. Ansible refactoring and static assignments (import and roles)
 13. Ansible dynamic assignments (include) and community roles.
 14. Experience CI-CD
+15. AWS Cloud solution
