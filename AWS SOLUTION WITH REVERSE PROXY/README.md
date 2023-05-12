@@ -74,9 +74,17 @@ Use this website to get the CIDR blocks easily. [ipinfo](https://ipinfo.io/ips).
 ![Alt text](images/route44.png)
 
 6. Edit a route in public route table, and associate it with the Internet Gateway. (This is what allows a public subnet to be accessisble from the Internet).
+![Alt text](images/routess.png)
+![Alt text](images/routess22.png)
 
-Create 3 Elastic IPs
-Create a Nat Gateway and assign one of the Elastic IPs (*The other 2 will be used by Bastion hosts)
+7. Create 3 Elastic IPs
+![Alt text](images/elastic.png)
+![Alt text](images/elastic2.png)
+
+8. Create a Nat Gateway and assign one of the Elastic IPs (*The other 2 will be used by Bastion hosts)
+![Alt text](images/nat1.png)
+![Alt text](images/nat2.png)
+
 Create a Security Group for:
 
 
