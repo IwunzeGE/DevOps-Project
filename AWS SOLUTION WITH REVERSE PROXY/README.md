@@ -51,6 +51,7 @@ Cost, Security, and Scalability are the major requirements for this project. Hen
 ![Alt text](images/ig3.png)
 ![Alt text](images/ig4.png)
 ![Alt text](images/ig5.png)
+
 4. Create the subnets
 
 Use this website to get the CIDR blocks easily. [ipinfo](https://ipinfo.io/ips).
@@ -66,10 +67,16 @@ Use this website to get the CIDR blocks easily. [ipinfo](https://ipinfo.io/ips).
 ![Alt text](images/sn5.png)
 ![Alt text](images/sn6.png)
 
-5. Create a route tables and associate it with private and public subnets
+5. Create a route tables and associate it with private and public subnets.
+![Alt text](images/route11.png)
+![Alt text](images/route22.png)
+![Alt text](images/route33.png)
+![Alt text](images/route44.png)
 
 6. Edit a route in public route table, and associate it with the Internet Gateway. (This is what allows a public subnet to be accessisble from the Internet).
 
 Create 3 Elastic IPs
 Create a Nat Gateway and assign one of the Elastic IPs (*The other 2 will be used by Bastion hosts)
 Create a Security Group for:
+
+
