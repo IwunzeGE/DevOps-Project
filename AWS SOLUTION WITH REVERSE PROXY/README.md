@@ -84,7 +84,31 @@ Use this website to get the CIDR blocks easily. [ipinfo](https://ipinfo.io/ips).
 8. Create a Nat Gateway and assign one of the Elastic IPs (*The other 2 will be used by Bastion hosts)
 ![Alt text](images/nat1.png)
 ![Alt text](images/nat2.png)
+![Alt text](images/nat3.png)
+![Alt text](images/nat4.png)
 
-Create a Security Group for:
+9. Create a Security Group for:
+![Alt text](images/sg1.png)
 
+- Application Load Balancer: ALB will be available from the Internet.
+
+![Alt text](images/sg2.png)
+![Alt text](images/sg2.1.png)
+
+- Bastion Servers: Access to the Bastion servers should be allowed only from workstations that need to SSH into the bastion servers. Hence, you can use your workstation public IP address.
+![Alt text](images/sg3.png)
+
+- Nginx Servers: Access to Nginx should only be allowed from a Application Load balancer (ALB).
+![Alt text](images/sg4.png)
+![Alt text](images/sg4.1.png)
+
+- Internal Application Load Balancer: ALB will be available from the Nginx servers.
+![Alt text](images/sg5.png)
+
+- Webservers: Access to Webservers should only be allowed from the Internal Application Load Balancer.
+![Alt text](images/sg6.png)
+
+- Data Layer: Access to the Data layer, which is comprised of Amazon Relational Database Service (RDS) and Amazon Elastic File System (EFS) must be carefully desinged – only webservers should be able to connect to RDS, while Nginx and Webservers will have access to EFS Mountpoint.
+
+![Alt text](images/sg7.png)
 
