@@ -130,6 +130,8 @@ You will need TLS certificates to handle secured connectivity to your Applicatio
 ![Alt text](images/acm5.png)
 ![Alt text](images/acm6.1.png)
 ![Alt text](images/acm6.2.png)
+![Alt text](images/acm7.png)
+![Alt text](images/acm8.png)
 
-Tag the resource
+
 
