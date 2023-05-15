@@ -112,3 +112,18 @@ Use this website to get the CIDR blocks easily. [ipinfo](https://ipinfo.io/ips).
 
 ![Alt text](images/sg7.png)
 
+
+## TLS Certificates From Amazon Certificate Manager (ACM)
+You will need TLS certificates to handle secured connectivity to your Application Load Balancers (ALB).
+
+Navigate to AWS ACM
+
+![Alt text](images/acm1.png)
+
+Request a public wildcard certificate for the domain name you registered.
+
+![Alt text](images/acm2.png)
+
+Use DNS to validate the domain name
+
+Tag the resource
