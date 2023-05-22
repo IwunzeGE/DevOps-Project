@@ -132,6 +132,36 @@ You will need TLS certificates to handle secured connectivity to your Applicatio
 ![Alt text](images/acm6.2.png)
 ![Alt text](images/acm7.png)
 ![Alt text](images/acm8.png)
+![Alt text](images/acm9.png)
 
 
+## Configure EFS
+- Create a new EFS
+
+![Alt text](images/efs1.png)
+![Alt text](images/efs2.png)
+![Alt text](images/efs3.png)
+![Alt text](images/efs4.png)
+![Alt text](images/efs5.png)
+![Alt text](images/efs6.png)
+![Alt text](images/efs7.png)
+
+- Create 2 access points - ! for each of the website (wordpress and tooling) so that the files do not overwrite each other when we mount.
+![Alt text](images/efs8.png)
+![Alt text](images/efs9.png)
+![Alt text](images/efs10.png)
+![Alt text](images/efs11.png)
+![Alt text](images/efs12.png)
+![Alt text](images/efs13.png)
+![Alt text](images/efs14.png)
+
+## Configure RDS
+
+- Create a KMS Key
+![Alt text](images/kms1.png)
+![Alt text](images/kms2.png)
+![Alt text](images/kms3.png)
+![Alt text](images/kms4.png)
+![Alt text](images/kms5.png)
+![Alt text](images/kms6.png)
 
