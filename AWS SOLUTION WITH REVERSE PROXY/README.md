@@ -136,7 +136,7 @@ You will need TLS certificates to handle secured connectivity to your Applicatio
 
 
 ## Configure EFS
-- Create a new EFS
+- Create a new EFS File system. Create an EFS mount target per AZ in the VPC, associate it with both subnets dedicated for data layer. Associate the Security groups created earlier for data layer.
 
 ![Alt text](images/efs1.png)
 ![Alt text](images/efs2.png)
@@ -156,7 +156,7 @@ You will need TLS certificates to handle secured connectivity to your Applicatio
 ![Alt text](images/efs14.png)
 
 ## Configure RDS
-
+### Pre-requisite: 
 - Create a KMS Key
 ![Alt text](images/kms1.png)
 ![Alt text](images/kms2.png)
@@ -165,3 +165,11 @@ You will need TLS certificates to handle secured connectivity to your Applicatio
 ![Alt text](images/kms5.png)
 ![Alt text](images/kms6.png)
 
+To ensure that yout databases are highly available and also have failover support in case one availability zone fails, we will configure a multi-AZ set up of RDS MySQL database instance. In our case, since we are only using 2 AZs, we can only failover to one, but the same concept applies to 3 Availability Zones.
+
+To configure RDS, follow steps below:
+1. Create a subnet group and add 2 private subnets (data Layer)
+![Alt text](images/rds1.png)
+![Alt text](images/rds2.png)
+![Alt text](images/rds3.png)
+![Alt text](images/rds4.png)
