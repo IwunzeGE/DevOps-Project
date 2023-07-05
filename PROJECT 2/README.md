@@ -17,20 +17,19 @@ Since this is our first time using `apt` for this session, start off by updating
 
 When prompted, enter `Y` to confirm that you want to install Nginx.
 
-![install nginx](https://github.com/IwunzeGE/LempStack/blob/e7ca43970a4acaf39c4fc38a4e05d9796c2c9ac7/install%20nginx.png)
-
+![Alt text](<images/install nginx.png>)
 
 To verify that nginx was successfully installed and is running as a service in Ubuntu, run:  
 `sudo systemctl status nginx`
 
-![install nginx](https://github.com/IwunzeGE/LempStack/blob/e7ca43970a4acaf39c4fc38a4e05d9796c2c9ac7/nginx%20status.png)
+![Alt text](<images/nginx status.png>)
 
 If it is green and running, then you did everything correctly.
 
 Open a web browser of your choice and try to access following url  
 http://Public-IP-Address:80
 
-![view](https://github.com/IwunzeGE/LempStack/blob/e7ca43970a4acaf39c4fc38a4e05d9796c2c9ac7/nginx%20default.png)
+![Alt text](<images/nginx default.png>)
 
 ## STEP 2 — INSTALLING MYSQL
 
@@ -39,7 +38,7 @@ Again, use `apt` to acquire and install this software:
 
 When prompted, confirm installation by typing `Y`, and then ENTER.
 
-![install nginx](https://github.com/IwunzeGE/LempStack/blob/e7ca43970a4acaf39c4fc38a4e05d9796c2c9ac7/mysql%20install.png)
+![Alt text](<images/mysql install.png>)
 
 When the installation is finished, log in to the MySQL console by typing:  
 `sudo mysql`
@@ -55,7 +54,7 @@ Start the interactive script by running:
 
 This will ask if you want to configure the VALIDATE PASSWORD PLUGIN.
 
-![install nginx](https://github.com/IwunzeGE/LempStack/blob/e7ca43970a4acaf39c4fc38a4e05d9796c2c9ac7/mysql%20validate.png)
+![Alt text](<images/mysql validate.png>)
 
 ## STEP 3 – INSTALLING PHP
 You have Nginx installed to serve your content and MySQL installed to store and manage your data. Now you can install PHP to process code and generate dynamic content for the web server.
@@ -66,7 +65,7 @@ To install these 2 packages at once, run:
 
 When prompted, type `Y` and press ENTER to confirm installation.
 
-![install nginx](https://github.com/IwunzeGE/LempStack/blob/e7ca43970a4acaf39c4fc38a4e05d9796c2c9ac7/php%20install.png)
+![Alt text](<images/php install.png>)
 
 You now have your PHP components installed. Next, you will configure Nginx to use them.
 
@@ -85,7 +84,7 @@ Create a new configuration file in Nginx’s sites-available directory
 
 Paste in the following bare-bones configuration:
 
-```
+```php
 server {
 	listen 80;
 	server_name projectLEMP www.projectLEMP;
@@ -110,7 +109,7 @@ server {
 
 ```
 
-![config](https://github.com/IwunzeGE/LempStack/blob/e7ca43970a4acaf39c4fc38a4e05d9796c2c9ac7/nginx%20config.png)
+![Alt text](<images/nginx config.png>)
 
 ### ***Here’s what each of these directives and location blocks do:***
 - listen — Defines what port Nginx will listen on. In this case, it will listen on port 80, the default port for HTTP.
@@ -155,18 +154,18 @@ You can do this by creating a test PHP file in your document root. Open a new fi
 
 Type or paste the following lines into the new file. This is valid PHP code that will return information about your server:
 
-```
+```php
 <?php
 phpinfo();
 ```
 
-![php](https://github.com/IwunzeGE/LempStack/blob/e7ca43970a4acaf39c4fc38a4e05d9796c2c9ac7/php%20script.png)
+![Alt text](<images/php script.png>)
 
 You can now access this page in your web browser by visiting the domain name or public IP address you’ve set up in your Nginx configuration file, followed by /info.php:  
 http://PublicIPAddress/info.php  
 You will see a web page containing detailed information about your server:
 
-![php](https://github.com/IwunzeGE/LempStack/blob/e7ca43970a4acaf39c4fc38a4e05d9796c2c9ac7/phpdefault.png)
+![Alt text](images/phpdefault.png)
 
 After checking the relevant information about your PHP server through that page, it’s best to remove the file you created as it contains sensitive information about your PHP environment and your Ubuntu server. You can use rm to remove that file:  
 `sudo rm /var/www/your_domain/info.php`
@@ -196,7 +195,7 @@ Now we need to give this user permission over the first_database database:
 Now exit the MySQL shell with:  
 `mysql> exit`
 
-![sql](https://github.com/IwunzeGE/LempStack/blob/e7ca43970a4acaf39c4fc38a4e05d9796c2c9ac7/mysql%20user.png)
+![Alt text](<images/mysql user.png>)
 
 You can test if the new user has the proper permissions by logging in to the MySQL console again, this time using the custom user credentials:  
 `mysql -u example_user -p`
@@ -223,7 +222,7 @@ You’ll see the following output:
 After confirming that you have valid data in your test table, you can exit the MySQL console:  
 `mysql> exit`
 
-![alt](https://github.com/IwunzeGE/LempStack/blob/e7ca43970a4acaf39c4fc38a4e05d9796c2c9ac7/mysqldb.png)
+![Alt text](images/mysqldb.png)
 
 Now you can create a PHP script that will connect to MySQL and query for your content. Create a new PHP file in your custom web root directory  
 `nano /var/www/projectLEMP/todo_list.php`
@@ -231,7 +230,8 @@ Now you can create a PHP script that will connect to MySQL and query for your co
 ***The following PHP script connects to the MySQL database and queries for the content of the todo_list table, displays the results in a list. If there is a problem with the database connection, it will throw an exception.***
 
 Copy this content into your todo_list.php script:
-```
+
+```php
 <?php
 $user = "example_user";
 $password = "password";
@@ -253,12 +253,12 @@ try {
 
 Save and close the file when you are done editing.
 
-![alt](https://github.com/IwunzeGE/LempStack/blob/e7ca43970a4acaf39c4fc38a4e05d9796c2c9ac7/mysqlphpscript.png)
+![Alt text](images/mysqlphpscript.png)
 
 You can now access this page in your web browser by visiting the domain name or public IP address configured for your website, followed by /todo_list.php:  
 http://Public_domain_or_IP/todo_list.php
 
-![alt](https://github.com/IwunzeGE/LempStack/blob/e7ca43970a4acaf39c4fc38a4e05d9796c2c9ac7/mysqlphp.png)
+![Alt text](images/mysqlphp.png)
 
 You should see a page like this, showing the content you’ve inserted in your test table:  
 That means your PHP environment is ready to connect and interact with your MySQL server.
