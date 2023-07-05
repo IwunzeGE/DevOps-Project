@@ -11,6 +11,11 @@ In Project 15 earlier, The below architecture was provisioned manually using the
 - Copy the secret access key and access key ID. Save them in a notepad temporarily.
 - Configure programmatic access from your workstation to connect to AWS using the access keys copied above and a Python SDK (boto3). You must have Python 3.6 or higher on your workstation.
 If you are on Windows, use gitbash, if you are on a Mac, you can simply open a terminal. Read here to configure the Python SDK properly.
+
+- Run `pip install boto3`
+
+![Alt text](<images/install boto3.png>)
+
 - For easier authentication configuration – use AWS CLI with `aws configure` command.
 ![Alt text](<images/aws configure.png>)
 
@@ -462,9 +467,10 @@ preferred_number_of_public_subnets = 2
 ```
 
 You should also have this file structure in the PBL folder.
+
 ![Alt text](<images/final setup.png>).
 
-Run `terraform plan` and `terraform apply` and ensure everything works.
+- Run `terraform plan` and `terraform apply` and ensure everything works.
 
 ![Alt text](images/plan1.png)
 
