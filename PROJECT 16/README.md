@@ -59,8 +59,6 @@ resource "aws_vpc" "main" {
   cidr_block                     = "172.16.0.0/16"
   enable_dns_support             = "true"
   enable_dns_hostnames           = "true"
-  enable_classiclink             = "false"
-  enable_classiclink_dns_support = "false"
 }
 ```
 **Note: You can change the configuration above to create your VPC in other region that is closer to you. The same applies to all configuration snippets that will follow.**
@@ -126,3 +124,132 @@ To destroy whatever has been created run `terraform destroy` command, and type `
 
 ![Alt text](images/destroy1.png)
 ![Alt text](images/destroyed2.png)
+
+
+## Fixing The Problems By Code Refactoring
+
+- Fixing Hard Coded Values: We will introduce variables, and remove hard coding.
+
+Starting with the provider block, declare a variable named region, give it a default value, and update the provider section by referring to the declared variable.
+
+```python
+    variable "region" {
+        default = "eu-central-1"
+    }
+
+
+    provider "aws" {
+        region = var.region
+    }
+Do the same to cidr value in the vpc block, and all the other arguments.
+    variable "region" {
+        default = "eu-central-1"
+    }
+
+
+    variable "vpc_cidr" {
+        default = "172.16.0.0/16"
+    }
+
+
+    variable "enable_dns_support" {
+        default = "true"
+    }
+
+
+    variable "enable_dns_hostnames" {
+        default ="true" 
+    }
+
+    provider "aws" {
+    region = var.region
+    }
+
+
+    # Create VPC
+    resource "aws_vpc" "main" {
+    cidr_block                     = var.vpc_cidr
+    enable_dns_support             = var.enable_dns_support 
+    enable_dns_hostnames           = var.enable_dns_support
+    enable_classiclink             = var.enable_classiclink
+    enable_classiclink_dns_support = var.enable_classiclink
+
+    }
+```
+
+### Taking a Dive at Loops & Data sources
+
+Terraform has a functionality that allows us to pull data which exposes information to us. For example, every region has Availability Zones (AZ). Different regions have from 2 to 4 Availability Zones. With over 20 geographic regions and over 70 AZs served by AWS, it is impossible to keep up with the latest information by hard coding the names of AZs. Hence, we will explore the use of Terraform’s Data Sources to fetch information outside of Terraform. In this case, from AWS.
+Let us fetch Availability zones from AWS, and replace the hard coded value in the subnet’s availability_zone section.
+
+```python
+        # Get list of availability zones
+        data "aws_availability_zones" "available" {
+        state = "available"
+        }
+```
+
+To make use of this new data resource, we will need to introduce a count argument in the subnet block: Something like this.
+
+```python
+    # Create public subnet1
+    resource "aws_subnet" "public" { 
+        count                   = 2
+        vpc_id                  = aws_vpc.main.id
+        cidr_block              = "172.16.1.0/24"
+        map_public_ip_on_launch = true
+        availability_zone       = data.aws_availability_zones.available.names[count.index]
+    }
+```
+
+But we still have a problem. If we run Terraform with this configuration, it may succeed for the first time, but by the time it goes into the second loop, it will fail because we still have cidr_block hard coded. The same cidr_block cannot be created twice within the same VPC. So, we have a little more work to do.
+Let’s make cidr_block dynamic.
+We will introduce a function `cidrsubnet()` to make this happen. It accepts 3 parameters. Let us use it first by updating the configuration, then we will explore its internals.
+
+```python
+    # Create public subnet1
+    resource "aws_subnet" "public" { 
+        count                   = 2
+        vpc_id                  = aws_vpc.main.id
+        cidr_block              = cidrsubnet(var.vpc_cidr, 4 , count.index)
+        map_public_ip_on_launch = true
+        availability_zone       = data.aws_availability_zones.available.names[count.index]
+    }
+```
+
+A closer look at cidrsubnet – this function works like an algorithm to dynamically create a subnet CIDR per AZ. Regardless of the number of subnets created, it takes care of the cidr value per subnet. Its parameters are cidrsubnet(prefix, newbits, netnum).
+
+- The prefix parameter must be given in CIDR notation, same as for VPC.
+- The newbits parameter is the number of additional bits with which to extend the prefix. For example, if given a prefix ending with /16 and a newbits value of 4, the resulting subnet address will have length /20
+- The netnum parameter is a whole number that can be represented as a binary integer with no more than newbits binary digits, which will be used to populate the additional bits added to the prefix
+
+
+**NOTE:** You can experiment how this works by entering the terraform console and keep changing the figures to see the output.
+- On the terminal, run `terraform console`
+- type `cidrsubnet("172.16.0.0/16", 4, 0)`
+- Hit `enter`.
+- See the output.
+- Keep changing the numbers and see what happens.
+- To get out of the console, type exit.
+
+
+The final problem to solve is removing hard coded count value.
+
+If we cannot hard code a value we want, then we will need a way to dynamically provide the value based on some input. Since the data resource returns all the AZs within a region, it makes sense to count the number of AZs returned and pass that number to the count argument.
+To do this, we can introuduce length() function, which basically determines the length of a given list, map, or string.
+Since `data.aws_availability_zones.available.names` returns a list like `["eu-central-1a", "eu-central-1b", "eu-central-1c"]` we can pass it into a `lenght` function and get number of the AZs.
+
+`length(["eu-central-1a", "eu-central-1b", "eu-central-1c"])`
+
+Now we can simply update the public subnet block like this
+
+```python
+# Create public subnet1
+    resource "aws_subnet" "public" { 
+        count                   = length(data.aws_availability_zones.available.names)
+        vpc_id                  = aws_vpc.main.id
+        cidr_block              = cidrsubnet(var.vpc_cidr, 4 , count.index)
+        map_public_ip_on_launch = true
+        availability_zone       = data.aws_availability_zones.available.names[count.index]
+    }
+```
