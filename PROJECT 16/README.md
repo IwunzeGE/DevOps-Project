@@ -1,6 +1,6 @@
 # AUTOMATE INFRASTRUCTURE WITH IAC USING TERRAFORM PART 1
 
-In Porject 15 earlier, The below architecture was provisioned manually using the AWS Console.
+In Project 15 earlier, The below architecture was provisioned manually using the AWS Console.
 
 ![Alt text](images/architecture.png)
 
@@ -19,7 +19,7 @@ If you are on Windows, use gitbash, if you are on a Mac, you can simply open a t
 
 **(Note: S3 bucket names must be unique unique within a region partition, you can read about S3 bucken naming in this article)**. We will use this bucket from Project-17 onwards.
 
-- When you have configured authentication and installed boto3, make sure you can programmatically access your AWS account by running following commands in  
+- When you have configured authentication and installed boto3, make sure you can programmatically access your AWS account by running following commands.
 
 `python`  
 
@@ -30,3 +30,18 @@ for bucket in s3.buckets.all():
     print(bucket.name)
 ```
 ![Alt text](<images/bucket check.png>)
+
+- Install Terraform. Check the official installation [documentation](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli#install-terraform). 
+
+For Windows,
+- Open `Powershell` in admin mode.
+- Run `choco install terraform`.
+
+**Note: You must have `Chocolatey` previously installed.**
+
+## VPC | Subnets | Security Groups
+
+### Create a directory structure
+NB: I'd be using Visual Studio Code IDE.
+- Create a folder called `PBL`
+- Create a file in the folder, name it `main.tf`
