@@ -32,4 +32,4 @@ Before you start, make sure you have the following tools installed on your syste
 13. Ansible dynamic assignments (include) and community roles.
 14. Experience CI-CD
 15. AWS Cloud solution
-16. 
+16. Automate Infrastructure with IAC Using Terraform PART1
