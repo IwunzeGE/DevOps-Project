@@ -1,6 +1,4 @@
-# WEB STACK IMPLEMENTATION (LEMP STACK)
-
-### LEMP (Linux, NGINX, MySQL and PHP)
+# WEB STACK IMPLEMENTATION LEMP STACK (Linux, NGINX, MySQL and PHP)
 
 ## Prerequisites
 - Cloud Service Provider - AWS, Azure, GCP, etc.

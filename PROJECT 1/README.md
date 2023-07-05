@@ -1,7 +1,4 @@
-# LAMP STACK IMPLEMENTATION
-### LAMP (Linux, Apache, MySQL and PHP)
-
-## Prerequisites
+# LAMP STACK IMPLEMENTATION (Linux, Apache, MySQL and PHP)
 
 ## Prerequisites
 - Cloud Service Provider - AWS, Azure, GCP, etc.
