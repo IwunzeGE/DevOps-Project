@@ -21,17 +21,15 @@ Update a list of packages in package manager
 Run apache2 package installation  
 `sudo apt install apache2`
 
+![Alt text](images/apache2.png)
+
 To verify that apache2 is running as a Service in your OS, use following command  
 `sudo systemctl status apache2`
-
-![Apache Install](https://github.com/IwunzeGE/LampServer/blob/aaa7d2fe78d8cf24f5738bcbd2d6bee4feadcf8c/apache2.png)
 
 To view the Apache default page,
 Go to http://Public-IP-Address:80 in your browser
 
-
-![apacheview](https://github.com/IwunzeGE/LampServer/blob/0829f2de59376d2fdfdec919d8a8d03e7599a586/apache2%20default%20page.png)
-
+![Alt text](<images/apache2 default page.png>)
 
 ## STEP 2 — INSTALLING MYSQL
 
@@ -56,7 +54,7 @@ Start the interactive script by running:
 
 This will ask if you want to configure the VALIDATE PASSWORD PLUGIN. 
 
-![My-sql](https://github.com/IwunzeGE/LampServer/blob/aaa7d2fe78d8cf24f5738bcbd2d6bee4feadcf8c/mysql.png)  
+ ![Alt text](images/mysql.png)
 
 
 
@@ -68,8 +66,7 @@ In addition to the php package, you’ll need php-mysql, a PHP module that allow
 To install these 3 packages at once, run:  
 `sudo apt install php libapache2-mod-php php-mysql`
   
-![php](https://github.com/IwunzeGE/LampServer/blob/aaa7d2fe78d8cf24f5738bcbd2d6bee4feadcf8c/php.png) 
-
+![Alt text](images/php.png)
 
 ## STEP 4 — CREATING A VIRTUAL HOST FOR YOUR WEBSITE USING APACHE
 
@@ -106,7 +103,7 @@ To make sure your configuration file doesn’t contain syntax errors, run:
 Reload Apache so these changes take effect:  
 `sudo systemctl reload apache2`
 
-![virtual](https://github.com/IwunzeGE/LampServer/blob/aaa7d2fe78d8cf24f5738bcbd2d6bee4feadcf8c/virtual%20host.png)
+![Alt text](<images/virtual host.png>)
 
 
 
@@ -130,7 +127,7 @@ Save and close the file, reload Apache so the changes take effect:
 
 `sudo systemctl reload apache2`
 
-![php-enable](php-enable.png)
+![Alt text](images/php-enable.png)
 
 **To verify if this works,**
 - Create a PHP script to test that PHP is correctly installed and configured on your server.
@@ -142,4 +139,5 @@ This will open a blank file. Add the following text, which is valid PHP code, in
 phpinfo();
 ```
 When you are finished, save and close the file, refresh the page and you will see a page similar to this:
-![php-page](https://github.com/IwunzeGE/LampServer/blob/0829f2de59376d2fdfdec919d8a8d03e7599a586/php-page.png)
+
+![Alt text](images/php-page.png)
