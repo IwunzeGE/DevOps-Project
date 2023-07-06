@@ -1208,7 +1208,7 @@ Add the following code to `efs.tf`
 
 ```python
 # create key from key management system
-resource "aws_kms_key" "ACS-kms" {
+resource "aws_kms_key" "wakabetter-kms" {
   description = "KMS key "
   policy      = <<EOF
   {
@@ -1218,7 +1218,7 @@ resource "aws_kms_key" "ACS-kms" {
     {
       "Sid": "Enable IAM User Permissions",
       "Effect": "Allow",
-      "Principal": { "AWS": "arn:aws:iam::${var.account_no}:user/segun" },
+      "Principal": { "AWS": "arn:aws:iam::${var.account_no}:user/rockchip" },
       "Action": "kms:*",
       "Resource": "*"
     }
@@ -1235,7 +1235,7 @@ resource "aws_kms_alias" "alias" {
 }
 Let us create EFS and it mount targets- add the following code to efs.tf
 # create Elastic file system
-resource "aws_efs_file_system" "ACS-efs" {
+resource "aws_efs_file_system" "wakabetter-efs" {
   encrypted  = true
   kms_key_id = aws_kms_key.ACS-kms.arn
 
@@ -1243,7 +1243,7 @@ resource "aws_efs_file_system" "ACS-efs" {
   tags = merge(
     var.tags,
     {
-      Name = "ACS-efs"
+      Name = "wakabetter-efs"
     },
   )
 }
@@ -1251,7 +1251,7 @@ resource "aws_efs_file_system" "ACS-efs" {
 
 # set first mount target for the EFS 
 resource "aws_efs_mount_target" "subnet-1" {
-  file_system_id  = aws_efs_file_system.ACS-efs.id
+  file_system_id  = aws_efs_file_system.wakabetter-efs.id
   subnet_id       = aws_subnet.private[2].id
   security_groups = [aws_security_group.datalayer-sg.id]
 }
@@ -1259,7 +1259,7 @@ resource "aws_efs_mount_target" "subnet-1" {
 
 # set second mount target for the EFS 
 resource "aws_efs_mount_target" "subnet-2" {
-  file_system_id  = aws_efs_file_system.ACS-efs.id
+  file_system_id  = aws_efs_file_system.wakabetter-efs.id
   subnet_id       = aws_subnet.private[3].id
   security_groups = [aws_security_group.datalayer-sg.id]
 }
@@ -1267,7 +1267,7 @@ resource "aws_efs_mount_target" "subnet-2" {
 
 # create access point for wordpress
 resource "aws_efs_access_point" "wordpress" {
-  file_system_id = aws_efs_file_system.ACS-efs.id
+  file_system_id = aws_efs_file_system.wakabetter-efs.id
 
 
   posix_user {
@@ -1295,7 +1295,7 @@ resource "aws_efs_access_point" "wordpress" {
 
 # create access point for tooling
 resource "aws_efs_access_point" "tooling" {
-  file_system_id = aws_efs_file_system.ACS-efs.id
+  file_system_id = aws_efs_file_system.wakabetter-efs.id
   posix_user {
     gid = 0
     uid = 0
@@ -1319,10 +1319,13 @@ resource "aws_efs_access_point" "tooling" {
 }
 ```
 
-Create MySQL RDS
-Let us create the RDS itself using this snippet of code in rds.tf file:
+## MySQL RDS
+
+Create the RDS itself using this snippet of code in `rds.tf` file:
+
+```python
 # This section will create the subnet group for the RDS  instance using the private subnet
-resource "aws_db_subnet_group" "ACS-rds" {
+resource "aws_db_subnet_group" "wakabetter-rds" {
   name       = "acs-rds"
   subnet_ids = [aws_subnet.private[2].id, aws_subnet.private[3].id]
 
@@ -1330,20 +1333,20 @@ resource "aws_db_subnet_group" "ACS-rds" {
  tags = merge(
     var.tags,
     {
-      Name = "ACS-rds"
+      Name = "wakabetter-rds"
     },
   )
 }
 
 
 # create the RDS instance with the subnets group
-resource "aws_db_instance" "ACS-rds" {
+resource "aws_db_instance" "wakabetter-rds" {
   allocated_storage      = 20
   storage_type           = "gp2"
   engine                 = "mysql"
   engine_version         = "5.7"
   instance_class         = "db.t2.micro"
-  name                   = "daviddb"
+  name                   = "wakabetterdb"
   username               = var.master-username
   password               = var.master-password
   parameter_group_name   = "default.mysql5.7"
@@ -1352,4 +1355,38 @@ resource "aws_db_instance" "ACS-rds" {
   vpc_security_group_ids = [aws_security_group.datalayer-sg.id]
   multi_az               = "true"
 }
-Before Applying, if you take note, we gave refrence to a lot of varibales in our resources that has not been declared in the variables.tf file. Go through the entire code and spot this variables and declare them in the variables.tf file.
+```
+
+Declate the variables in our resources that has not been declared in the `variables.tf` file. 
+
+```python
+variable "ami" {
+  type        = string
+  description = "AMI ID for the launch template"
+}
+
+
+variable "keypair" {
+  type        = string
+  description = "key pair for the instances"
+}
+
+
+variable "account_no" {
+  type        = number
+  description = "the account number"
+}
+
+
+variable "master-username" {
+  type        = string
+  description = "RDS admin username"
+}
+
+
+variable "master-password" {
+  type        = string
+  description = "RDS master password"
+}
+```
+
