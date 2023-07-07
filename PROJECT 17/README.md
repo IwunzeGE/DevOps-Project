@@ -556,6 +556,10 @@ Check out the terraform documentation for [AWS Certifivate manager](https://regi
 
 The entire section create a certiface, public zone, and validate the certificate using DNS method. Create the certificate using a wildcard for all the domains created in `wakabetter.site`.
 
+**NOTE: You'd have to create a hosted zone from the AWS mamagement console firstly before making reference to the created hosted zone in the code below;**
+
+![Alt text](<images/hosted zone.png>)
+
 ```python
 resource "aws_acm_certificate" "wakabetter" {
   domain_name       = "*.wakabetter.site"
@@ -1357,7 +1361,7 @@ resource "aws_db_instance" "wakabetter-rds" {
 }
 ```
 
-Declate the variables in our resources that has not been declared in the `variables.tf` file. 
+Declare the variables in our resources that has not been declared in the `variables.tf` file. 
 
 ```python
 variable "ami" {
@@ -1390,3 +1394,19 @@ variable "master-password" {
 }
 ```
 
+- Run a `terraform init -upgrade` 
+`terraform plan` 
+`terraform apply`
+
+![Alt text](images/apply1.png)
+![Alt text](images/apply2.png)
+![Alt text](images/confirm1.png)
+![Alt text](images/confirm2.png)
+![Alt text](images/confirm3.png)
+![Alt text](images/confirm4.png)
+![Alt text](images/confirm5.png)
+
+
+- Don't forget to `terraform destroy` the resources to avoid cost.
+
+![Alt text](images/destroy.png)
