@@ -167,6 +167,8 @@ provider "aws" {
 }
 ```
 
+- Modify the modules and declare all the respective variables in thier `variables.tf` file.
+
 
 
 
