@@ -18,7 +18,7 @@ Another useful option that is supported by S3 backend is State Locking – it is
 
 ```python
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "iwunzegp-terraform-bucket"
+  bucket = "iwunzegp247365-terraform-bucket"
   # Enable versioning so we can see the full revision history of our state files
   versioning {
     enabled = true
@@ -53,14 +53,16 @@ resource "aws_dynamodb_table" "terraform_locks" {
 
 Terraform expects that both S3 bucket and DynamoDB resources are already created before we configure the backend. Run `terraform apply` to provision resources.
 
+![Alt text](images/1.png)
+
 - Configure S3 Backend
 
 ```python
 terraform {
   backend "s3" {
-    bucket         = "dev-terraform-bucket"
+    bucket         = "iwunzegp247365-terraform-bucket"
     key            = "global/s3/terraform.tfstate"
-    region         = "eu-central-1"
+    region         = "us-east-1"
     dynamodb_table = "terraform-locks"
     encrypt        = true
   }
@@ -69,9 +71,29 @@ terraform {
 
 - Re-initialize the backend. Run `terraform init` and confirm you are happy to change the backend by typing `yes`.
 
+![Alt text](images/init.png)
+
 - Verify the changes
 
 - Open the AWS console now to see what happened you should be able to see the following:
 
     - `tfstatefile` is now inside the S3 bucket.
+![Alt text](images/check1.png)
+![Alt text](images/openfile0.png)
+![Alt text](images/openfile.png)
+
     - DynamoDB table which we create has an entry which includes state file status.
+![Alt text](images/dynamo1.png)
+
+- Add the code below to `output.tf` file so that the s3 bucket ARN and DynamoDB table name can be displayed.
+
+```python
+output "s3_bucket_arn" {
+  value       = aws_s3_bucket.terraform_state.arn
+  description = "The ARN of the S3 bucket"
+}
+output "dynamodb_table_name" {
+  value       = aws_dynamodb_table.terraform_locks.name
+  description = "The name of the DynamoDB table"
+}
+```
