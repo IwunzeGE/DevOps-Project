@@ -126,7 +126,8 @@ Open the file with the command below
 `nano api.js`
 Copy below code in the file.
 
-```const express = require ('express');
+```javascript
+const express = require ('express');
 const router = express.Router();
  
 router.get('/todos', (req, res, next) => {
@@ -170,7 +171,8 @@ Inside the models folder, create a file and name it todo.js
 
 Open the file created with nano todo.js then paste the code below in the file:
 
-```const mongoose = require('mongoose');
+```
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
  
 //create schema for todo
@@ -190,7 +192,8 @@ module.exports = Todo;
 Now we need to update our routes from the file api.js in ‘routes’ directory to make use of the new model.
 In Routes directory, open `api.js` with `nano api.js`, update the code inside with the code below.
 
-```const express = require ('express');
+```
+const express = require ('express');
 const router = express.Router();
 const Todo = require('../models/todo');
  
@@ -263,7 +266,8 @@ Add the connection string to access the database in it, just as below:
 
 edit with `nano index.js`
 
-```const express = require('express');
+```
+const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const routes = require('./routes/api');
@@ -349,7 +353,8 @@ To start out with the frontend of the To-do app, use the create-react-app comman
 `npm install nodemon --save-dev`
  
 3.	In Todo folder open the package.json file. Change the highlighted part of the below screenshot and replace with the code below.  
-```"scripts": {
+```
+"scripts": {
 "start": "node index.js",
 "start-watch": "nodemon index.js",
 "dev": "concurrently \"npm run start-watch\" \"cd client && npm start\""
@@ -404,7 +409,8 @@ Open Input.js file
 
 Copy and paste the following
 
-```import React, { Component } from 'react';
+```
+import React, { Component } from 'react';
 import axios from 'axios';
  
 class Input extends Component {
