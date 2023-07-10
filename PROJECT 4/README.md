@@ -87,7 +87,7 @@ In the Books directory, Initialize npm project
  
 ![alt](https://github.com/IwunzeGE/DevOps-Project/blob/7a8cc8b999c10030428af8c85f033a69515e1731/MEAN%20Stack/images/mkdir%20Books.png)
 
-Add a file to it named `server.js  
+Add a file to it named `server.js` 
 
 `nano server.js`
 
