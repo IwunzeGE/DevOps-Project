@@ -87,12 +87,14 @@ In the Books directory, Initialize npm project
  
 ![alt](https://github.com/IwunzeGE/DevOps-Project/blob/7a8cc8b999c10030428af8c85f033a69515e1731/MEAN%20Stack/images/mkdir%20Books.png)
 
-Add a file to it named server.js  
+Add a file to it named `server.js  
+
 `nano server.js`
 
 Copy and paste the web server code below into the server.js file.
 
-```var express = require('express');
+```javascript
+var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 app.use(express.static(__dirname + '/public'));
@@ -103,6 +105,7 @@ app.listen(app.get('port'), function() {
     console.log('Server up: http://localhost:' + app.get('port'));
 });
 ```
+
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/7a8cc8b999c10030428af8c85f033a69515e1731/MEAN%20Stack/images/nano%20server%20js.png)
 
 ## STEP 3: INSTALL EXPRESS AND SET UP ROUTES
@@ -113,15 +116,18 @@ app.listen(app.get('port'), function() {
 
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/7a8cc8b999c10030428af8c85f033a69515e1731/MEAN%20Stack/images/install%20express%20mongoose.png)
 
-In ‘Books’ folder, create a folder named apps  
+In `Books` folder, create a folder named apps  
+
 `mkdir apps && cd apps`
 
-Create a file named routes.js  
+Create a file named `routes.js`
+
 `nano routes.js`
 
-Copy and paste the code below into routes.js
+Copy and paste the code below into `routes.js`
 
-```var Book = require('./models/book');
+```javascript
+var Book = require('./models/book');
 module.exports = function(app) {
   app.get('/book', function(req, res) {
     Book.find({}, function(err, result) {
@@ -162,14 +168,17 @@ module.exports = function(app) {
 
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/7a8cc8b999c10030428af8c85f033a69515e1731/MEAN%20Stack/images/routes%20js.png)
 
-In the ‘apps’ folder, create a folder named models  
+In the `apps` folder, create a folder named `models`
+
 `mkdir models && cd models`
 
-Create a file named book.js  
+Create a file named `book.js`  
 `nano book.js`
 
-Copy and paste the code below into ‘book.js’
-```var mongoose = require('mongoose');
+Copy and paste the code below into `book.js`
+
+```javascript
+var mongoose = require('mongoose');
 var dbHost = 'mongodb://localhost:27017/test';
 mongoose.connect(dbHost);
 mongoose.connection;
@@ -188,21 +197,25 @@ module.exports = mongoose.model('Book', bookSchema);
 
 ## STEP 4 – ACCESS THE ROUTES WITH ANGULARJS
 
-Change the directory back to ‘Books’  
+Change the directory back to `Books`
+
 `cd ../..`
 
-Create a folder named public  
+Create a folder named `public`
+
 `mkdir public && cd public`
 
-Add a file named script.js  
+Add a file named `script.js`
+
 `nano script.js`
 
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/d5982bcd8c54f971cd0d305fd39a2dc8b0c379cb/MEAN%20Stack/images/mkdir%20public.png)
 
-Copy and paste the Code below (controller configuration defined) into the script.js file.
+Copy and paste the Code below (controller configuration defined) into the `script.js` file.
 
 
-```var app = angular.module('myApp', []);
+```javascript
+var app = angular.module('myApp', []);
 app.controller('myCtrl', function($scope, $http) {
   $http( {
     method: 'GET',
@@ -243,12 +256,14 @@ app.controller('myCtrl', function($scope, $http) {
 
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/d5982bcd8c54f971cd0d305fd39a2dc8b0c379cb/MEAN%20Stack/images/scrpit%20js.png)
 
-In the public folder, create a file named index.html;  
+In the public folder, create a file named `index.html`;
+
 `nano index.html`
 
-Copy and paste the code below into index.html file.
+Copy and paste the code below into `index.html` file.
 
-```<!doctype html>
+```html
+<!doctype html>
 <html ng-app="myApp" ng-controller="myCtrl">
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
@@ -302,25 +317,27 @@ Copy and paste the code below into index.html file.
 
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/d5982bcd8c54f971cd0d305fd39a2dc8b0c379cb/MEAN%20Stack/images/index%20html.png)
 
-Change the directory back up to 'Books'  
+Change the directory back up to `Books`
+
 `cd ..`
 
-Start the server by running this command:  
+Start the server by running this command:
+
 `node server.js`
 
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/d5982bcd8c54f971cd0d305fd39a2dc8b0c379cb/MEAN%20Stack/images/node%20server%20js.png)
 
 The server is now up and running, we can connect it via port 3300.
 
-Go to http://PublicIP-or-PublicDNS:3300 on your browser.
+Go to `http://PublicIP-or-PublicDNS:3300` on your browser.
 
 ***A quick reminder on how to get your server’s Public IP and public DNS name:***
 
 - You can find it in your AWS web console in EC2 details.
 
-- Run curl -s http://169.254.169.254/latest/meta-data/public-ipv4 for Public IP address.
+- Run `curl -s http://169.254.169.254/latest/meta-data/public-ipv4` for Public IP address.
 
-- curl -s http://169.254.169.254/latest/meta-data/public-hostname for Public DNS name.
+- `curl -s http://169.254.169.254/latest/meta-data/public-hostname` for Public DNS name.
 
 This is how your WebBook Register Application will look in the browser:
 
