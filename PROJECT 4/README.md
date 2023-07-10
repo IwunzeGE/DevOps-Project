@@ -56,12 +56,12 @@ Run:
 `sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6
 echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.4.list`
 
-**Install MongoDB**  
+- Install MongoDB
 `sudo apt install -y mongodb`
 
 ![Alt text](<images/install mongodb.png>)
 
-**Start The server**  
+- Start The server
 `sudo service mongodb start`
 
 Verify that the service is up and running  
@@ -69,29 +69,31 @@ Verify that the service is up and running
 
 ![Alt text](<images/start mongodb.png>)
 
-**Install npm – Node package manager**  
+- Install npm – Node package manager
 `sudo apt install -y npm`
 
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/7a8cc8b999c10030428af8c85f033a69515e1731/MEAN%20Stack/images/install%20npm%20-y.png)
 
-**Install body-parser package:**‘body-parser’ package to help us process JSON files passed in requests to the server.  
+- Install body-parser package: `body-parser` package to help us process JSON files passed in requests to the server.
+  
 `sudo npm install body-parser`
 
 ![f](https://github.com/IwunzeGE/DevOps-Project/blob/7a8cc8b999c10030428af8c85f033a69515e1731/MEAN%20Stack/images/insttall%20body%20parser.png)
 
-Create a folder named ‘Books’  
+- Create a folder named ‘Books’  
+
 `mkdir Books && cd Books`
 
-In the Books directory, Initialize npm project  
+- In the Books directory, Initialize npm project  
 `npm init`
  
 ![alt](https://github.com/IwunzeGE/DevOps-Project/blob/7a8cc8b999c10030428af8c85f033a69515e1731/MEAN%20Stack/images/mkdir%20Books.png)
 
-Add a file to it named `server.js` 
+- Add a file to it named `server.js` 
 
 `nano server.js`
 
-Copy and paste the web server code below into the server.js file.
+- Copy and paste the web server code below into the server.js file.
 
 ```javascript
 var express = require('express');
@@ -110,21 +112,21 @@ app.listen(app.get('port'), function() {
 
 ## STEP 3: INSTALL EXPRESS AND SET UP ROUTES
 
-*** Mongoose package which provides a straightforward, schema-based solution to model your application data will be used.***
+- Mongoose package which provides a straightforward, schema-based solution to model your application data will be used.
 
 `sudo npm install express mongoose`
 
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/7a8cc8b999c10030428af8c85f033a69515e1731/MEAN%20Stack/images/install%20express%20mongoose.png)
 
-In `Books` folder, create a folder named apps  
+- In `Books` folder, create a folder named apps  
 
 `mkdir apps && cd apps`
 
-Create a file named `routes.js`
+- Create a file named `routes.js`
 
 `nano routes.js`
 
-Copy and paste the code below into `routes.js`
+- Copy and paste the code below into `routes.js`
 
 ```javascript
 var Book = require('./models/book');
@@ -168,14 +170,14 @@ module.exports = function(app) {
 
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/7a8cc8b999c10030428af8c85f033a69515e1731/MEAN%20Stack/images/routes%20js.png)
 
-In the `apps` folder, create a folder named `models`
+- In the `apps` folder, create a folder named `models`
 
 `mkdir models && cd models`
 
-Create a file named `book.js`  
+- Create a file named `book.js`  
 `nano book.js`
 
-Copy and paste the code below into `book.js`
+- Copy and paste the code below into `book.js`
 
 ```javascript
 var mongoose = require('mongoose');
@@ -197,22 +199,21 @@ module.exports = mongoose.model('Book', bookSchema);
 
 ## STEP 4 – ACCESS THE ROUTES WITH ANGULARJS
 
-Change the directory back to `Books`
+- Change the directory back to `Books`
 
 `cd ../..`
 
-Create a folder named `public`
+- Create a folder named `public`
 
 `mkdir public && cd public`
 
-Add a file named `script.js`
+- Add a file named `script.js`
 
 `nano script.js`
 
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/d5982bcd8c54f971cd0d305fd39a2dc8b0c379cb/MEAN%20Stack/images/mkdir%20public.png)
 
-Copy and paste the Code below (controller configuration defined) into the `script.js` file.
-
+- Copy and paste the Code below (controller configuration defined) into the `script.js` file.
 
 ```javascript
 var app = angular.module('myApp', []);
@@ -256,11 +257,11 @@ app.controller('myCtrl', function($scope, $http) {
 
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/d5982bcd8c54f971cd0d305fd39a2dc8b0c379cb/MEAN%20Stack/images/scrpit%20js.png)
 
-In the public folder, create a file named `index.html`;
+- In the public folder, create a file named `index.html`;
 
 `nano index.html`
 
-Copy and paste the code below into `index.html` file.
+- Copy and paste the code below into `index.html` file.
 
 ```html
 <!doctype html>
@@ -317,11 +318,11 @@ Copy and paste the code below into `index.html` file.
 
 ![a](https://github.com/IwunzeGE/DevOps-Project/blob/d5982bcd8c54f971cd0d305fd39a2dc8b0c379cb/MEAN%20Stack/images/index%20html.png)
 
-Change the directory back up to `Books`
+- Change the directory back up to `Books`
 
 `cd ..`
 
-Start the server by running this command:
+- Start the server by running this command:
 
 `node server.js`
 
