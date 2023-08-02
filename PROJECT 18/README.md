@@ -152,11 +152,13 @@ resource "aws_db_instance" "read_replica" {
 ![Alt text](images/mkdir.png)
 
 ![Alt text](images/alb+autoscalng.png)
+
 ![Alt text](images/rds=.png)
 
 Notice there is a `variable.tf` file in all my directories. Go ahead and create them too.
 
 - Create a new `main.tf` and `provider.tf` file in the root directory.
+
 ![Alt text](<images/new main.png>)
 
 - Cut this section of code from `/modules/VPC/main.tf` and paste it in the `provider.tf` file.
@@ -169,6 +171,24 @@ provider "aws" {
 
 - Modify the modules and declare all the respective variables in thier `variables.tf` file.
 
+- You can further split the codes into smaller partitions just for clarity.
+
+- in the `provider.tf` file, paste the code below into it
+
+```
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      version = "~> 4.0"
+    }
+  }
+}
+
+provider "aws" {
+  region = var.region
+}
+```
 
 
 
