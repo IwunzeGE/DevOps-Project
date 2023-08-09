@@ -62,5 +62,19 @@ We can either connect directly to the container running the MySQL server or use 
 
 or
 
-`docker exec -it mysql mysql -uroot -p`
+`docker exec -it <name_of_container> mysql -uroot -p`
+
+Let's break down the command:
+
+`docker exec`: This is the Docker command for executing a command in a running container.
+
+`-it`: These are the same flags we discussed before, used together to make the interaction with the container's command prompt interactive and allocate a pseudo-TTY (terminal).
+
+`mysql-server`: This is the name or ID of the container you want to execute the command in, which is assumed to be a MySQL container.
+
+`mysql -uroot -p`: This part of the command is what you're actually running inside the container. It's invoking the MySQL client and passing arguments to it:
+
+`-uroot`: This specifies the MySQL user you want to connect as. In this case, you're connecting as the "root" user.
+
+`-p`: This tells the MySQL client to prompt for the password.
 
