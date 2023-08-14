@@ -111,5 +111,31 @@ verify the environment variable is created
 
 Then, pull the image and run the container, all in one command like below:
 
-`$ docker run --network tooling_app_network -h mysqlserverhost --name=mysql-server -e MYSQL_ROOT_PASSWORD=$MYSQL_PW -d mysql/mysql-server:latest`
+`$ docker run --network tooling_network -h mysqlserverhost --name=mysql-server -e MYSQL_ROOT_PASSWORD=$MYSQL_PW -d mysql/mysql-server:latest`
 
+![Alt text](images/run-server.png)
+
+docker run: This is the command to run a Docker container.
+
+--network tooling_app_network: This specifies the network that the container should be connected to. In this case, the container will be connected to a Docker network named tooling_app_network.
+
+-h mysqlserverhost: This option sets the hostname for the container. The hostname is specified as mysqlserverhost.
+
+--name=mysql-server: This assigns a name to the running container, which will be "mysql-server".
+
+-e MYSQL_ROOT_PASSWORD=$MYSQL_PW: This sets an environment variable named MYSQL_ROOT_PASSWORD inside the container. The value of this variable is determined by the shell environment variable $MYSQL_PW.
+
+-d mysql/mysql-server:latest: This specifies the Docker image to use for creating the container. In this case, it pulls the latest version of the mysql/mysql-server image from Docker Hub and runs it in detached mode (-d), meaning the container will run in the background.
+
+
+Create a file and name it `create_user.sql` and add the below code in the file:
+
+`CREATE USER ''@'%' IDENTIFIED BY ''; GRANT ALL PRIVILEGES ON * . * TO ''@'%';`
+
+Run the script:
+
+Ensure you are in the directory `create_user.sql` file is located or declare a path
+
+`docker exec -i mysql-server mysql -uroot -p$MYSQL_PW < create_user.sql `
+
+![Alt text](images/script.png)
