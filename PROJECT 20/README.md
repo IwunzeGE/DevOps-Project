@@ -62,7 +62,9 @@ We can either connect directly to the container running the MySQL server or use 
 
 or
 
-`docker exec -it <name_of_container> mysql -uroot -p`
+`docker exec -it <name_of_container> <command_to_be_run>`
+
+![Alt text](images/exec.png)
 
 Let's break down the command:
 
@@ -77,4 +79,37 @@ Let's break down the command:
 `-uroot`: This specifies the MySQL user you want to connect as. In this case, you're connecting as the "root" user.
 
 `-p`: This tells the MySQL client to prompt for the password.
+
+stop and remove the previous mysql docker container and verify that the container is deleted
+`docker ps -a`
+`docker stop mysql-server `
+`docker rm mysql or <container ID>`
+
+![Alt text](<images/docker stop.png>)
+
+
+
+### Create a network:
+
+`docker network create --subnet=172.18.0.0/24 tooling_app_network`
+
+
+
+Creating a custom network is not necessary because even if we do not create a network, Docker will use the default network for all the containers you run. By default, the network we created above is of `DRIVER Bridge`. So, also, it is the default network. You can verify this by running the docker network ls command.
+
+![Alt text](<images/netwrok create'.png>)
+
+### Run the MySQL Server container using the created network
+
+First, let us create an environment variable to store the root password:
+
+`$ export MYSQL_PW=`
+verify the environment variable is created
+`echo $MYSQL_PW`
+
+![Alt text](images/export.png)
+
+Then, pull the image and run the container, all in one command like below:
+
+`$ docker run --network tooling_app_network -h mysqlserverhost --name=mysql-server -e MYSQL_ROOT_PASSWORD=$MYSQL_PW -d mysql/mysql-server:latest`
 
