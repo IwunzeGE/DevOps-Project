@@ -209,3 +209,36 @@ MYSQL_USER=username
 MYSQL_PASS=client-secrete-password
 MYSQL_DBNAME=toolingdb
 ```
+
+Ensure you are inside the directory "tooling" that has the file Dockerfile and build your container :
+
+`docker build -t tooling:0.0.1 .`
+
+![Alt text](images/build.png)
+
+Run the container:
+`docker run --network tooling_app_network -p 8085:80 -it tooling:0.0.1`
+
+![Alt text](images/runnnn.png)
+
+### MAJOR CHALLENGES
+
+Docker image doesn't build with the specified `ENV`
+
+![Alt text](images/issue.jpg)
+
+### FIX
+
+`cd tooling/html`
+
+`sudo vi db_conn.php`
+
+![Alt text](images/fix.png)
+
+
+If everything works, you can open the browser and type http://publicIP:8085
+You will see the login page.
+
+![Alt text](images/check1.png)
+
+![Alt text](images/check2.png)
