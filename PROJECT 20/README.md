@@ -111,7 +111,7 @@ verify the environment variable is created
 
 Then, pull the image and run the container, all in one command like below:
 
-`$ docker run --network tooling_network -h mysqlserverhost --name=mysql-server -e MYSQL_ROOT_PASSWORD=$MYSQL_PW -d mysql/mysql-server:latest`
+`docker run --network tooling_network -h mysqlserverhost --name=mysql-server -e MYSQL_ROOT_PASSWORD=$MYSQL_PW -d mysql/mysql-server:latest`
 
 ![Alt text](images/run-server.png)
 
@@ -130,12 +130,82 @@ docker run: This is the command to run a Docker container.
 
 Create a file and name it `create_user.sql` and add the below code in the file:
 
-`CREATE USER ''@'%' IDENTIFIED BY ''; GRANT ALL PRIVILEGES ON * . * TO ''@'%';`
+`CREATE USER ''@'%' IDENTIFIED BY '';`
+`GRANT ALL PRIVILEGES ON * . * TO ''@'%';`
+
+![Alt text](images/create_sql.png)
 
 Run the script:
 
 Ensure you are in the directory `create_user.sql` file is located or declare a path
 
-`docker exec -i mysql-server mysql -uroot -p$MYSQL_PW < create_user.sql `
+`docker exec -i mysql-server mysql -uroot -p$MYSQL_PW < create_user.sql`
 
-![Alt text](images/script.png)
+![Alt text](images/execc.png)
+
+### Connecting to the MySQL server from a second container running the MySQL client utility
+
+The good thing about this approach is that you do not have to install any client tool on your laptop, and you do not need to connect directly to the container running the MySQL server.
+
+Run the MySQL Client Container:
+
+`docker run --network tooling_network --name mysql-client -it --rm mysql mysql -h mysqlserverhost -u -p`
+
+docker run: This is the command to run a Docker container.
+
+--network tooling_app_network: This flag specifies the network to which the container should be connected. In this case, the container will be connected to a network named tooling_app_network.
+
+--name mysql-client: This flag assigns a name to the running container. The name of the container will be set to mysql-client.
+
+-it: These flags combine to allocate a pseudo-TTY and keep the input/output interaction with the container alive. This is typically used when you want to interact with the container's shell or command-line interface.
+
+--rm: This flag tells Docker to remove the container automatically after it exits. This is useful for temporary containers like the MySQL client, which is used for a specific task and then discarded.
+
+mysql: This is the name of the Docker image that will be used to create the container. It refers to an image that contains the MySQL client tools.
+
+mysql -h mysqlserverhost -u -p: This is the command that will be executed inside the container. It runs the MySQL client and provides the following options:
+
+-h mysqlserverhost: This option specifies the hostname (or IP address) of the MySQL server to connect to.
+-u: This option is used to provide the MySQL username for authentication. However, there seems to be a missing value after -u, which should be replaced with the actual username you want to use.
+-p: This option prompts you to enter the MySQL password for authentication. After entering this option, the MySQL client will wait for you to input the password interactively.
+
+![Alt text](images/run.png)
+
+### Prepare database schema
+
+Now you need to prepare a database schema so that the Tooling application can connect to it.
+
+`git clone https://github.com/darey-devops/tooling.git`
+
+![Alt text](<images/git clone.png>)
+
+On your terminal, export the location of the SQL file
+
+`export tooling_db_schema=/tooling_db_schema.sql`
+
+**You can find the tooling_db_schema.sql in the tooling/html/tooling_db_schema.sql folder of cloned repo.**
+
+Verify that the path is exported
+
+`echo $tooling_db_schema`
+
+![Alt text](images/tooling_schema.png)
+
+Use the SQL script to create the database and prepare the schema. With the docker exec command
+
+`docker exec -i mysql-server mysql -uroot -p$MYSQL_PW < $tooling_db_schema`
+
+![Alt text](images/exec2.png)
+
+Update the .env file with connection details to the database
+
+**The `.env` file is located in the html tooling/html/.env folder but not visible in terminal.**
+
+`sudo vi .env`
+
+```
+MYSQL_IP=mysqlserverhost
+MYSQL_USER=username
+MYSQL_PASS=client-secrete-password
+MYSQL_DBNAME=toolingdb
+```
