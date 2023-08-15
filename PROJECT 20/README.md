@@ -242,3 +242,9 @@ You will see the login page.
 ![Alt text](images/check1.png)
 
 ![Alt text](images/check2.png)
+
+
+## PRACTICE TASK
+
+Implement a POC to migrate the PHP-Todo app into a containerized application.
+
