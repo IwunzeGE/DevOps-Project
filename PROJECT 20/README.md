@@ -248,3 +248,12 @@ You will see the login page.
 
 Implement a POC to migrate the PHP-Todo app into a containerized application.
 
+Download php-todo repository from [here](https://github.com/darey-devops/php-todo)
+
+### Part 1
+
+1. Write a Dockerfile for the TODO app
+
+Run both database and app on your laptop Docker Engine
+Access the application from the browser
+
