@@ -250,6 +250,9 @@ Implement a POC to migrate the PHP-Todo app into a containerized application.
 
 Download php-todo repository from [here](https://github.com/darey-devops/php-todo)
 
+![Alt text](images/todo1.png)
+
+
 ### Part 1
 
 1. Write a Dockerfile for the TODO app
