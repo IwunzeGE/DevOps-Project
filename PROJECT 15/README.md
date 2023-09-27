@@ -212,3 +212,8 @@ Repeat the same procedure for internal ALB, select wordpress as the default targ
 ![Alt text](images/lb11.png)
 ![Alt text](images/lb12.png)
 ![Alt text](images/lb13.png)
+
+### Configure AMI of NGINX, Webservers(Tooling and Wordpress)
+
+1. Launch 3 RHEL8 instances
+
