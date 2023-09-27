@@ -173,3 +173,42 @@ To configure RDS, follow steps below:
 ![Alt text](images/rds2.png)
 ![Alt text](images/rds3.png)
 ![Alt text](images/rds4.png)
+
+2. Create the DB
+![Alt text](images/rds5.png)
+![Alt text](images/rds6.png)
+![Alt text](images/rds7.png)
+![Alt text](images/rds8.png)
+![Alt text](images/rds9.png)
+
+
+### Configure Loadbalancers and Target Groups
+
+1. Create Target group for NGINX, tooling amd wordpress targets
+
+![Alt text](images/target1.png)
+![Alt text](images/target2.png)
+![Alt text](images/target3.png)
+![Alt text](images/target4.png)
+![Alt text](images/target5.png)
+
+NB: I didn't add any instance to the targets because I havent laucnhed them. I'll do that kater in and add them to the target group.
+
+1. Create public-facing and internal loadbalancers
+
+![Alt text](images/lb1.png)
+![Alt text](images/lb2.png)
+![Alt text](images/lb3.png)
+![Alt text](images/lb4.png)
+![Alt text](images/lb5.png)
+![Alt text](images/lb6.png)
+
+Repeat the same procedure for internal ALB, select wordpress as the default target and create a rule to send traffic to tooling if the headers match our specified parameters.
+
+![Alt text](images/lb7.png)
+![Alt text](images/lb8.png)
+![Alt text](images/lb9.png)
+![Alt text](images/lb10.png)
+![Alt text](images/lb11.png)
+![Alt text](images/lb12.png)
+![Alt text](images/lb13.png)
