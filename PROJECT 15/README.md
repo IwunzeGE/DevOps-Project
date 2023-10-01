@@ -217,62 +217,57 @@ Repeat the same procedure for internal ALB, select wordpress as the default targ
 
 1. Launch 3 RHEL8 instances
 
-- Install these programs on the bastion server
+- Install these programs on the bastion, Nginx and Tooling server
+
 ```
-yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm 
-
-yum install -y dnf-utils http://rpms.remirepo.net/enterprise/remi-release-8.rpm 
-
-yum install wget vim python3 telnet htop git mysql net-tools chrony -y 
-
-systemctl start chronyd 
-
-systemctl enable chronyd
-```
-
-- Nginx and Tooling server
-
-```yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 yum install -y dnf-utils http://rpms.remirepo.net/enterprise/remi-release-8.rpm
 yum install wget vim python3 telnet htop git mysql net-tools chrony -y
 systemctl start chronyd
 systemctl enable chronyd
-
+```
 
 configure selinux policies for the webservers and nginx servers
 
+```
 setsebool -P httpd_can_network_connect=1
 setsebool -P httpd_can_network_connect_db=1
 setsebool -P httpd_execmem=1
 setsebool -P httpd_use_nfs 1
-
+```
 
 this section will instll amazon efs utils for mounting the target on the Elastic file system
 
+```
 git clone https://github.com/aws/efs-utils
 cd efs-utils
 yum install -y make
 yum install -y rpm-build
 make rpm 
 yum install -y  ./build/amazon-efs-utils*rpm
-
+```
 
 seting up self-signed certificate for the nginx instance
 
+```
 sudo mkdir /etc/ssl/private
 sudo chmod 700 /etc/ssl/private
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/wakabetter.key -out /etc/ssl/certs/wakabetter.crt
 sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
-
+```
+![Alt text](<images/nginx cert.png>)
 
 seting up self-signed certificate for the apache tooling instance
-
+```
 yum install -y mod_ssl
 openssl req -newkey rsa:2048 -nodes -keyout /etc/pki/tls/private/wakabetter.key -x509 -days 365 -out /etc/pki/tls/certs/wakabetter.crt
 vi /etc/httpd/conf.d/ssl.conf
 ```
 
-![Alt text](<images/nginx cert.png>)
-
 ![Alt text](images/apachecert.png)
 
+### Create AMIs from the instances
+
+![Alt text](images/image1.png)
+
+![Alt text](images/image2.png)
