@@ -271,3 +271,14 @@ vi /etc/httpd/conf.d/ssl.conf
 ![Alt text](images/image1.png)
 
 ![Alt text](images/image2.png)
+
+### Create Launch Templates
+
+From the created custom AMIs, create Launch templates for each of the instances
+
+![Alt text](images/launch1.png)
+![Alt text](images/launch2.png)
+![Alt text](images/launch3.png)
+![Alt text](images/launch4.png)
+![Alt text](images/launch5.png)
+
