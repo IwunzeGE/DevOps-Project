@@ -284,7 +284,4 @@ From the created custom AMIs, create Launch templates for each of the instances
 
 Fill in the userdata with the details from this [repo.](https://github.com/IwunzeGE/wakabetter-project-config.git)
 
-Welldone champ
-
-![Alt text](images/acm1.png)
 
