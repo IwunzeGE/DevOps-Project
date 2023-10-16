@@ -258,6 +258,7 @@ sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
 ![Alt text](<images/nginx cert.png>)
 
 seting up self-signed certificate for the apache tooling instance
+
 ```
 yum install -y mod_ssl
 openssl req -newkey rsa:2048 -nodes -keyout /etc/pki/tls/private/wakabetter.key -x509 -days 365 -out /etc/pki/tls/certs/wakabetter.crt
@@ -282,6 +283,18 @@ From the created custom AMIs, create Launch templates for each of the instances
 ![Alt text](images/launch4.png)
 ![Alt text](images/launch5.png)
 
-Fill in the userdata with the details from this [repo.](https://github.com/IwunzeGE/wakabetter-project-config.git)
+![Alt text](images/final-launch.png)
+
+Fill in the userdata with the details from this [repo](https://github.com/IwunzeGE/wakabetter-project-config.git) and edit it with your details
+
+*NOTE: For DB name, ssh into the rds engine with an instance and create a DB with a name of your choice.*
+
+![Alt text](images/ssh-db.png)
+
+
+
+
+
+
 
 
