@@ -289,7 +289,36 @@ Fill in the userdata with the details from this [repo](https://github.com/Iwunze
 
 *NOTE: For DB name, ssh into the rds engine with an instance and create a DB with a name of your choice.*
 
-![Alt text](images/ssh-db.png)
+![Alt text](images/ssh-dbbb.png)
+
+### Create AutoScaling Group
+
+For Bastion
+
+![Alt text](images/ASG1.png) 
+
+![Alt text](images/ASG2.png) 
+
+![Alt text](images/ASG3.png) 
+
+![Alt text](images/ASG4.png)
+
+![Alt text](images/ASG5.png) 
+
+![Alt text](images/ASG6.png)
+
+For Nginx
+
+![Alt text](images/ASG7.png) 
+
+![Alt text](images/ASG8.png) 
+
+![Alt text](images/ASG9.png) 
+
+![Alt text](images/ASG10.png) 
+
+![Alt text](images/ASG11.png)
+
 
 
 
