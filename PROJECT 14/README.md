@@ -71,21 +71,7 @@ Now go ahead and Add two more roles to ansible:
 
 ## Configuring the Jenkins Server
 
-- Install jenkins with its dependencies
-
-```
-sudo wget -O /etc/yum.repos.d/jenkins.repo \    https://pkg.jenkins.io/redhat-stable/jenkins.repo
-sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
-sudo yum upgrade
-sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-sudo yum install -y dnf-utils http://rpms.remirepo.net/enterprise/remi-release-8.rpm
-
-# Add required dependencies for the jenkins package
-
-sudo yum install java-11-openjdk -y
-sudo yum install jenkins -y
-sudo systemctl daemon-reload
-```
+- Install jenkins with its dependencies using the official documentation from Jenkins [here](https://www.jenkins.io/doc/book/installing/linux/)
 
 - Update the bash profile
 
@@ -112,6 +98,8 @@ sudo systemctl start jenkins
 sudo systemctl enable jenkins
 sudo systemctl status jenkins
 ```
+- Install git and clone down your ansible-congig-mgt [repo](https://github.com/IwunzeGE/ansible-config-mgt.git)
+
 
 ## Configuring Ansible For Jenkins Deployment
 
@@ -382,7 +370,9 @@ ansible_user=ec2-user
 <SIT-DB-Server-Private-IP-Address>
 ```
 
-2.	Update Jenkinsfile to introduce parameterization. Below is just one parameter. It has a default value in case if no value is specified at execution. It also has a description so that everyone is aware of its purpose.```
+2.	Update Jenkinsfile to introduce parameterization. Below is just one parameter. It has a default value in case if no value is specified at execution. It also has a description so that everyone is aware of its purpose.
+
+```
 pipeline {
     agent any
 
@@ -409,9 +399,7 @@ https://github.com/IwunzeGE/php-todo.git
 ```
 yum module reset php -y
 yum module enable php:remi-7.4 -y
-yum install -y php php-common php-mbstring php-opcache php-
-
-intl php-xml php-gd php-curl php-mysqlnd php-fpm php-json
+yum install -y php php-common php-mbstring php-opcache php-intl php-xml php-gd php-curl php-mysqlnd php-fpm php-json
 systemctl start php-fpm
 systemctl enable php-fpm
 
@@ -445,10 +433,16 @@ sudo yum install php-xdebug
 
 
 ### Phase 2 – Integrate Artifactory repository with Jenkins
-1.	Create a dummy Jenkinsfile in the php-todo repository
+1.	Create a dummy Jenkinsfile in the [php-todo](https://github.com/IwunzeGE/php-todo.git) repository.
 2.	Using Blue Ocean, create a multibranch Jenkins pipeline
-3.	Edit your mysql roles to Create database  `homestead`; CREATE USER 'homestead'@'%' IDENTIFIED BY 'Passswword1234'; GRANT ALL PRIVILEGES ON * . * TO 'homestead'@'%'; (THE IP ADDRESS OF THE USER WILL BE THAT OF THE JENKINS SERVER TO ALLOW REMOTE ACCESS)
+3.	Edit your mysql roles to Create database  `homestead`, create user 'homestead'@'<Jenkins-instance-IP>' IDENTIFIED BY 'passw'; GRANT ALL PRIVILEGES ON * . * TO 'homestead'@'%'; (THE IP ADDRESS OF THE USER WILL BE THAT OF THE JENKINS SERVER TO ALLOW REMOTE ACCESS). locate the file `roles/mysql/default/main.yml`
+
+
+![Alt text](images/sqllll.png)
+
+
 4.	Update the database connectivity requirements in the file `.env.sample` file
+
 ```
 DB_CONNECTION=mysql
 DB_PORT=3306
@@ -471,7 +465,7 @@ pipeline {
 
     stage('Checkout SCM') {
       steps {
-            git branch: 'main', url: 'https://github.com/darey-devops/php-todo.git'
+            git branch: 'main', url: 'https://github.com/IwunzeGE/php-todo.git'
       }
     }
 
