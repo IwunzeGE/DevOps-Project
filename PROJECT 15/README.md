@@ -319,7 +319,17 @@ For Nginx
 
 ![Alt text](images/ASG11.png)
 
+Same for Wordpress and Tooling, selecting the respective target groups.
 
+
+### Add Records to Route 53
+
+Add records for tooling.wakabetter.site and wordpress.wakabetter.site using an Alias point it to youe internet facing load balancer.
+
+
+### Test your webpages
+
+![Alt text](image.png)
 
 
 
