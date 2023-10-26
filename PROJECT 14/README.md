@@ -694,7 +694,19 @@ stage ('Deploy to Dev Environment') {
 
 ## SONARQUBE INSTALLATION
 
-Although I achieved this by using the ansible-galaxy sonarqube role (You can check my ansible-config repo for the codes). It can also be achieved by making use of some Linux Kernel configuration changes to ensure optimal performance of the tool – we will increase vm.max_map_count, file discriptor and ulimit.
+Although I achieved this by using the ansible-galaxy sonarqube role on an Ubuntu based server. (You can check my ansible-config repo for the codes). It can also be achieved by making use of some Linux Kernel configuration changes to ensure optimal performance of the tool – we will increase vm.max_map_count, file discriptor and ulimit.
+
+![Alt text](images/image.png)
+
+FIX
+- add the `roles_path=/home/ec2-user/ansible-config-mgt/deploy/ansible.cfg` to the ansible.cfg path in deploy.
+- export ANSIBLE_CONFIG=/home/ec2-user/ansible-config-mgt/deploy/ansible.cfg
+
+- Install community postgres
+`cd ansible-config-mgt`
+`ansible-galaxy collection install community.postgresql`
+
+![Alt text](images/image-1.png)
 
 ### Tune Linux Kernel
 
@@ -833,7 +845,7 @@ sudo chown sonar:sonar /opt/sonarqube -R
 ```
 
 - Open SonarQube configuration file using your favourite text editor (e.g., nano or vim)
-`sudo vim /opt/sonarqube/conf/sonar.properties`
+`sudo nano /opt/sonarqube/conf/sonar.properties`
 
 - Find the following lines,  Uncomment them and provide the values of PostgreSQL Database username and password
 ```
