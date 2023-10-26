@@ -412,10 +412,15 @@ composer --version
 
 #Install phpunit, phploc
 
+dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm
+dnf module reset php
+dnf module install php:remi-7.4
 sudo dnf --enablerepo=remi install php-phpunit-phploc
 wget -O phpunit https://phar.phpunit.de/phpunit-7.phar
 chmod +x phpunit
 sudo yum install php-xdebug
+sudo yum install zip
 ```
 
 3.	Install Jenkins plugins: Plot plugin and Artifactory plugin
@@ -581,14 +586,111 @@ stage ('Upload Artifact to Artifactory') {
 ```
 
 5.	Deploy the application to the dev environment by launching Ansible pipeline
+- Launch a server for the todo app
+- Add the private Ip to the inventory list in `dev`
+```
+[todo]
+<todo-private-IP>
+```
+- Create a `/static-assignements/deployment.yml` file and update it with the below snippet
 
+```
+---
+- name: Deploying the PHP Applicaion to Dev Enviroment
+  become: true
+  hosts: todo
+  tasks:
+    - name: install remi and rhel repo
+      ansible.builtin.yum:
+        name: 
+          - https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+          - dnf-utils
+          - https://rpms.remirepo.net/enterprise/remi-release-8.rpm
+        disable_gpg_check: yes
+
+    
+    - name: install httpd on the webserver
+      ansible.builtin.yum:
+        name: httpd
+        state: present
+
+    - name: ensure httpd is started and enabled
+      ansible.builtin.service:
+        name: httpd
+        state: started 
+        enabled: yes
+      
+    - name: install PHP
+      ansible.builtin.yum:
+        name:
+          - php 
+          - php-mysqlnd
+          - php-gd 
+          - php-curl
+          - unzip
+          - php-common
+          - php-mbstring
+          - php-opcache
+          - php-intl
+          - php-xml
+          - php-fpm
+          - php-json
+        enablerepo: php:remi-7.4
+        state: present
+    
+    - name: ensure php-fpm is started and enabled
+      ansible.builtin.service:
+        name: php-fpm
+        state: started 
+        enabled: yes
+
+    - name: Download the artifact
+      get_url:
+        url: http://13.52.250.218:8082/artifactory/rockchip/php-todo
+        dest: /home/ec2-user/
+        url_username: admin
+        url_password: cmVmdGtuOjAxOjE3MTAyNTA5MDQ6T1NiY0FTMGJoa1U2bVk4cGgxcHhGTDNxeTg5
+
+    - name: unzip the artifacts
+      ansible.builtin.unarchive:
+       src: /home/ec2-user/php-todo
+       dest: /home/ec2-user/
+       remote_src: yes
+
+    - name: deploy the code
+      ansible.builtin.copy:
+        src: /home/ec2-user/var/lib/jenkins/workspace/php-todo_main/
+        dest: /var/www/html/
+        force: yes
+        remote_src: yes
+
+    - name: remove nginx default page
+      ansible.builtin.file:
+        path: /etc/httpd/conf.d/welcome.conf
+        state: absent
+
+    - name: restart httpd
+      ansible.builtin.service:
+        name: httpd
+        state: restarted
+```
+
+- Edit the artifact url, username and password to match yours
+- To get the artifacts password
+![Alt text](<images/artifactory pssword.png>)
+
+You'll be prompted to type in your actual password and click on Genertate Token
+
+![Alt text](<images/artifactory pssword1.png>)
+- Add this snippet to the Jenkinsfile
 ```
 stage ('Deploy to Dev Environment') {
     steps {
-    build job: 'ansible-project/main', parameters: [[$class: 'StringParameterValue', name: 'env', value: 'dev']], propagate: false, wait: true
+    build job: 'ansible-config-mgt/main', parameters: [[$class: 'StringParameterValue', name: 'env', value: 'dev']], propagate: false, wait: true
     }
   }
 ```
+- Scan the repo, the php-todo should build first and subsequently trigger the build of the ansible-config-mgt when it gets to the Deploy stage.
 
 ## SONARQUBE INSTALLATION
 
