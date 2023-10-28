@@ -690,11 +690,11 @@ stage ('Upload Artifact to Artifactory') {
 
 - Edit the artifact url, username and password to match yours
 - To get the artifacts password
-![Alt text](<images/artifactory pssword.png>)
+![Alt text](<images/artifactory pssword1.png>)
 
 You'll be prompted to type in your actual password and click on Genertate Token
 
-![Alt text](<images/artifactory pssword1.png>)
+![Alt text](<images/artifactory pssword.png>)
 - Add this snippet to the Jenkinsfile
 
 ```yaml
@@ -726,7 +726,7 @@ cd ansible-config-mgt`
 ansible-galaxy collection install community.postgresql
 ```
 
-![Alt text](image-1.png)
+![Alt text](images/image-1.png)
 
 ### Tune Linux Kernel
 
