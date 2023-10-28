@@ -2,7 +2,7 @@
 
 Ansible Inventory should look like this
 
-```
+```yaml
 ├── ci
 ├── dev
 ├── pentest
@@ -15,7 +15,7 @@ Ansible Inventory should look like this
 
 - ci inventory file
 
-```
+```yaml
 [jenkins]
 <Jenkins-Private-IP-Address>
 
@@ -29,9 +29,9 @@ Ansible Inventory should look like this
 <Artifact_repository-Private-IP-Address>
 ```
 
-- dev Inventory file
+- dev inventory file
 
-```
+```yaml
 [tooling]
 <Tooling-Web-Server-Private-IP-Address>
 
@@ -50,7 +50,7 @@ ansible_user=ec2-user
 
 - pentest inventory file
 
-```
+```yaml
 [pentest:children]
 pentest-todo
 pentest-tooling
@@ -75,11 +75,15 @@ Now go ahead and Add two more roles to ansible:
 
 - Update the bash profile
 
-`sudo -i`
-
-`nano .bash_profile`
-
+```bash
+sudo -i
 ```
+
+```bash
+nano .bash_profile
+```
+
+```bash
 export JAVA_HOME=$(dirname $(dirname $(readlink $(readlink $(which java)))))
 export PATH=$PATH:$JAVA_HOME/bin 
 export CLASSPATH=.:$JAVA_HOME/jre/lib:$JAVA_HOME/lib:$JAVA_HOME/lib/tools.jar
@@ -87,13 +91,15 @@ export CLASSPATH=.:$JAVA_HOME/jre/lib:$JAVA_HOME/lib:$JAVA_HOME/lib/tools.jar
 
 - Reload the bash profile
 
-`source ~/.bash_profile`
+```bash
+source ~/.bash_profile
+```
 
 **NB: This is done so that the path is exported anytime the machine is restarted**
 
 - Start the jenkins server
 
-```			
+```bash	
 sudo systemctl start jenkins
 sudo systemctl enable jenkins
 sudo systemctl status jenkins
@@ -136,7 +142,7 @@ Inside the Ansible project, create a new directory deploy and start a new file J
 
 Add the code snippet below to start building the Jenkinsfile gradually. This pipeline currently has just one stage called Build and the only thing we are doing is using the shell script module to echo Building Stage
 
-```
+```yaml
 pipeline {
     agent any
 
@@ -184,7 +190,7 @@ Let us see this in action.
 
 2.	Currently we only have the Build stage. Let us add another stage called Test. Paste the code snippet below and push the new changes to GitHub.
 
-```
+```yaml
    pipeline {
     agent any
 
@@ -235,7 +241,7 @@ Let us see this in action.
 Now that you have a broad overview of a typical Jenkins pipeline. Let us get the actual Ansible deployment to work by:
 1.	Installing Ansible on Jenkins Server
 
-```
+```bash
 sudo yum install ansible -y
 python3 -m pip install --upgrade setuptools
 python3 -m pip install --upgrade pip
@@ -278,7 +284,7 @@ To get the path of a package use the `which` command
 
 6.	Creating Jenkinsfile from scratch. (Delete all you currently have in there and start all over to get Ansible to run successfully)
 
-```
+```yaml
 pipeline {
   agent any
 
@@ -329,7 +335,7 @@ pipeline {
 
 - Create the ansible config file in the `deploy` dir `ansible.cfg` and paste the code below
 
-```
+```conf
 [defaults]
 timeout = 160
 callback_whitelist = profile_tasks
@@ -353,7 +359,7 @@ To deploy to other environments, we will need to use parameters.
 
 1.	Update sit inventory with new servers
 
-```
+```yaml
 [tooling]
 <SIT-Tooling-Web-Server-Private-IP-Address>
 
@@ -372,14 +378,15 @@ ansible_user=ec2-user
 
 2.	Update Jenkinsfile to introduce parameterization. Below is just one parameter. It has a default value in case if no value is specified at execution. It also has a description so that everyone is aware of its purpose.
 
-```
+```yaml
 pipeline {
     agent any
 
     parameters {
       string(name: 'inventory', defaultValue: 'dev',  description: 'This is the inventory file for the environment to deploy configuration')
     }
-...
+}
+```
 
 3.	In the Ansible execution section, remove the hardcoded `inventory/dev` and replace with ``${inventory}`. From now on, each time you hit on execute, it will expect an input.
 
@@ -396,22 +403,26 @@ https://github.com/IwunzeGE/php-todo.git
 
 2.	On you Jenkins server, install PHP, its dependencies and Composer tool (Feel free to do this manually at first, then update your Ansible accordingly later)
 
-```
+```bash
 yum module reset php -y
 yum module enable php:remi-7.4 -y
 yum install -y php php-common php-mbstring php-opcache php-intl php-xml php-gd php-curl php-mysqlnd php-fpm php-json
 systemctl start php-fpm
 systemctl enable php-fpm
+```
 
-#Install composer
+### Install composer
 
+```bash
 curl -sS https://getcomposer.org/installer | php
 sudo mv composer.phar /usr/bin/composer
 Verify Composer is installed or not
 composer --version
+```
 
-#Install phpunit, phploc
+### Install phpunit, phploc
 
+```bash
 dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm
 dnf module reset php
@@ -440,7 +451,7 @@ sudo yum install zip
 ### Phase 2 – Integrate Artifactory repository with Jenkins
 1.	Create a dummy Jenkinsfile in the [php-todo](https://github.com/IwunzeGE/php-todo.git) repository.
 2.	Using Blue Ocean, create a multibranch Jenkins pipeline
-3.	Edit your mysql roles to Create database  `homestead`, create user 'homestead'@'<Jenkins-instance-IP>' IDENTIFIED BY 'passw'; GRANT ALL PRIVILEGES ON * . * TO 'homestead'@'%'; (THE IP ADDRESS OF THE USER WILL BE THAT OF THE JENKINS SERVER TO ALLOW REMOTE ACCESS). locate the file `roles/mysql/default/main.yml`
+3.	Edit your mysql roles to Create database  `homestead`, create user 'homestead'@'<Jenkins-instance-IP>' IDENTIFIED BY 'password'; GRANT ALL PRIVILEGES ON * . * TO 'homestead'@'%'; (THE IP ADDRESS OF THE USER WILL BE THAT OF THE JENKINS SERVER TO ALLOW REMOTE ACCESS). locate the file `roles/mysql/default/main.yml`
 
 
 ![Alt text](images/sqllll.png)
@@ -448,13 +459,13 @@ sudo yum install zip
 
 4.	Update the database connectivity requirements in the file `.env.sample` file
 
-```
+```bash
 DB_CONNECTION=mysql
 DB_PORT=3306
 ```
 5.	Update Jenkinsfile with proper pipeline configuration
 
-```
+```yaml
 pipeline {
     agent any
 
@@ -495,25 +506,26 @@ If you get this error, then you need to inshtall mysql-client on the jenkins ser
 ![error with php build fix](https://user-images.githubusercontent.com/110903886/224705972-c0afbc74-381c-4f93-b3f5-3cf44e162c38.png)
 
 
-**Notice the Prepare Dependencies section
+**Notice the Prepare Dependencies section**
 •	The required file by PHP is .env so we are renaming .env.sample to .env
 •	Composer is used by PHP to install all the dependent libraries used by the application
 •	php artisan uses the .env file to setup the required database objects – (After successful run of this step, login to the database, run show tables and you will see the tables being created for you)**
 
 Update the Jenkinsfile to include Unit tests step
 
-```
+```yaml
     stage('Execute Unit Tests') {
       steps {
              sh './vendor/bin/phpunit'
       }
+    }
 ```
     
 ### Phase 3 – Code Quality Analysis
 
 1.	Add the code analysis step in Jenkinsfile. The output of the data will be saved in build/logs/phploc.csv file.
 
-```
+```yaml
     stage('Code Analysis') {
 	  steps {
 	        sh 'phploc app/ --log-csv build/logs/phploc.csv'	
@@ -524,7 +536,7 @@ Update the Jenkinsfile to include Unit tests step
 2.	Plot the data using plot Jenkins plugin.
 This plugin provides generic plotting (or graphing) capabilities in Jenkins. It will plot one or more single values variations across builds in one or more plots. Plots for a particular job (or project) are configured in the job configuration screen, where each field has additional help information. Each plot can have one or more lines (called data series). After each build completes the plots’ data series latest values are pulled from the CSV file generated by phploc.
 
-```
+```yaml
     stage('Plot Code Coverage Report') {
       steps {
 
@@ -552,7 +564,7 @@ You should now see a Plot menu item on the left menu. Click on it to see the cha
 
 3.	Bundle the application code for into an artifact (archived package) upload to Artifactory
 
-```
+```yaml
 stage ('Package Artifact') {
     steps {
             sh 'zip -qr php-todo.zip ${WORKSPACE}/*'
@@ -562,7 +574,7 @@ stage ('Package Artifact') {
 
 4.	Publish the resulted artifact into Artifactory
 
-```
+```yaml
 stage ('Upload Artifact to Artifactory') {
           steps {
             script { 
@@ -588,13 +600,14 @@ stage ('Upload Artifact to Artifactory') {
 5.	Deploy the application to the dev environment by launching Ansible pipeline
 - Launch a server for the todo app
 - Add the private Ip to the inventory list in `dev`
-```
+
+```yaml
 [todo]
 <todo-private-IP>
 ```
 - Create a `/static-assignements/deployment.yml` file and update it with the below snippet
 
-```
+```yaml
 ---
 - name: Deploying the PHP Applicaion to Dev Enviroment
   become: true
@@ -683,7 +696,8 @@ You'll be prompted to type in your actual password and click on Genertate Token
 
 ![Alt text](<images/artifactory pssword1.png>)
 - Add this snippet to the Jenkinsfile
-```
+
+```yaml
 stage ('Deploy to Dev Environment') {
     steps {
     build job: 'ansible-config-mgt/main', parameters: [[$class: 'StringParameterValue', name: 'env', value: 'dev']], propagate: false, wait: true
@@ -700,18 +714,25 @@ Although I achieved this by using the ansible-galaxy sonarqube role on an Ubuntu
 
 FIX
 - add the `roles_path=/home/ec2-user/ansible-config-mgt/deploy/ansible.cfg` to the ansible.cfg path in deploy.
-- export ANSIBLE_CONFIG=/home/ec2-user/ansible-config-mgt/deploy/ansible.cfg
+- 
+```bash
+export ANSIBLE_CONFIG=/home/ec2-user/ansible-config-mgt/deploy/ansible.cfg
+```
 
 - Install community postgres
-`cd ansible-config-mgt`
-`ansible-galaxy collection install community.postgresql`
 
-![Alt text](images/image-1.png)
+```bash
+cd ansible-config-mgt`
+ansible-galaxy collection install community.postgresql
+```
+
+![Alt text](image-1.png)
 
 ### Tune Linux Kernel
 
 This can be achieved by making session changes which does not persist beyond the current session terminal. 
-```
+
+```bash
 sudo sysctl -w vm.max_map_count=262144
 sudo sysctl -w fs.file-max=65536
 ulimit -n 65536
@@ -720,32 +741,40 @@ ulimit -u 4096
 
 To make a permanent change, edit the file `/etc/security/limits.conf` and append the below
 
-```
+```bash
 sonarqube   -   nofile   65536
 sonarqube   -   nproc    4096
 ```
 
 Before installing, let us update and upgrade system packages:
 
-```
+```bash
 sudo apt-get update
 sudo apt-get upgrade
 ```
 
 Install wget and unzip packages
 
-`sudo apt-get install wget unzip -y`
+```bash
+sudo apt-get install wget unzip -y
+```
 
 Install OpenJDK and Java Runtime Environment (JRE) 11
-```
+
+```bash
 sudo apt-get install openjdk-11-jdk -y
 sudo apt-get install openjdk-11-jre -y
 ```
 
 Set default JDK – To set default JDK or switch to OpenJDK enter below command:
-`sudo update-alternatives --config java`
+```bash
+sudo update-alternatives --config java
+```
+
 
 If you have multiple versions of Java installed, you should see a list like below:
+
+```bash
 Selection    Path                                            Priority   Status
 
 ------------------------------------------------------------
@@ -758,6 +787,7 @@ Selection    Path                                            Priority   Status
 
 * 3            /usr/lib/jvm/java-8-oracle/jre/bin/java          1081      manual mode
 Type "1" to switch OpenJDK 11
+```
 
 Install and Setup PostgreSQL 10 Database for SonarQube
 
@@ -897,7 +927,7 @@ Configure SonarQube to run as a systemd service
 
 - Add the configuration below for systemd to determine how to start, stop, check status, or restart the SonarQube service.
 
-```
+```bash
 [Unit]
 Description=SonarQube service
 After=syslog.target network.target
@@ -921,7 +951,7 @@ WantedBy=multi-user.target
 
 - Save the file and control the service with systemctl
 
-```
+```bash
 sudo systemctl start sonar
 sudo systemctl enable sonar
 sudo systemctl status sonar
@@ -961,7 +991,7 @@ Access SonarQube
 
 - Update Jenkins Pipeline to include SonarQube scanning and Quality Gate. Below is the snippet for a Quality Gate stage in Jenkinsfile. The Quality gate should come in before you package the artifacts.
 
-```
+```yaml
     stage('SonarQube Quality Gate') {
         environment {
             scannerHome = tool 'SonarQubeScanner'
